@@ -6,6 +6,7 @@ import { html as post5Content } from '../posts/MEV/MEV5:AMM_Pricing_and_Mathemat
 import { html as post6Content } from '../posts/MEV/MEV6:StrategyArb_Cross_DEX_Arbitrage_Strategy.md';
 import { html as post7Content } from '../posts/MEV/MEV7:Jito.md';
 import { html as post8Content } from '../posts/MEV/MEV8:Risk_Risk_Control_and_Safety_Checks.md';
+import { html as post9Content } from '../posts/Detailed_Explanation_of_Blockchain/Detailed_Explanation_of_Blockchain.md';
 import mev1Image from '../images/posts/MEV_img/MEV1.jpg';
 import mev2Image from '../images/posts/MEV_img/MEV2.jpg';
 import mev3Image from '../images/posts/MEV_img/MEV3.jpg';
@@ -14,6 +15,9 @@ import mev5Image from '../images/posts/MEV_img/MEV5.JPG';
 import mev6Image from '../images/posts/MEV_img/MEV6.JPG';
 import mev7Image from '../images/posts/MEV_img/MEV7.JPG';
 import mev8Image from '../images/posts/MEV_img/MEV8.JPG';
+import blockchainImage from '../images/posts/web3/web3.jpg';
+
+
 
 export interface BlogPost {
   id: string;
@@ -28,74 +32,14 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
-    id: '1',
-    title: 'MEV1: Solana MEV Technical Analysis',
-    excerpt: 'Technical analysis of Solana MEV, including MEV bots, MEV opportunities, and MEV risks',
-    content: post1Content,
-    date: 'Jan 20, 2026',
-    category: 'MEV',
-    tags: ['MEV', 'Solana'],
-    image: mev1Image,
-  },
-  {
-    id: '2',
-    title: 'MEV2: Solana MEV Practical Applications',
-    excerpt: 'Practical applications of Solana MEV, including MEV bots, MEV opportunities, and MEV risks',
-    content: post2Content,
-    date: 'Jan 20, 2026',
-    category: 'MEV',
-    tags: ['MEV', 'Solana'],
-    image: mev2Image,
-  },
-  {
-    id: '3',
-    title: 'MEV3: Solana MEV Impact and Challenges',
-    excerpt: 'Impact and challenges of Solana MEV, including MEV bots, MEV opportunities, and MEV risks',
-    content: post3Content,
-    date: 'Jan 20, 2026',
-    category: 'MEV',
-    tags: ['MEV', 'Solana'],
-    image: mev3Image,
-  },
-  {
-    id: '4',
-    title: 'MEV4: Solana MEV Future Trends',
-    excerpt: 'Future trends of Solana MEV, including MEV bots, MEV opportunities, and MEV risks',
-    content: post4Content,
-    date: 'Jan 20, 2026',
-    category: 'MEV',
-    tags: ['MEV', 'Solana'],
-    image: mev4Image,
-  },
-  {
-    id: '5',
-    title: 'MEV5: Solana MEV Regulation and Law',
-    excerpt: 'Regulation and law of Solana MEV, including MEV bots, MEV opportunities, and MEV risks',
-    content: post5Content,
-    date: 'Jan 20, 2026',
-    category: 'MEV',
-    tags: ['MEV', 'Solana'],
-    image: mev5Image,
-  },
-  {
-    id: '6',
-    title: 'MEV6: Solana MEV Industry Impact',
-    excerpt: 'Industry impact of Solana MEV, including MEV bots, MEV opportunities, and MEV risks',
-    content: post6Content,
-    date: 'Jan 20, 2026',
-    category: 'MEV',
-    tags: ['MEV', 'Solana'],
-    image: mev6Image,
-  },
-  {
-    id: '7',
-    title: 'MEV7: Solana MEV Conclusion',
-    excerpt: 'Conclusion of Solana MEV, including MEV bots, MEV opportunities, and MEV risks',
-    content: post7Content,
-    date: 'Jan 20, 2026',
-    category: 'MEV',
-    tags: ['MEV', 'Solana'],
-    image: mev7Image,
+    id: '9',
+    title: 'Detailed Explanation of Blockchain',
+    excerpt: 'Detailed explanation of blockchain, including its concepts, technology, and applications',
+    content: post9Content,
+    date: 'Feb 04, 2026',
+    category: 'Web3',
+    tags: ['Web3', 'Blockchain'],
+    image: blockchainImage,
   },
   {
     id: '8',
@@ -104,7 +48,77 @@ export const blogPosts: BlogPost[] = [
     content: post8Content,
     date: 'Jan 20, 2026',
     category: 'MEV',
-    tags: ['MEV', 'Solana'],
+    tags: ['MEV', 'Blockchain'],
     image: mev8Image,
-  }
+  },
+  {
+    id: '7',
+    title: 'MEV7: Solana MEV Conclusion',
+    excerpt: 'Conclusion of Solana MEV, including MEV bots, MEV opportunities, and MEV risks',
+    content: post7Content,
+    date: 'Jan 20, 2026',
+    category: 'MEV',
+    tags: ['MEV', 'Blockchain'],
+    image: mev7Image,
+  },
+  {
+    id: '6',
+    title: 'MEV6: Solana MEV Industry Impact',
+    excerpt: 'Industry impact of Solana MEV, including MEV bots, MEV opportunities, and MEV risks',
+    content: post6Content,
+    date: 'Jan 20, 2026',
+    category: 'MEV',
+    tags: ['MEV', 'Blockchain'],
+    image: mev6Image,
+  },
+  {
+    id: '5',
+    title: 'MEV5: Solana MEV Regulation and Law',
+    excerpt: 'Regulation and law of Solana MEV, including MEV bots, MEV opportunities, and MEV risks',
+    content: post5Content,
+    date: 'Jan 20, 2026',
+    category: 'MEV',
+    tags: ['MEV', 'Blockchain'],
+    image: mev5Image,
+  },
+  {
+    id: '4',
+    title: 'MEV4: Solana MEV Future Trends',
+    excerpt: 'Future trends of Solana MEV, including MEV bots, MEV opportunities, and MEV risks',
+    content: post4Content,
+    date: 'Jan 20, 2026',
+    category: 'MEV',
+    tags: ['MEV', 'Blockchain'],
+    image: mev4Image,
+  },
+  {
+    id: '3',
+    title: 'MEV3: Solana MEV Impact and Challenges',
+    excerpt: 'Impact and challenges of Solana MEV, including MEV bots, MEV opportunities, and MEV risks',
+    content: post3Content,
+    date: 'Jan 20, 2026',
+    category: 'MEV',
+    tags: ['MEV', 'Blockchain'],
+    image: mev3Image,
+  },
+  {
+    id: '2',
+    title: 'MEV2: Solana MEV Practical Applications',
+    excerpt: 'Practical applications of Solana MEV, including MEV bots, MEV opportunities, and MEV risks',
+    content: post2Content,
+    date: 'Jan 20, 2026',
+    category: 'MEV',
+    tags: ['MEV', 'Blockchain'],
+    image: mev2Image,
+  },
+  {
+    id: '1',
+    title: 'MEV1: Solana MEV Technical Analysis',
+    excerpt: 'Technical analysis of Solana MEV, including MEV bots, MEV opportunities, and MEV risks',
+    content: post1Content,
+    date: 'Jan 20, 2026',
+    category: 'MEV',
+    tags: ['MEV', 'Blockchain'],
+    image: mev1Image,
+  },
 ];
