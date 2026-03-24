@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ragas 评测报告 - taskId_48dab81953f6411c97f7</title>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.1/dist/echarts.min.js"></script>
+    <style>
+        * { box-sizing: border-box; }
+        html { overflow-y: scroll; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; margin: 0; padding: 0; background-color: #f0f2f5; }
+        .app-layout { display: flex; min-height: 100vh; }
+        .sidebar { width: 220px; min-width: 220px; background: white; display: flex; flex-direction: column; position: fixed; top: 0; left: 0; height: 100vh; z-index: 100; border-right: 1px solid #eef0f5; }
+        .sidebar-header { padding: 10px 14px 9px; background: linear-gradient(135deg, #436ef3 0%, #6c5ce7 100%); color: white; position: relative; }
+        .sidebar-header h2 { margin: 0; font-size: 0.95em; color: white; display: flex; align-items: center; gap: 6px; cursor: default; }
+        .sidebar-header h2 svg { opacity: 0.95; }
+        .sidebar-header .hdr-time { margin: 3px 0 0; font-size: 0.67em; color: rgba(255,255,255,0.7); line-height: 1.2; }
+        .sidebar-header .hdr-id { display: none; position: absolute; left: 0; top: 100%; width: 100%; padding: 6px 14px 7px; background: rgba(67,110,243,0.96); font-size: 0.66em; color: rgba(255,255,255,0.85); word-break: break-all; line-height: 1.4; box-shadow: 0 4px 12px rgba(0,0,0,0.15); z-index: 10; }
+        .sidebar-header:hover .hdr-id { display: block; }
+        .sidebar-nav { flex: 1; overflow-y: auto; padding: 12px 12px; }
+        .nav-item { display: flex; align-items: center; gap: 10px; padding: 10px 12px; cursor: pointer; color: #444; font-size: 0.9em; transition: all 0.18s ease; border-radius: 10px; white-space: nowrap; margin-bottom: 4px; }
+        .nav-item:hover { background: #f5f6fa; color: #436ef3; }
+        .nav-item.active { background: #eef1ff; color: #436ef3; font-weight: 600; }
+        .nav-item .nav-icon { flex-shrink: 0; width: 20px; display: flex; align-items: center; justify-content: center; }
+        .nav-item .nav-icon svg { width: 18px; height: 18px; vertical-align: middle; }
+        .nav-item .nav-arrow { margin-left: auto; font-size: 0.75em; color: #ccc; transition: color 0.15s; }
+        .nav-item.active .nav-arrow { color: #436ef3; }
+        .section h2 svg { vertical-align: -5px; margin-right: 6px; }
+        h4 svg { vertical-align: -3px; margin-right: 5px; }
+        .main-content { margin-left: 220px; flex: 1; padding: 20px 28px; min-height: 100vh; }
+        .content-panel { display: none; }
+        .content-panel.active { display: block; }
+        @keyframes fadeSlideUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+        .content-panel.active > .section,
+        .content-panel.active > div { animation: fadeSlideUp 0.35s ease-out both; }
+        .content-panel.active > :nth-child(2) { animation-delay: 0.05s; }
+        .content-panel.active > :nth-child(3) { animation-delay: 0.1s; }
+        .content-panel.active > :nth-child(4) { animation-delay: 0.15s; }
+        .content-panel.active > :nth-child(5) { animation-delay: 0.2s; }
+        @keyframes detailSlideDown { from { opacity: 0; max-height: 0; } to { opacity: 1; max-height: 800px; } }
+        .detail-anim { animation: detailSlideDown 0.3s ease-out forwards; overflow: hidden; }
+        .section { background: white; padding: 22px; margin-bottom: 16px; border-radius: 12px; box-shadow: 0 1px 6px rgba(0,0,0,0.05); }
+        .section h2 { color: #333; border-bottom: none; margin: 0 0 16px 0; padding: 0; font-size: 1.1em; background: none; }
+        .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-top: 12px; }
+        .info-item { padding: 14px; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #436ef3; }
+        .info-item strong { display: block; color: #666; font-size: 0.85em; margin-bottom: 4px; }
+        .info-item span { font-size: 1.2em; color: #333; font-weight: 600; }
+        .progress-bar-container { margin: 12px 0; display: flex; align-items: center; gap: 12px; }
+        .progress-bar-label { min-width: 110px; font-weight: bold; color: #333; font-size: 0.9em; }
+        .progress-bar { flex: 1; height: 22px; background: #e0e0e0; border-radius: 11px; overflow: hidden; }
+        .progress-bar-fill { height: 100%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 0.82em; border-radius: 11px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 12px; border-radius: 10px; overflow: hidden; border: 1px solid #eee; }
+        th, td { padding: 7px 8px; text-align: center; border-bottom: 1px solid #eee; font-size: 0.88em; }
+        th { background-color: #436ef3; color: white; font-weight: 600; font-size: 0.85em; padding: 8px; }
+        tbody tr:hover { background-color: #f4f6ff; }
+        .recommendation-item { display: flex; gap: 12px; padding: 14px; margin: 8px 0; background: #f8f9fa; border-radius: 10px; border-left: 4px solid #436ef3; }
+        .recommendation-icon { font-size: 1.8em; flex-shrink: 0; display: flex; align-items: flex-start; padding-top: 2px; }
+        .recommendation-icon svg { flex-shrink: 0; }
+        .recommendation-content h4 { margin: 0 0 6px 0; color: #436ef3; }
+        .recommendation-content p { margin: 0; color: #555; line-height: 1.5; }
+        .copy-toast { position: fixed; top: 20px; right: 20px; background: #28a745; color: white; padding: 8px 18px; border-radius: 8px; font-size: 0.88em; z-index: 9999; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transition: opacity 0.3s; }
+        .sort-btn { cursor: pointer; user-select: none; }
+        .sort-btn:hover { opacity: 0.7; }
+        .overall-score { text-align: center; padding: 24px; background: linear-gradient(135deg, #436ef322 0%, #436ef311 100%); border-radius: 10px; margin-bottom: 16px; }
+        .overall-score-value { font-size: 3.5em; font-weight: bold; color: #436ef3; margin: 8px 0; }
+        .overall-score-label { font-size: 1.2em; color: #436ef3; font-weight: 600; }
+        .sample-card { transition: all 0.3s ease; }
+        .confusion-matrix { display: inline-block; margin: 20px auto; }
+        .confusion-matrix table { border-collapse: separate; border-spacing: 2px; }
+        .confusion-matrix td, .confusion-matrix th { padding: 15px; text-align: center; min-width: 80px; font-weight: bold; }
+        .cm-cell { background: #f8f9fa; font-size: 1.2em; }
+        .cm-tp { background: #d4edda !important; color: #155724; }
+        .cm-tn { background: #d4edda !important; color: #155724; }
+        .cm-fp { background: #f8d7da !important; color: #721c24; }
+        .cm-fn { background: #f8d7da !important; color: #721c24; }
+        .metric-card { background: white; border-left: 4px solid #436ef3; padding: 15px; margin: 10px 0; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .metric-card h4 { margin: 0 0 10px 0; color: #436ef3; }
+        ._tip { position: fixed; z-index: 10000; max-width: 300px; padding: 7px 11px; background: rgba(255,255,255,0.92); color: #666; font-size: 0.78em; line-height: 1.55; border-radius: 8px; pointer-events: none; opacity: 0; transition: opacity 0.12s; box-shadow: 0 4px 16px rgba(0,0,0,0.12), 0 0 0 1px rgba(67,110,243,0.12); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 1px solid rgba(67,110,243,0.15); }
+        ._tip.show { opacity: 1; }
+    </style>
+    
+    <script>
+        let currentPage = 1;
+        let samplesPerPage = 10;
+        const totalSamples = 5;
+
+        function toggleDetails(idx) {
+            var r = document.getElementById('details-row-' + idx);
+            if (!r) return;
+            var btn = document.querySelector('tr[data-sample-index="' + idx + '"] .detail-toggle');
+            if (r.style.display === 'none') {
+                r.style.display = 'table-row';
+                var inner = r.querySelector('td > div');
+                if (inner) { inner.classList.remove('detail-anim'); void inner.offsetHeight; inner.classList.add('detail-anim'); }
+                if (btn) btn.textContent = '▲';
+            } else {
+                r.style.display = 'none';
+                if (btn) btn.textContent = '▼';
+            }
+        }
+
+        function renderPagination() {
+            var totalPages = Math.ceil(totalSamples / samplesPerPage);
+            var c = document.getElementById('pagination-buttons');
+            if (!c) return;
+            c.innerHTML = '';
+            var bs = 'padding:8px 16px;border:1px solid #ddd;background:white;border-radius:5px;cursor:pointer;font-weight:bold;transition:all 0.2s;min-width:40px;';
+            var as = 'padding:8px 16px;border:1px solid #436ef3;background:#436ef3;color:white;border-radius:5px;cursor:pointer;font-weight:bold;transition:all 0.2s;min-width:40px;';
+            if (currentPage > 1) { var b=document.createElement('button');b.textContent='上一页';b.style.cssText=bs;b.onclick=function(){goToPage(currentPage-1)};c.appendChild(b); }
+            var pages=[];
+            if (totalPages<=7) { for(var i=1;i<=totalPages;i++) pages.push(i); }
+            else if (currentPage<=3) { pages=[1,2,3,4,'...',totalPages]; }
+            else if (currentPage>=totalPages-2) { pages=[1,'...',totalPages-3,totalPages-2,totalPages-1,totalPages]; }
+            else { pages=[1,'...',currentPage-1,currentPage,currentPage+1,'...',totalPages]; }
+            pages.forEach(function(p){ if(p==='...'){ var s=document.createElement('span');s.textContent='...';s.style.cssText='color:#666;padding:0 5px;';c.appendChild(s); } else { var b=document.createElement('button');b.textContent=p;b.style.cssText=p===currentPage?as:bs;b.onclick=(function(pg){return function(){goToPage(pg)}})(p);c.appendChild(b); } });
+            if (currentPage < totalPages) { var b=document.createElement('button');b.textContent='下一页';b.style.cssText=bs;b.onclick=function(){goToPage(currentPage+1)};c.appendChild(b); }
+            var ji=document.getElementById('page-jump-input'); if(ji) ji.max=totalPages;
+        }
+
+        function goToPage(page, scroll) {
+            var totalPages = Math.ceil(totalSamples / samplesPerPage);
+            if (page < 1 || page > totalPages) return;
+            currentPage = page;
+            document.querySelectorAll('.sample-row').forEach(function(r){ r.style.display = 'none'; });
+            document.querySelectorAll('.sample-details').forEach(function(r){ r.style.display = 'none'; });
+            var start = (page - 1) * samplesPerPage;
+            for (var i = start; i < Math.min(start + samplesPerPage, totalSamples); i++) {
+                var rows = document.querySelectorAll('.sample-row');
+                if (rows[i]) rows[i].style.display = 'table-row';
+            }
+            renderPagination();
+        }
+        function changePageSize() { samplesPerPage = parseInt(document.getElementById('page-size-selector').value); currentPage = 1; goToPage(1); }
+        function jumpToPage() { var p = parseInt(document.getElementById('page-jump-input').value); if (!isNaN(p)) goToPage(p); }
+
+        function searchSampleById() {
+            var q = (document.getElementById('sample-search-input') || {}).value;
+            if (!q) return;
+            q = q.trim().toLowerCase();
+            var hint = document.getElementById('sample-search-hint');
+            if (!q) { clearSampleSearch(); return; }
+            var rows = document.querySelectorAll('tr.sample-row'); var matched = 0;
+            rows.forEach(function(row) {
+                var tc = row.querySelector('td:nth-child(2)');
+                var tid = (tc ? (tc.getAttribute('data-tid') || tc.getAttribute('title') || tc.textContent) : '').toLowerCase();
+                if (tid.indexOf(q) !== -1) { row.style.display = 'table-row'; matched++; }
+                else { row.style.display = 'none'; var idx = row.getAttribute('data-sample-index'); var dr = document.getElementById('details-row-' + idx); if (dr) dr.style.display = 'none'; }
+            });
+            if (hint) { hint.style.display = 'block'; hint.style.background = matched > 0 ? '#e8f5e9' : '#ffebee'; hint.style.color = matched > 0 ? '#2e7d32' : '#c62828'; hint.textContent = matched > 0 ? '找到 ' + matched + ' 条匹配样本' : '未找到匹配的样本ID'; }
+        }
+        function clearSampleSearch() {
+            var inp = document.getElementById('sample-search-input');
+            if (inp) inp.value = '';
+            var hint = document.getElementById('sample-search-hint'); if (hint) hint.style.display = 'none';
+            goToPage(1, false);
+        }
+
+        function switchPanel(panelId) {
+            document.querySelectorAll('.content-panel').forEach(function(p) { p.classList.remove('active'); });
+            document.querySelectorAll('.nav-item').forEach(function(n) { n.classList.remove('active'); });
+            var panel = document.getElementById('panel-' + panelId);
+            if (panel) {
+                panel.style.animation = 'none';
+                void panel.offsetHeight;
+                panel.style.animation = '';
+                Array.from(panel.children).forEach(function(child) {
+                    child.style.animation = 'none';
+                    void child.offsetHeight;
+                    child.style.animation = '';
+                });
+                panel.classList.add('active');
+            }
+            var nav = document.querySelector('.nav-item[data-panel="' + panelId + '"]');
+            if (nav) nav.classList.add('active');
+            document.querySelector('.main-content').scrollTop = 0;
+            window.scrollTo(0, 0);
+            if (panelId === 'samples') { setTimeout(function(){ goToPage(1, false); }, 50); }
+            if (panelId === 'overview' && typeof window._initOverviewCharts === 'function') { setTimeout(window._initOverviewCharts, 100); }
+            if (panelId === 'dimensions' && typeof window._initDimChart === 'function') { setTimeout(window._initDimChart, 100); }
+            if (panelId === 'efficiency' && typeof window._initEffCharts === 'function') { setTimeout(window._initEffCharts, 100); }
+            if (panelId === 'coverage' && typeof window._initCoverageCharts === 'function') { setTimeout(window._initCoverageCharts, 100); }
+            if (panelId === 'parrot' && typeof window._initParrotCharts === 'function') { setTimeout(window._initParrotCharts, 100); }
+            setTimeout(function() {
+                if (typeof echarts !== 'undefined' && panel) {
+                    var charts = panel.querySelectorAll('[_echarts_instance_]');
+                    charts.forEach(function(el) { var inst = echarts.getInstanceByDom(el); if (inst) inst.resize(); });
+                    ['_mc'].concat(Array.from({length:10},function(_,i){return '_sc'+i;})).forEach(function(id) {
+                        var el = document.getElementById(id);
+                        if (el && panel.contains(el)) {
+                            var inst = echarts.getInstanceByDom(el);
+                            if (inst) inst.resize();
+                        }
+                    });
+                }
+            }, 120);
+        }
+
+        function navigateTo(panelId, traceId) {
+            switchPanel(panelId);
+            if (traceId && panelId === 'samples') {
+                setTimeout(function() {
+                    var inp = document.getElementById('sample-search-input');
+                    if (inp) { inp.value = traceId; searchSampleById(); }
+                }, 200);
+            }
+        }
+
+        function copyTraceId(el) {
+            var tid = el.getAttribute('data-tid');
+            if (!tid) return;
+            if (navigator.clipboard) { navigator.clipboard.writeText(tid); }
+            else { var ta = document.createElement('textarea'); ta.value = tid; ta.style.position = 'fixed'; ta.style.opacity = '0'; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); }
+            var toast = document.createElement('div'); toast.className = 'copy-toast'; toast.textContent = '已复制';
+            document.body.appendChild(toast);
+            setTimeout(function() { toast.style.opacity = '0'; setTimeout(function(){ document.body.removeChild(toast); }, 300); }, 1200);
+        }
+
+        var sortState = {};
+        function sortByColumn(colIdx) {
+            var table = document.querySelector('#sample-details-section table');
+            if (!table) return;
+            var tbody = table.querySelector('tbody');
+            var rowPairs = [];
+            var rows = Array.from(tbody.querySelectorAll('tr.sample-row'));
+            rows.forEach(function(row) {
+                var idx = row.getAttribute('data-sample-index');
+                var detailRow = document.getElementById('details-row-' + idx);
+                var cell = row.querySelectorAll('td')[colIdx];
+                var val = cell ? parseFloat(cell.textContent) : 0;
+                rowPairs.push({ row: row, detail: detailRow, val: isNaN(val) ? 0 : val });
+            });
+            var asc = sortState[colIdx] === 'desc';
+            sortState[colIdx] = asc ? 'asc' : 'desc';
+            rowPairs.sort(function(a, b) { return asc ? a.val - b.val : b.val - a.val; });
+            rowPairs.forEach(function(p) {
+                tbody.appendChild(p.row);
+                if (p.detail) tbody.appendChild(p.detail);
+            });
+            document.querySelectorAll('.sort-btn').forEach(function(s) { s.textContent = '⇅'; });
+            var btn = document.querySelector('.sort-btn[data-col="' + colIdx + '"]');
+            if (btn) btn.textContent = asc ? '▲' : '▼';
+            goToPage(1, false);
+        }
+
+        window.addEventListener('DOMContentLoaded', function() {
+            switchPanel('overview');
+            var si = document.getElementById('sample-search-input');
+            if (si) si.addEventListener('keydown', function(e) { if (e.key === 'Enter') searchSampleById(); });
+            
+            // Ragas 雷达图
+            (function(){
+                var el=document.getElementById('_ragas_radar');if(!el)return;
+                var c=echarts.init(el);
+                c.setOption({
+                    color:["#436ef3", "#f08e35", "#59bdf9", "#f6c846", "#65c444", "#90959d"],
+                    radar:{indicator:[{"name": "上下文精确度", "max": 1}, {"name": "上下文召回率", "max": 1}, {"name": "忠实度", "max": 1}, {"name": "答案相关性", "max": 1}],shape:'circle',splitArea:{areaStyle:{color:['rgba(67,110,243,0.03)','rgba(67,110,243,0.06)']}}},
+                    series:[{type:'radar',data:[{value:[0.9119, 1.0, 0.9315, 0.4156],name:'综合能力',areaStyle:{opacity:0.25}}]}],
+                    tooltip:{trigger:'item'}
+                });
+                window.addEventListener('resize',function(){c.resize();});
+            })();
+
+            // 指标均值条形图
+            (function(){
+                var el=document.getElementById('_ragas_bar');if(!el)return;
+                var c=echarts.init(el);
+                var ms=["上下文精确度", "上下文召回率", "忠实度", "答案相关性"];
+                var vs=[0.9119, 1.0, 0.9315, 0.4156];
+                var pal=["#436ef3", "#f08e35", "#59bdf9", "#f6c846", "#65c444", "#90959d"];
+                c.setOption({
+                    tooltip:{trigger:'axis',axisPointer:{type:'shadow'}},
+                    grid:{left:10,right:30,top:10,bottom:10,containLabel:true},
+                    xAxis:{type:'value',max:1,axisLabel:{fontSize:11}},
+                    yAxis:{type:'category',data:ms,axisLabel:{fontSize:11}},
+                    series:[{type:'bar',data:vs.map(function(v,i){return {value:v,itemStyle:{color:pal[i%pal.length],borderRadius:[0,6,6,0]}}}),barWidth:22,label:{show:true,position:'right',fontSize:11,formatter:function(p){return p.value.toFixed(3)}}}]
+                });
+                window.addEventListener('resize',function(){c.resize();});
+            })();
+
+            // 箱线图
+            (function(){
+                var el=document.getElementById('_ragas_boxplot');if(!el)return;
+                var c=echarts.init(el);
+                c.setOption({
+                    tooltip:{trigger:'item'},
+                    grid:{left:10,right:30,top:10,bottom:10,containLabel:true},
+                    xAxis:{type:'category',data:["上下文精确度", "上下文召回率", "忠实度", "答案相关性"],axisLabel:{fontSize:11}},
+                    yAxis:{type:'value',min:0,max:1,axisLabel:{fontSize:11}},
+                    series:[{type:'boxplot',data:[[0.8056, 0.8667, 0.8875, 1.0, 1.0], [1.0, 1.0, 1.0, 1.0, 1.0], [0.7931, 0.92, 0.9444, 1.0, 1.0], [0.2497, 0.3273, 0.4313, 0.5276, 0.5424]],itemStyle:{color:'#436ef3',borderColor:'#436ef3'},boxWidth:[20,40]}]
+                });
+                window.addEventListener('resize',function(){c.resize();});
+            })();
+
+            // 相关性热力图
+            (function(){
+                var el=document.getElementById('_ragas_corr');if(!el)return;
+                var c=echarts.init(el);
+                var ms=["上下文精确度", "上下文召回率", "忠实度", "答案相关性"];
+                var data=[[0, 0, 1.0], [0, 1, 0.0], [0, 2, -0.472], [0, 3, 0.358], [1, 0, 0.0], [1, 1, 0.0], [1, 2, 0.0], [1, 3, 0.0], [2, 0, -0.472], [2, 1, 0.0], [2, 2, 1.0], [2, 3, -0.783], [3, 0, 0.358], [3, 1, 0.0], [3, 2, -0.783], [3, 3, 1.0]];
+                if(!data.length)return;
+                c.setOption({
+                    tooltip:{formatter:function(p){return ms[p.value[0]]+' vs '+ms[p.value[1]]+': '+p.value[2].toFixed(3)}},
+                    grid:{left:10,right:60,top:10,bottom:10,containLabel:true},
+                    xAxis:{type:'category',data:ms,axisLabel:{fontSize:10,rotate:30}},
+                    yAxis:{type:'category',data:ms,axisLabel:{fontSize:10}},
+                    visualMap:{min:-1,max:1,calculable:true,orient:'vertical',right:0,top:'center',inRange:{color:['#dc3545','#fff','#28a745']}},
+                    series:[{type:'heatmap',data:data,label:{show:true,fontSize:11,formatter:function(p){return p.value[2].toFixed(2)}},emphasis:{itemStyle:{shadowBlur:10,shadowColor:'rgba(0,0,0,0.2)'}}}]
+                });
+                window.addEventListener('resize',function(){c.resize();});
+            })();
+
+            // 样本平均分直方图
+            (function(){
+                var el=document.getElementById('_ragas_hist');if(!el)return;
+                var c=echarts.init(el);
+                var avgs=[0.8097, 0.8347, 0.8339, 0.7638, 0.8318];
+                var bins=[0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.01];
+                var labels=['0-0.1','0.1-0.2','0.2-0.3','0.3-0.4','0.4-0.5','0.5-0.6','0.6-0.7','0.7-0.8','0.8-0.9','0.9-1.0'];
+                var counts=new Array(10).fill(0);
+                avgs.forEach(function(v){for(var i=0;i<10;i++)if(v>=bins[i]&&v<bins[i+1]){counts[i]++;break;}});
+                var colors=labels.map(function(_,i){return i<5?'#dc3545':(i<7?'#ffc107':'#28a745')});
+                c.setOption({
+                    tooltip:{trigger:'axis'},
+                    grid:{left:10,right:10,top:10,bottom:10,containLabel:true},
+                    xAxis:{type:'category',data:labels,axisLabel:{fontSize:10}},
+                    yAxis:{type:'value',name:'样本数',axisLabel:{fontSize:11}},
+                    series:[{type:'bar',data:counts.map(function(v,i){return {value:v,itemStyle:{color:colors[i],borderRadius:[4,4,0,0]}}}),barWidth:28}]
+                });
+                window.addEventListener('resize',function(){c.resize();});
+            })();
+
+            // 低质量失分来源柱状图
+            (function(){
+                var el=document.getElementById('_ragas_lq_bar');if(!el)return;
+                var c=echarts.init(el);
+                var ms=["上下文精确度", "上下文召回率", "忠实度", "答案相关性"];
+                var vs=[0, 0, 0, 0];
+                var pal=["#436ef3", "#f08e35", "#59bdf9", "#f6c846", "#65c444", "#90959d"];
+                c.setOption({
+                    tooltip:{trigger:'axis'},
+                    grid:{left:10,right:10,top:10,bottom:10,containLabel:true},
+                    xAxis:{type:'category',data:ms,axisLabel:{fontSize:10}},
+                    yAxis:{type:'value',name:'次数',axisLabel:{fontSize:11}},
+                    series:[{type:'bar',data:vs.map(function(v,i){return {value:v,itemStyle:{color:pal[i%pal.length],borderRadius:[4,4,0,0]}}}),barWidth:30}]
+                });
+                window.addEventListener('resize',function(){c.resize();});
+            })();
+
+            // 低质量 vs 全体雷达
+            (function(){
+                var el=document.getElementById('_ragas_lq_radar');if(!el)return;
+                var c=echarts.init(el);
+                c.setOption({
+                    color:['#dc3545','#436ef3'],
+                    legend:{data:['低质量样本','全体平均'],bottom:0,textStyle:{fontSize:11}},
+                    radar:{indicator:[{"name": "上下文精确度", "max": 1}, {"name": "上下文召回率", "max": 1}, {"name": "忠实度", "max": 1}, {"name": "答案相关性", "max": 1}],shape:'circle',radius:'60%',splitArea:{areaStyle:{color:['rgba(67,110,243,0.03)','rgba(67,110,243,0.06)']}}},
+                    series:[{type:'radar',data:[
+                        {value:[0, 0, 0, 0],name:'低质量样本',areaStyle:{opacity:0.15}},
+                        {value:[0.9119, 1.0, 0.9315, 0.4156],name:'全体平均',areaStyle:{opacity:0.15}}
+                    ]}],
+                    tooltip:{trigger:'item'}
+                });
+                window.addEventListener('resize',function(){c.resize();});
+            })();
+
+            // 成本占比饼图
+            (function(){
+                var el=document.getElementById('_ragas_cost_pie');if(!el)return;
+                var data=[{"name": "LLM 输入", "value": 0.064784}, {"name": "LLM 输出", "value": 0.091673}, {"name": "Embedding", "value": 0.006226}];if(!data.length)return;
+                var c=echarts.init(el);
+                c.setOption({
+                    color:['#436ef3','#f08e35','#65c444'],
+                    tooltip:{trigger:'item',formatter:'{b}: ${c} ({d}%)'},
+                    series:[{type:'pie',radius:['40%','70%'],data:data,label:{fontSize:11},emphasis:{itemStyle:{shadowBlur:10,shadowOffsetX:0,shadowColor:'rgba(0,0,0,0.2)'}}}]
+                });
+                window.addEventListener('resize',function(){c.resize();});
+            })();
+
+            // Token 分布条形图
+            (function(){
+                var el=document.getElementById('_ragas_token_bar');if(!el)return;
+                var data=[{"name": "输入 Token", "value": 117789}, {"name": "输出 Token", "value": 41860}];if(!data.length)return;
+                var c=echarts.init(el);
+                c.setOption({
+                    color:['#436ef3','#f08e35'],
+                    tooltip:{trigger:'axis'},
+                    grid:{left:10,right:30,top:10,bottom:10,containLabel:true},
+                    xAxis:{type:'value',axisLabel:{fontSize:11}},
+                    yAxis:{type:'category',data:data.map(function(d){return d.name}),axisLabel:{fontSize:11}},
+                    series:[{type:'bar',data:data.map(function(d,i){return {value:d.value,itemStyle:{color:['#436ef3','#f08e35'][i],borderRadius:[0,6,6,0]}}})
+                        ,barWidth:28,label:{show:true,position:'right',fontSize:11,formatter:function(p){return p.value.toLocaleString()}}}]
+                });
+                window.addEventListener('resize',function(){c.resize();});
+            })();
+
+            // 信效度 - 各指标评分分布（分组柱状图）
+            (function(){
+                var el=document.getElementById('_ragas_rel_dist');if(!el)return;
+                var c=echarts.init(el);
+                var ms=["上下文精确度", "上下文召回率", "忠实度", "答案相关性"];
+                var cvs=[0.0941, 0.0, 0.0912, 0.3048];
+                var skews=[0.0355, 0.0, 1.3669, 0.3728];
+                var entropies=[-0.0, -0.0, 0.3109, 0.4182];
+                c.setOption({
+                    tooltip:{trigger:'axis',axisPointer:{type:'shadow'}},
+                    legend:{data:['变异系数','|偏度|','归一化熵'],bottom:0,textStyle:{fontSize:11}},
+                    grid:{left:10,right:10,top:10,bottom:30,containLabel:true},
+                    xAxis:{type:'category',data:ms,axisLabel:{fontSize:10}},
+                    yAxis:{type:'value',axisLabel:{fontSize:11}},
+                    series:[
+                        {name:'变异系数',type:'bar',data:cvs,itemStyle:{color:'#436ef3',borderRadius:[4,4,0,0]},barWidth:16},
+                        {name:'|偏度|',type:'bar',data:skews,itemStyle:{color:'#f08e35',borderRadius:[4,4,0,0]},barWidth:16},
+                        {name:'归一化熵',type:'bar',data:entropies,itemStyle:{color:'#65c444',borderRadius:[4,4,0,0]},barWidth:16}
+                    ]
+                });
+                window.addEventListener('resize',function(){c.resize();});
+            })();
+
+            // 信效度 - 评分质量雷达
+            (function(){
+                var el=document.getElementById('_ragas_rel_radar');if(!el)return;
+                var c=echarts.init(el);
+                c.setOption({
+                    color:['#436ef3'],
+                    radar:{
+                        indicator:[
+                            {name:'样本量',max:100},
+                            {name:'区分度',max:1},
+                            {name:'均匀度',max:1},
+                            {name:'独立性',max:100},
+                        ],
+                        shape:'circle',
+                        splitArea:{areaStyle:{color:['rgba(67,110,243,0.03)','rgba(67,110,243,0.06)']}}
+                    },
+                    series:[{
+                        type:'radar',
+                        data:[{
+                            value:[
+                                5,
+                                0.1225,
+                                0.1823,
+                                100
+                            ],
+                            name:'评分质量',
+                            areaStyle:{opacity:0.25}
+                        }]
+                    }],
+                    tooltip:{trigger:'item'}
+                });
+                window.addEventListener('resize',function(){c.resize();});
+            })();
+
+            // 样本详情 - 展开/收起
+            window.toggleSampleDetail=function(row){
+                var sid=row.getAttribute('data-sample-id');
+                var details=document.querySelectorAll('.sample-detail-row[data-sample-id="'+sid+'"]');
+                details.forEach(function(d){
+                    d.style.display=d.style.display==='none'?'table-row':'none';
+                });
+            };
+
+            // 样本详情 - 搜索
+            window.searchRagasSample=function(){
+                var input=document.getElementById('ragas-sample-search');
+                var hint=document.getElementById('ragas-search-hint');
+                if(!input)return;
+                var q=input.value.trim().toUpperCase();
+                if(!q){clearRagasSampleSearch();return;}
+                var rows=document.querySelectorAll('.sample-row');
+                var found=0;
+                rows.forEach(function(r){
+                    var sid=r.getAttribute('data-sample-id');
+                    var match=sid.toUpperCase().indexOf(q)>=0;
+                    r.style.display=match?'':'none';
+                    var detail=document.querySelector('.sample-detail-row[data-sample-id="'+sid+'"]');
+                    if(detail)detail.style.display='none';
+                    if(match)found++;
+                });
+                if(hint){
+                    hint.style.display='block';
+                    hint.style.background=found>0?'#e8f5e9':'#ffebee';
+                    hint.style.color=found>0?'#155724':'#721c24';
+                    hint.innerHTML=found>0?'找到 '+found+' 条匹配样本':'未找到匹配样本';
+                }
+            };
+            window.clearRagasSampleSearch=function(){
+                var input=document.getElementById('ragas-sample-search');
+                var hint=document.getElementById('ragas-search-hint');
+                if(input)input.value='';
+                if(hint)hint.style.display='none';
+                document.querySelectorAll('.sample-row').forEach(function(r){r.style.display='';});
+                document.querySelectorAll('.sample-detail-row').forEach(function(r){r.style.display='none';});
+            };
+            document.getElementById('ragas-sample-search')&&document.getElementById('ragas-sample-search').addEventListener('keyup',function(e){if(e.key==='Enter')searchRagasSample();});
+        
+            // --- custom tooltip (防断触：用 _currentTipEl 追踪当前宿主，mousemove 更新位置) ---
+            var _tipEl = document.createElement('div'); _tipEl.className = '_tip'; document.body.appendChild(_tipEl);
+            var _tipTimer = null;
+            var _currentTipEl = null;
+            function _showTip(el, x, y) {
+                if (_currentTipEl !== el) {
+                    _currentTipEl = el;
+                    _tipEl.textContent = el.getAttribute('data-tip-text') || el.title || '';
+                }
+                clearTimeout(_tipTimer);
+                _tipEl.classList.add('show');
+                var tw = _tipEl.offsetWidth, th = _tipEl.offsetHeight;
+                var left = x - tw / 2;
+                var top  = y - th - 10;
+                if (top < 4) top = y + 14;
+                if (left < 4) left = 4;
+                if (left + tw > window.innerWidth - 4) left = window.innerWidth - tw - 4;
+                _tipEl.style.left = left + 'px'; _tipEl.style.top = top + 'px';
+            }
+            document.addEventListener('mouseover', function(e) {
+                var el = e.target.closest('[title],[data-tip-text]');
+                if (!el) return;
+                if (el.title) { el.setAttribute('data-tip-text', el.title); el.removeAttribute('title'); }
+                if (!el.getAttribute('data-tip-text')) return;
+                _showTip(el, e.clientX, e.clientY);
+                // 添加 hover 动效（仅跳转类组件已有，这里补充所有 title 组件）
+                if (!el._tipHoverInited) {
+                    el._tipHoverInited = true;
+                    if (!el.style.transition) el.style.transition = 'transform 0.15s,box-shadow 0.15s';
+                }
+                el.style.transform = el.style.transform || '';
+            });
+            document.addEventListener('mousemove', function(e) {
+                if (!_currentTipEl) return;
+                var el = e.target.closest('[data-tip-text]');
+                if (el && el === _currentTipEl) {
+                    _showTip(el, e.clientX, e.clientY);
+                }
+            });
+            document.addEventListener('mouseout', function(e) {
+                var el = e.target.closest('[data-tip-text]');
+                if (!el) return;
+                // 只有真正离开该元素（relatedTarget 不在其内部）才隐藏
+                var related = e.relatedTarget;
+                if (related && el.contains(related)) return;
+                el.setAttribute('title', el.getAttribute('data-tip-text'));
+                el.removeAttribute('data-tip-text');
+                _currentTipEl = null;
+                _tipTimer = setTimeout(function() { _tipEl.classList.remove('show'); }, 120);
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="app-layout">
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h2><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;flex-shrink:0;"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"/><path d="M14 2v5a1 1 0 0 0 1 1h5"/><path d="m16 13-3.5 3.5-2-2L8 17"/></svg> Ragas 评测报告</h2>
+                <p class="hdr-time">2026-03-20 19:11:02</p>
+                <div class="hdr-id">taskId_48dab81953f6411c97f7</div>
+            </div>
+            <div class="sidebar-nav">
+                <div class="nav-item active" data-panel="overview" onclick="switchPanel('overview')"><span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;flex-shrink:0;"><path d="M12 13V2l8 4-8 4"/><path d="M20.561 10.222a9 9 0 1 1-12.55-5.29"/><path d="M8.002 9.997a5 5 0 1 0 8.9 2.02"/></svg></span> 总体评分 <span class="nav-arrow">›</span></div>
+<div class="nav-item" data-panel="efficiency" onclick="switchPanel('efficiency')"><span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;flex-shrink:0;"><path d="M15.6 2.7a10 10 0 1 0 5.7 5.7"/><circle cx="12" cy="12" r="2"/><path d="M13.4 10.6 19 5"/></svg></span> 执行效率 <span class="nav-arrow">›</span></div>
+<div class="nav-item" data-panel="reliability" onclick="switchPanel('reliability')"><span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;flex-shrink:0;"><path d="M18 6 7 17l-5-5"/><path d="m22 10-7.5 7.5L13 16"/></svg></span> 信效度保障 <span class="nav-arrow">›</span></div>
+<div class="nav-item" data-panel="metrics_detail" onclick="switchPanel('metrics_detail')"><span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;flex-shrink:0;"><path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="M7 16c.5-2 1.5-7 4-7 2 0 2 3 4 3 2.5 0 4.5-5 5-7"/></svg></span> 评分体系 <span class="nav-arrow">›</span></div>
+<div class="nav-item" data-panel="traceability" onclick="switchPanel('traceability')"><span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;flex-shrink:0;"><path d="M12 16v5"/><path d="M16 14v7"/><path d="M20 10v11"/><path d="m22 3-8.646 8.646a.5.5 0 0 1-.708 0L9.354 8.354a.5.5 0 0 0-.707 0L2 15"/><path d="M4 18v3"/><path d="M8 14v7"/></svg></span> 结果溯源 <span class="nav-arrow">›</span></div>
+<div class="nav-item" data-panel="badcase" onclick="switchPanel('badcase')"><span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;flex-shrink:0;"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg></span> 低质量样本 <span class="nav-arrow">›</span></div>
+<div class="nav-item" data-panel="samples" onclick="switchPanel('samples')"><span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;flex-shrink:0;"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"/><path d="M14 2v5a1 1 0 0 0 1 1h5"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg></span> 样本详情 <span class="nav-arrow">›</span></div>
+<div class="nav-item" data-panel="recommendations" onclick="switchPanel('recommendations')"><span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;flex-shrink:0;"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg></span> 优化建议 <span class="nav-arrow">›</span></div>
+
+            </div>
+        </div>
+        <div class="main-content">
+            <div class="content-panel active" id="panel-overview">
+            <div class="section">
+                <h2><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-4px;flex-shrink:0;"><path d="M12 13V2l8 4-8 4"/><path d="M20.561 10.222a9 9 0 1 1-12.55-5.29"/><path d="M8.002 9.997a5 5 0 1 0 8.9 2.02"/></svg> 总体评分</h2>
+                <p style="color:#888;margin:6px 0 0;font-size:0.82em;line-height:1.6;padding:8px 12px;background:#f8f9fa;border-radius:6px;border-left:3px solid #17a2b8;">
+                    <strong style="color:#555;">主要关注：</strong>RAG 系统的整体能力水平。综合得分为各评测指标（上下文精确度、召回率、忠实度、答案相关性、正确性）的均值，雷达图直观展示各维度均衡性，帮助快速定位最弱环节。
+                </p>
+            </div>
+            <div class="section">
+                <div style="display:grid;grid-template-columns:1fr 2fr;gap:18px;">
+                    <div style="background:linear-gradient(135deg,#17a2b822 0%,#17a2b811 100%);border:2px solid #17a2b8;border-radius:12px;padding:28px 20px;text-align:center;display:flex;flex-direction:column;justify-content:center;align-items:center;">
+                        <div style="font-size:0.9em;color:#666;margin-bottom:6px;">综合得分</div>
+                        <div style="font-size:3.5em;font-weight:bold;color:#17a2b8;margin:8px 0;line-height:1;">0.815</div>
+                        <div style="font-size:1.2em;color:#17a2b8;font-weight:bold;">良好</div>
+                    </div>
+                    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;">
+                        <div style="padding:14px;border-radius:10px;border:2px solid #28a745;background:linear-gradient(135deg,#28a74518 0%,#28a74508 100%);text-align:center;" title="检索到的上下文中有多大比例是与问题直接相关的。衡量检索系统的精确度——返回结果中有效信息占比越高，说明检索噪声越低。"><div style="font-size:0.78em;color:#666;margin-bottom:4px;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;flex-shrink:0;"><path d="M20.34 17.52a10 10 0 1 0-2.82 2.82"/><circle cx="19" cy="19" r="2"/><path d="m13.41 13.41 4.18 4.18"/><circle cx="12" cy="12" r="2"/></svg> 上下文精确度</div><div style="font-size:1.6em;font-weight:700;color:#28a745;">0.912</div></div><div style="padding:14px;border-radius:10px;border:2px solid #28a745;background:linear-gradient(135deg,#28a74518 0%,#28a74508 100%);text-align:center;" title="检索到的上下文是否覆盖了回答问题所需的所有关键信息。衡量检索系统的召回能力——是否遗漏了必要的知识片段。"><div style="font-size:0.78em;color:#666;margin-bottom:4px;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;flex-shrink:0;"><circle cx="9" cy="9" r="7"/><circle cx="15" cy="15" r="7"/></svg> 上下文召回率</div><div style="font-size:1.6em;font-weight:700;color:#28a745;">1.000</div></div><div style="padding:14px;border-radius:10px;border:2px solid #28a745;background:linear-gradient(135deg,#28a74518 0%,#28a74508 100%);text-align:center;" title="生成的答案是否忠实于检索到的上下文，不引入外部知识或产生幻觉。该指标通过逐条验证答案中的声明是否可从上下文推导来评估。"><div style="font-size:0.78em;color:#666;margin-bottom:4px;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;flex-shrink:0;"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg> 忠实度</div><div style="font-size:1.6em;font-weight:700;color:#28a745;">0.932</div></div><div style="padding:14px;border-radius:10px;border:2px solid #dc3545;background:linear-gradient(135deg,#dc354518 0%,#dc354508 100%);text-align:center;" title="生成的答案与用户问题的切题程度。通过反向生成问题并计算与原始问题的语义相似度来衡量答案是否直接回应了用户意图。"><div style="font-size:0.78em;color:#666;margin-bottom:4px;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;flex-shrink:0;"><path d="M20 6 9 17l-5-5"/></svg> 答案相关性</div><div style="font-size:1.6em;font-weight:700;color:#dc3545;">0.416</div></div>
+                    </div>
+                </div>
+            </div>
+            <div class="section">
+                <div style="display:flex;justify-content:space-around;align-items:center;flex-wrap:wrap;gap:16px;">
+                    <div style="text-align:center;padding:10px 18px;">
+                        <div style="font-size:0.85em;color:#666;margin-bottom:4px;">评测样本数</div>
+                        <div style="font-size:1.8em;font-weight:700;color:#436ef3;">5</div>
+                    </div>
+                    <div style="text-align:center;padding:10px 18px;">
+                        <div style="font-size:0.85em;color:#666;margin-bottom:4px;">评测指标数</div>
+                        <div style="font-size:1.8em;font-weight:700;color:#436ef3;">4</div>
+                    </div>
+                    <div style="text-align:center;padding:10px 18px;">
+                        <div style="font-size:0.85em;color:#666;margin-bottom:4px;">最强指标</div>
+                        <div style="font-size:1.1em;font-weight:700;color:#28a745;">上下文召回率</div>
+                    </div>
+                    <div style="text-align:center;padding:10px 18px;">
+                        <div style="font-size:0.85em;color:#666;margin-bottom:4px;">最弱指标</div>
+                        <div style="font-size:1.1em;font-weight:700;color:#dc3545;">答案相关性</div>
+                    </div>
+                    <div onclick="navigateTo('badcase')" style="cursor:pointer;text-align:center;padding:10px 18px;border-radius:10px;border:2px solid #28a745;background:linear-gradient(135deg,#28a74522 0%,#28a74511 100%);transition:transform 0.15s,box-shadow 0.15s;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 4px 12px rgba(0,0,0,0.1)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+                        <div style="font-size:1.6em;font-weight:bold;color:#28a745;margin-bottom:4px;">0 条</div>
+                        <div style="color:#666;font-size:0.85em;">低质量样本（0.0%） ↗</div>
+                    </div>
+                </div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
+                <div class="section" style="margin-bottom:0;">
+                    <h4 style="margin:0 0 8px;color:#333;font-size:0.92em;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;flex-shrink:0;"><path d="M20.34 17.52a10 10 0 1 0-2.82 2.82"/><circle cx="19" cy="19" r="2"/><path d="m13.41 13.41 4.18 4.18"/><circle cx="12" cy="12" r="2"/></svg> RAG 能力雷达</h4>
+                    <div id="_ragas_radar" style="width:100%;height:320px;"></div>
+                </div>
+                <div class="section" style="margin-bottom:0;">
+                    <h4 style="margin:0 0 8px;color:#333;font-size:0.92em;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;flex-shrink:0;"><path d="M13 17V9"/><path d="M18 17V5"/><path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="M8 17v-3"/></svg> 指标均值排名</h4>
+                    <div id="_ragas_bar" style="width:100%;height:320px;"></div>
+                </div>
+            </div></div>
+<div class="content-panel" id="panel-efficiency">
+            <div class="section">
+                <h2><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-4px;flex-shrink:0;"><path d="M15.6 2.7a10 10 0 1 0 5.7 5.7"/><circle cx="12" cy="12" r="2"/><path d="M13.4 10.6 19 5"/></svg> 执行效率 & 成本统计</h2>
+                <p style="color:#888;margin:6px 0 0;font-size:0.82em;line-height:1.6;padding:8px 12px;background:#f8f9fa;border-radius:6px;border-left:3px solid #436ef3;">
+                    <strong style="color:#555;">主要关注：</strong>Ragas 评测的整体耗时、Token 消耗与成本分析。帮助评估评测资源消耗，优化评测策略。LLM 调用成本基于 deepseek_r1 定价，Embedding 基于 text-embedding-3-large 估算。
+                </p>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:14px;">
+                <div class="section" style="text-align:center;margin-bottom:0;background:linear-gradient(135deg,#436ef322 0%,#436ef311 100%);border:2px solid #436ef3;"><h3 style="margin:0;color:#436ef3;font-size:1.8em;">125.2s</h3><p style="margin:5px 0 0;color:#666;font-weight:bold;font-size:0.88em;">总执行耗时</p></div>
+                <div class="section" style="text-align:center;margin-bottom:0;background:linear-gradient(135deg,#436ef322 0%,#436ef311 100%);border:2px solid #436ef3;"><h3 style="margin:0;color:#436ef3;font-size:1.8em;">25.0s</h3><p style="margin:5px 0 0;color:#666;font-weight:bold;font-size:0.88em;">平均单样本耗时</p></div>
+                <div class="section" style="text-align:center;margin-bottom:0;background:linear-gradient(135deg,#436ef322 0%,#436ef311 100%);border:2px solid #436ef3;"><h3 style="margin:0;color:#436ef3;font-size:1.8em;">0.04/s</h3><p style="margin:5px 0 0;color:#666;font-weight:bold;font-size:0.88em;">样本吞吐率</p></div>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:14px;">
+                <div class="section" style="text-align:center;margin-bottom:0;background:linear-gradient(135deg,#436ef322 0%,#436ef311 100%);border:2px solid #436ef3;"><h3 style="margin:0;color:#436ef3;font-size:1.8em;">159,649</h3><p style="margin:5px 0 0;color:#666;font-weight:bold;font-size:0.88em;">总 Token 消耗</p><p style="margin:4px 0 0;color:#436ef3;font-size:0.85em;font-weight:600;">输入 117,789 / 输出 41,860</p></div>
+                <div class="section" style="text-align:center;margin-bottom:0;background:linear-gradient(135deg,#436ef322 0%,#436ef311 100%);border:2px solid #436ef3;"><h3 style="margin:0;color:#436ef3;font-size:1.8em;">31,929</h3><p style="margin:5px 0 0;color:#666;font-weight:bold;font-size:0.88em;">单样本 Token</p><p style="margin:4px 0 0;color:#436ef3;font-size:0.85em;font-weight:600;">tokens/sample</p></div>
+                <div class="section" style="text-align:center;margin-bottom:0;background:linear-gradient(135deg,#436ef322 0%,#436ef311 100%);border:2px solid #436ef3;"><h3 style="margin:0;color:#436ef3;font-size:1.8em;">$0.1627</h3><p style="margin:5px 0 0;color:#666;font-weight:bold;font-size:0.88em;">评测总成本</p><p style="margin:4px 0 0;color:#436ef3;font-size:0.85em;font-weight:600;">$0.0325/样本</p></div>
+            </div>
+            <div class="section">
+                <h4 style="margin:0 0 12px;color:#333;font-size:0.92em;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;flex-shrink:0;"><path d="M13 17V9"/><path d="M18 17V5"/><path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="M8 17v-3"/></svg> 成本构成明细</h4>
+                <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
+                    <div style="text-align:center;padding:10px;background:#f8f9fa;border-radius:8px;">
+                        <p style="margin:0;color:#436ef3;font-size:1.3em;font-weight:700;">$0.0648</p>
+                        <p style="margin:4px 0 0;color:#666;font-size:0.78em;">LLM 输入成本</p>
+                    </div>
+                    <div style="text-align:center;padding:10px;background:#f8f9fa;border-radius:8px;">
+                        <p style="margin:0;color:#f08e35;font-size:1.3em;font-weight:700;">$0.0917</p>
+                        <p style="margin:4px 0 0;color:#666;font-size:0.78em;">LLM 输出成本</p>
+                    </div>
+                    <div style="text-align:center;padding:10px;background:#f8f9fa;border-radius:8px;">
+                        <p style="margin:0;color:#65c444;font-size:1.3em;font-weight:700;">$0.0062</p>
+                        <p style="margin:4px 0 0;color:#666;font-size:0.78em;">Embedding 成本(估算)</p>
+                    </div>
+                </div>
+                <p style="margin:8px 0 0;color:#999;font-size:0.75em;">
+                    定价：deepseek_r1 输入 $0.55/1M · 输出 $2.19/1M · text-embedding-3-large $0.13/1M
+                </p>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
+                <div class="section" style="margin-bottom:0;">
+                    <h4 style="margin:0 0 8px;color:#333;font-size:0.92em;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;flex-shrink:0;"><path d="M13 17V9"/><path d="M18 17V5"/><path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="M8 17v-3"/></svg> 成本占比</h4>
+                    <div id="_ragas_cost_pie" style="width:100%;height:240px;"></div>
+                </div>
+                <div class="section" style="margin-bottom:0;">
+                    <h4 style="margin:0 0 8px;color:#333;font-size:0.92em;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;flex-shrink:0;"><path d="M13 17V9"/><path d="M18 17V5"/><path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="M8 17v-3"/></svg> Token 分布</h4>
+                    <div id="_ragas_token_bar" style="width:100%;height:240px;"></div>
+                </div>
+            </div></div>
+<div class="content-panel" id="panel-reliability">
+            <div class="section">
+                <h2><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-4px;flex-shrink:0;"><path d="M18 6 7 17l-5-5"/><path d="m22 10-7.5 7.5L13 16"/></svg> 信效度保障</h2>
+                <p style="color:#888;margin:6px 0 0;font-size:0.82em;line-height:1.6;padding:8px 12px;background:#f8f9fa;border-radius:6px;border-left:3px solid #dc3545;">
+                    <strong style="color:#555;">主要关注：</strong>LLM 作为评委的打分质量——是否稳定一致、是否具有区分度、是否存在「端水」或「逻辑矛盾」。通过分析评分的变异系数、分布熵、偏度和指标间相关性来评估评测结果的可信程度。
+                </p>
+            </div>
+            <div class="section" style="text-align:center;padding:20px;background:linear-gradient(135deg,#dc354522 0%,#dc354511 100%);border:2px solid #dc3545;">
+                <div style="font-size:0.9em;color:#666;">评测可信度综合评分</div>
+                <div style="font-size:3em;font-weight:bold;color:#dc3545;margin:8px 0;line-height:1;">55</div>
+                <div style="font-size:1.1em;font-weight:bold;color:#dc3545;">低可信</div>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:16px 0;">
+                <div style="padding:14px;border-radius:10px;border:2px solid #dc3545;background:linear-gradient(135deg,#dc354518 0%,#dc354508 100%);text-align:center;"><div style="font-size:0.82em;color:#666;margin-bottom:4px;">样本量充足性</div><div style="font-size:1.4em;font-weight:700;color:#dc3545;margin-bottom:4px;">5 条</div><div style="font-size:0.78em;color:#666;line-height:1.5;text-align:left;">评测样本数量。≥30 条为充足（绿），10-29 条为不足（黄），<10 条为严重不足（红）。样本量不足会导致统计结果不具代表性。</div></div><div style="padding:14px;border-radius:10px;border:2px solid #ffc107;background:linear-gradient(135deg,#ffc10718 0%,#ffc10708 100%);text-align:center;"><div style="font-size:0.82em;color:#666;margin-bottom:4px;">评分区分度</div><div style="font-size:1.4em;font-weight:700;color:#ffc107;margin-bottom:4px;">CV=0.123</div><div style="font-size:0.78em;color:#666;line-height:1.5;text-align:left;">变异系数（CV = 标准差/均值），取值 ≥0。CV≥0.15 为良好（绿），0.08-0.15 为一般（黄），<0.08 为差（红）。CV 过低说明 LLM 打分趋同，无法区分好坏样本（「端水」）。</div></div><div style="padding:14px;border-radius:10px;border:2px solid #dc3545;background:linear-gradient(135deg,#dc354518 0%,#dc354508 100%);text-align:center;"><div style="font-size:0.82em;color:#666;margin-bottom:4px;">分布均匀度</div><div style="font-size:1.4em;font-weight:700;color:#dc3545;margin-bottom:4px;">熵=0.182</div><div style="font-size:0.78em;color:#666;line-height:1.5;text-align:left;">归一化熵，取值 0-1。≥0.5 为良好（绿），0.3-0.5 为一般（黄），<0.3 为差（红）。熵越高说明分数分散在各区间而非集中于某一段，评分的区分能力越强。</div></div><div style="padding:14px;border-radius:10px;border:2px solid #28a745;background:linear-gradient(135deg,#28a74518 0%,#28a74508 100%);text-align:center;"><div style="font-size:0.82em;color:#666;margin-bottom:4px;">指标独立性</div><div style="font-size:1.4em;font-weight:700;color:#28a745;margin-bottom:4px;">高相关对=0</div><div style="font-size:0.78em;color:#666;line-height:1.5;text-align:left;">相关系数 >0.95 的指标对数量。0 对为良好（绿），1-2 对为一般（黄），≥3 对为差（红）。过多高相关指标说明信息冗余，多个指标实质上在衡量同一能力。</div></div>
+            </div>
+            <div class="section">
+                <h4 style="margin:0 0 10px;color:#333;font-size:0.92em;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;flex-shrink:0;"><path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="M7 16c.5-2 1.5-7 4-7 2 0 2 3 4 3 2.5 0 4.5-5 5-7"/></svg> 各指标评分质量明细</h4>
+                <table><thead><tr>
+                    <th>指标</th><th style="text-align:center;">变异系数(CV)</th><th style="text-align:center;">偏度(Skew)</th>
+                    <th style="text-align:center;">归一化熵</th><th style="text-align:center;">有效样本</th>
+                </tr></thead><tbody><tr><td style="font-weight:600;">上下文精确度</td><td style="text-align:center;color:#ffc107;font-weight:600;">0.094</td><td style="text-align:center;color:#28a745;font-weight:600;">0.036</td><td style="text-align:center;color:#dc3545;font-weight:600;">-0.000</td><td style="text-align:center;">5</td></tr><tr><td style="font-weight:600;">上下文召回率</td><td style="text-align:center;color:#dc3545;font-weight:600;">0.000</td><td style="text-align:center;color:#28a745;font-weight:600;">0.000</td><td style="text-align:center;color:#dc3545;font-weight:600;">-0.000</td><td style="text-align:center;">5</td></tr><tr><td style="font-weight:600;">忠实度</td><td style="text-align:center;color:#ffc107;font-weight:600;">0.091</td><td style="text-align:center;color:#dc3545;font-weight:600;">-1.367</td><td style="text-align:center;color:#ffc107;font-weight:600;">0.311</td><td style="text-align:center;">5</td></tr><tr><td style="font-weight:600;">答案相关性</td><td style="text-align:center;color:#28a745;font-weight:600;">0.305</td><td style="text-align:center;color:#28a745;font-weight:600;">-0.373</td><td style="text-align:center;color:#ffc107;font-weight:600;">0.418</td><td style="text-align:center;">5</td></tr></tbody></table>
+                <p style="margin:8px 0 0;color:#999;font-size:0.75em;">
+                    CV≥0.15 区分度良好 · |Skew|&lt;0.5 分布对称 · 熵≥0.5 分布均匀
+                </p>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
+                <div class="section" style="margin-bottom:0;">
+                    <h4 style="margin:0 0 8px;color:#333;font-size:0.92em;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;flex-shrink:0;"><path d="M13 17V9"/><path d="M18 17V5"/><path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="M8 17v-3"/></svg> 各指标评分分布</h4>
+                    <div id="_ragas_rel_dist" style="width:100%;height:280px;"></div>
+                </div>
+                <div class="section" style="margin-bottom:0;">
+                    <h4 style="margin:0 0 8px;color:#333;font-size:0.92em;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;flex-shrink:0;"><path d="M20.34 17.52a10 10 0 1 0-2.82 2.82"/><circle cx="19" cy="19" r="2"/><path d="m13.41 13.41 4.18 4.18"/><circle cx="12" cy="12" r="2"/></svg> 评分质量雷达</h4>
+                    <div id="_ragas_rel_radar" style="width:100%;height:280px;"></div>
+                </div>
+            </div></div>
+<div class="content-panel" id="panel-metrics_detail">
+            <div class="section">
+                <h2><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-4px;flex-shrink:0;"><path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="M7 16c.5-2 1.5-7 4-7 2 0 2 3 4 3 2.5 0 4.5-5 5-7"/></svg> 评分体系</h2>
+                <p style="color:#888;margin:6px 0 0;font-size:0.82em;line-height:1.6;padding:8px 12px;background:#f8f9fa;border-radius:6px;border-left:3px solid #436ef3;">
+                    <strong style="color:#555;">主要关注：</strong>Ragas 各指标的定义、计算逻辑、分布统计与逐样本评分。综合得分 = 所选指标的算术平均值；低质量样本定义为均分 &lt; 0.5。
+                </p>
+            </div>
+            <div class="section">
+                <h4 style="margin:0 0 12px;color:#333;font-size:0.95em;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;flex-shrink:0;"><path d="M12 3v17a1 1 0 0 1-1 1H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6a1 1 0 0 1-1 1H3"/><path d="m16 19 2 2 4-4"/></svg> 指标定义与计算逻辑</h4>
+                <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:14px;">
+                    <div style="padding:14px;background:#f8f9fa;border-radius:10px;border-left:4px solid #436ef3;"><div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#436ef3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;flex-shrink:0;"><path d="M20.34 17.52a10 10 0 1 0-2.82 2.82"/><circle cx="19" cy="19" r="2"/><path d="m13.41 13.41 4.18 4.18"/><circle cx="12" cy="12" r="2"/></svg><strong style="color:#333;font-size:0.95em;">上下文精确度</strong></div><p style="margin:0 0 8px;color:#555;font-size:0.85em;line-height:1.6;">检索到的上下文中有多大比例是与问题直接相关的。衡量检索系统的精确度——返回结果中有效信息占比越高，说明检索噪声越低。</p><div style="padding:8px 10px;background:white;border-radius:6px;border:1px solid #e8e8e8;font-size:0.82em;line-height:1.6;"><div style="color:#436ef3;font-weight:600;margin-bottom:2px;">计算公式</div><div style="color:#555;">Precision@k = (相关上下文数量) / (检索到的上下文总数)</div><div style="margin-top:4px;color:#436ef3;font-weight:600;">取值范围</div><div style="color:#555;">0-1，越高表示检索精确度越好</div><div style="margin-top:4px;color:#dc3545;font-weight:600;">低分影响</div><div style="color:#555;">低精确度意味着检索返回大量无关文档，增加 LLM 处理负担并可能导致答案偏差</div></div></div><div style="padding:14px;background:#f8f9fa;border-radius:10px;border-left:4px solid #f08e35;"><div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f08e35" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;flex-shrink:0;"><circle cx="9" cy="9" r="7"/><circle cx="15" cy="15" r="7"/></svg><strong style="color:#333;font-size:0.95em;">上下文召回率</strong></div><p style="margin:0 0 8px;color:#555;font-size:0.85em;line-height:1.6;">检索到的上下文是否覆盖了回答问题所需的所有关键信息。衡量检索系统的召回能力——是否遗漏了必要的知识片段。</p><div style="padding:8px 10px;background:white;border-radius:6px;border:1px solid #e8e8e8;font-size:0.82em;line-height:1.6;"><div style="color:#436ef3;font-weight:600;margin-bottom:2px;">计算公式</div><div style="color:#555;">Recall = (检索到的相关信息数量) / (回答所需的总信息数量)</div><div style="margin-top:4px;color:#436ef3;font-weight:600;">取值范围</div><div style="color:#555;">0-1，越高表示信息覆盖越完整</div><div style="margin-top:4px;color:#dc3545;font-weight:600;">低分影响</div><div style="color:#555;">低召回率意味着关键信息未被检索到，LLM 只能基于不完整的上下文生成答案</div></div></div><div style="padding:14px;background:#f8f9fa;border-radius:10px;border-left:4px solid #59bdf9;"><div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#59bdf9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;flex-shrink:0;"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg><strong style="color:#333;font-size:0.95em;">忠实度</strong></div><p style="margin:0 0 8px;color:#555;font-size:0.85em;line-height:1.6;">生成的答案是否忠实于检索到的上下文，不引入外部知识或产生幻觉。该指标通过逐条验证答案中的声明是否可从上下文推导来评估。</p><div style="padding:8px 10px;background:white;border-radius:6px;border:1px solid #e8e8e8;font-size:0.82em;line-height:1.6;"><div style="color:#436ef3;font-weight:600;margin-bottom:2px;">计算公式</div><div style="color:#555;">Faithfulness = (可由上下文支撑的声明数) / (答案中的总声明数)</div><div style="margin-top:4px;color:#436ef3;font-weight:600;">取值范围</div><div style="color:#555;">0-1，越高表示幻觉风险越低</div><div style="margin-top:4px;color:#dc3545;font-weight:600;">低分影响</div><div style="color:#555;">低忠实度说明 LLM 在生成中引入了上下文未涵盖的信息，存在事实错误风险</div></div></div><div style="padding:14px;background:#f8f9fa;border-radius:10px;border-left:4px solid #f6c846;"><div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f6c846" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;flex-shrink:0;"><path d="M20 6 9 17l-5-5"/></svg><strong style="color:#333;font-size:0.95em;">答案相关性</strong></div><p style="margin:0 0 8px;color:#555;font-size:0.85em;line-height:1.6;">生成的答案与用户问题的切题程度。通过反向生成问题并计算与原始问题的语义相似度来衡量答案是否直接回应了用户意图。</p><div style="padding:8px 10px;background:white;border-radius:6px;border:1px solid #e8e8e8;font-size:0.82em;line-height:1.6;"><div style="color:#436ef3;font-weight:600;margin-bottom:2px;">计算公式</div><div style="color:#555;">通过 Embedding 计算反向生成问题与原始问题的平均余弦相似度</div><div style="margin-top:4px;color:#436ef3;font-weight:600;">取值范围</div><div style="color:#555;">0-1，越高表示答案越切题</div><div style="margin-top:4px;color:#dc3545;font-weight:600;">低分影响</div><div style="color:#555;">低相关性说明答案偏离用户意图，可能包含冗余或不相关内容</div></div></div>
+                </div>
+            </div>
+            <div class="section">
+                <h4 style="margin:0 0 12px;color:#333;font-size:0.95em;">评分区间说明</h4>
+                <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;">
+                    <div style="padding:10px;background:linear-gradient(135deg,#28a74522,#28a74511);border-radius:8px;border:2px solid #28a745;text-align:center;">
+                        <strong style="color:#28a745;">≥0.9 优秀</strong><br/><span style="color:#555;font-size:0.82em;">业界领先</span></div>
+                    <div style="padding:10px;background:linear-gradient(135deg,#17a2b822,#17a2b811);border-radius:8px;border:2px solid #17a2b8;text-align:center;">
+                        <strong style="color:#17a2b8;">0.7-0.9 良好</strong><br/><span style="color:#555;font-size:0.82em;">可优化</span></div>
+                    <div style="padding:10px;background:linear-gradient(135deg,#ffc10722,#ffc10711);border-radius:8px;border:2px solid #ffc107;text-align:center;">
+                        <strong style="color:#f57f17;">0.5-0.7 及格</strong><br/><span style="color:#555;font-size:0.82em;">需改进</span></div>
+                    <div style="padding:10px;background:linear-gradient(135deg,#dc354522,#dc354511);border-radius:8px;border:2px solid #dc3545;text-align:center;">
+                        <strong style="color:#c62828;">&lt;0.5 不及格</strong><br/><span style="color:#555;font-size:0.82em;">需重点优化</span></div>
+                </div>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:16px;">
+                
+            <div class="section" style="padding:16px;margin-bottom:0;">
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#28a745" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;flex-shrink:0;"><path d="M20.34 17.52a10 10 0 1 0-2.82 2.82"/><circle cx="19" cy="19" r="2"/><path d="m13.41 13.41 4.18 4.18"/><circle cx="12" cy="12" r="2"/></svg>
+                    <h4 style="margin:0;color:#333;font-size:0.92em;">上下文精确度</h4>
+                    <span style="margin-left:auto;font-size:1.3em;font-weight:700;color:#28a745;">0.912</span>
+                </div>
+                <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;font-size:0.82em;">
+                    <div style="text-align:center;padding:6px;background:#f8f9fa;border-radius:6px;"><div style="color:#999;">中位数</div><div style="font-weight:600;color:#333;">0.887</div></div>
+                    <div style="text-align:center;padding:6px;background:#f8f9fa;border-radius:6px;"><div style="color:#999;">P25-P75</div><div style="font-weight:600;color:#333;">0.867 - 1.000</div></div>
+                    <div style="text-align:center;padding:6px;background:#f8f9fa;border-radius:6px;"><div style="color:#999;">标准差</div><div style="font-weight:600;color:#333;">0.086</div></div>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px;font-size:0.82em;">
+                    <div style="padding:6px 10px;background:#ffebee;border-radius:6px;"><span style="color:#dc3545;font-weight:600;">0.0%</span> <span style="color:#999;">低分率(&lt;0.5)</span></div>
+                    <div style="padding:6px 10px;background:#e8f5e9;border-radius:6px;"><span style="color:#28a745;font-weight:600;">100.0%</span> <span style="color:#999;">高分率(≥0.8)</span></div>
+                </div>
+            </div>
+            <div class="section" style="padding:16px;margin-bottom:0;">
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#28a745" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;flex-shrink:0;"><circle cx="9" cy="9" r="7"/><circle cx="15" cy="15" r="7"/></svg>
+                    <h4 style="margin:0;color:#333;font-size:0.92em;">上下文召回率</h4>
+                    <span style="margin-left:auto;font-size:1.3em;font-weight:700;color:#28a745;">1.000</span>
+                </div>
+                <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;font-size:0.82em;">
+                    <div style="text-align:center;padding:6px;background:#f8f9fa;border-radius:6px;"><div style="color:#999;">中位数</div><div style="font-weight:600;color:#333;">1.000</div></div>
+                    <div style="text-align:center;padding:6px;background:#f8f9fa;border-radius:6px;"><div style="color:#999;">P25-P75</div><div style="font-weight:600;color:#333;">1.000 - 1.000</div></div>
+                    <div style="text-align:center;padding:6px;background:#f8f9fa;border-radius:6px;"><div style="color:#999;">标准差</div><div style="font-weight:600;color:#333;">0.000</div></div>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px;font-size:0.82em;">
+                    <div style="padding:6px 10px;background:#ffebee;border-radius:6px;"><span style="color:#dc3545;font-weight:600;">0.0%</span> <span style="color:#999;">低分率(&lt;0.5)</span></div>
+                    <div style="padding:6px 10px;background:#e8f5e9;border-radius:6px;"><span style="color:#28a745;font-weight:600;">100.0%</span> <span style="color:#999;">高分率(≥0.8)</span></div>
+                </div>
+            </div>
+            <div class="section" style="padding:16px;margin-bottom:0;">
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#28a745" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;flex-shrink:0;"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>
+                    <h4 style="margin:0;color:#333;font-size:0.92em;">忠实度</h4>
+                    <span style="margin-left:auto;font-size:1.3em;font-weight:700;color:#28a745;">0.932</span>
+                </div>
+                <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;font-size:0.82em;">
+                    <div style="text-align:center;padding:6px;background:#f8f9fa;border-radius:6px;"><div style="color:#999;">中位数</div><div style="font-weight:600;color:#333;">0.944</div></div>
+                    <div style="text-align:center;padding:6px;background:#f8f9fa;border-radius:6px;"><div style="color:#999;">P25-P75</div><div style="font-weight:600;color:#333;">0.920 - 1.000</div></div>
+                    <div style="text-align:center;padding:6px;background:#f8f9fa;border-radius:6px;"><div style="color:#999;">标准差</div><div style="font-weight:600;color:#333;">0.085</div></div>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px;font-size:0.82em;">
+                    <div style="padding:6px 10px;background:#ffebee;border-radius:6px;"><span style="color:#dc3545;font-weight:600;">0.0%</span> <span style="color:#999;">低分率(&lt;0.5)</span></div>
+                    <div style="padding:6px 10px;background:#e8f5e9;border-radius:6px;"><span style="color:#28a745;font-weight:600;">80.0%</span> <span style="color:#999;">高分率(≥0.8)</span></div>
+                </div>
+            </div>
+            <div class="section" style="padding:16px;margin-bottom:0;">
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#dc3545" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;flex-shrink:0;"><path d="M20 6 9 17l-5-5"/></svg>
+                    <h4 style="margin:0;color:#333;font-size:0.92em;">答案相关性</h4>
+                    <span style="margin-left:auto;font-size:1.3em;font-weight:700;color:#dc3545;">0.416</span>
+                </div>
+                <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;font-size:0.82em;">
+                    <div style="text-align:center;padding:6px;background:#f8f9fa;border-radius:6px;"><div style="color:#999;">中位数</div><div style="font-weight:600;color:#333;">0.431</div></div>
+                    <div style="text-align:center;padding:6px;background:#f8f9fa;border-radius:6px;"><div style="color:#999;">P25-P75</div><div style="font-weight:600;color:#333;">0.327 - 0.528</div></div>
+                    <div style="text-align:center;padding:6px;background:#f8f9fa;border-radius:6px;"><div style="color:#999;">标准差</div><div style="font-weight:600;color:#333;">0.127</div></div>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px;font-size:0.82em;">
+                    <div style="padding:6px 10px;background:#ffebee;border-radius:6px;"><span style="color:#dc3545;font-weight:600;">60.0%</span> <span style="color:#999;">低分率(&lt;0.5)</span></div>
+                    <div style="padding:6px 10px;background:#e8f5e9;border-radius:6px;"><span style="color:#28a745;font-weight:600;">0.0%</span> <span style="color:#999;">高分率(≥0.8)</span></div>
+                </div>
+            </div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
+                <div class="section" style="margin-bottom:0;">
+                    <h4 style="margin:0 0 4px;color:#333;font-size:0.92em;cursor:help;" title="箱线图（盒须图）直观展示各指标的得分分布情况。箱体范围为 P25–P75 四分位距（中间 50% 样本的得分区间），中间竖线为中位数，须线延伸至实际最小/最大值。• 箱体越窄 → 得分越集中，评估结果稳定• 箱体越宽 → 样本间差异较大，存在高低分分化• 中位数偏高 → 多数样本表现良好• 须线过长或中位数极低 → 需重点排查低分样本的失败原因"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;flex-shrink:0;"><path d="M11 13H7"/><path d="M19 9h-4"/><path d="M3 3v16a2 2 0 0 0 2 2h16"/><rect x="15" y="5" width="4" height="12" rx="1"/><rect x="7" y="8" width="4" height="9" rx="1"/></svg> 指标分布箱线图 <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-left:2px;"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></h4>
+                    <p style="margin:0 0 8px;color:#999;font-size:0.76em;">分析各指标得分的集中趋势与离散程度</p>
+                    <div id="_ragas_boxplot" style="width:100%;height:340px;"></div>
+                </div>
+                
+            <div class="section" style="margin-bottom:0;">
+                <h4 style="margin:0 0 4px;color:#333;font-size:0.92em;cursor:help;" title="热力图展示各指标两两之间的皮尔逊相关系数（范围 -1 至 +1）。绿色系（正相关）：颜色越深，相关系数越接近 + 1，正相关强度越高。代表两个指标呈同向变化规律：在同一样本中，一个指标得分越高，另一个指标往往同步取得高分，反之亦然。红色系（负相关）：颜色越深，相关系数越接近 - 1，负相关强度越高。代表两个指标呈反向变化规律：在同一样本中，一个指标得分越高，另一个指标往往同步取得低分，呈现此消彼长的特征。白色 / 浅色系（弱相关 / 无相关）：颜色越浅、越接近纯白色，相关系数越接近 0，代表两个指标间的线性关联越弱，几乎不存在稳定的同向或反向变化规律。• 高正相关（相关系数＞0.7）：两个指标衡量的能力维度高度相近，测评结果具备强一致性，可互为佐证。• 低相关（相关系数绝对值＜0.3）：两个指标间线性关联极弱，独立性强，说明测评指标的区分度高，能力维度的覆盖更全面。• 高负相关（相关系数＜-0.7）：两个指标呈现极强的反向关联，这类情况在同体系的能力测评中极为罕见，若出现该结果，需优先排查数据采集质量、指标评估逻辑、计分规则是否存在异常。"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;flex-shrink:0;"><path d="m8 6 4-4 4 4"/><path d="M12 2v10.3a4 4 0 0 1-1.172 2.872L4 22"/><path d="m20 22-5-5"/></svg> 指标相关性矩阵 <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-left:2px;"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></h4>
+                <p style="margin:0 0 8px;color:#999;font-size:0.76em;">衡量各指标间的线性相关程度（皮尔逊系数）</p>
+                <div id="_ragas_corr" style="width:100%;height:340px;"></div>
+            </div>
+            </div>
+            <div class="section">
+                <h4 style="margin:0 0 8px;color:#333;font-size:0.92em;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;flex-shrink:0;"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"/><path d="M14 2v5a1 1 0 0 0 1 1h5"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg> 逐样本评分汇总</h4>
+                <table><thead><tr><th style="text-align:center;">ID</th><th class="sort-btn" style="text-align:center;" onclick="sortByColumn(1)">上下文精确度 ↕</th><th class="sort-btn" style="text-align:center;" onclick="sortByColumn(2)">上下文召回率 ↕</th><th class="sort-btn" style="text-align:center;" onclick="sortByColumn(3)">忠实度 ↕</th><th class="sort-btn" style="text-align:center;" onclick="sortByColumn(4)">答案相关性 ↕</th><th class="sort-btn" style="text-align:center;" onclick="sortByColumn(5)">平均分 ↕</th></tr></thead><tbody><tr style="cursor:pointer" onclick="navigateTo('samples')"><td style="color:#436ef3;font-weight:600;" title="d6bcb9b27c604fe9ab96bfbf69dd2708">d6bcb9b27c..</td><td style="color:#17a2b8;font-weight:600;">0.887</td><td style="color:#28a745;font-weight:600;">1.000</td><td style="color:#28a745;font-weight:600;">0.920</td><td style="color:#dc3545;font-weight:600;">0.431</td><td style="color:#17a2b8;font-weight:700;">0.810</td></tr><tr style="cursor:pointer" onclick="navigateTo('samples')"><td style="color:#436ef3;font-weight:600;" title="7371c2ec7a2647a4a08f1bfdf0ddcdb5">7371c2ec7a..</td><td style="color:#17a2b8;font-weight:600;">0.867</td><td style="color:#28a745;font-weight:600;">1.000</td><td style="color:#28a745;font-weight:600;">0.944</td><td style="color:#ffc107;font-weight:600;">0.528</td><td style="color:#17a2b8;font-weight:700;">0.835</td></tr><tr style="cursor:pointer" onclick="navigateTo('samples')"><td style="color:#436ef3;font-weight:600;" title="c71fdf07268e41fbb7f036d44e8eeac8">c71fdf0726..</td><td style="color:#28a745;font-weight:600;">1.000</td><td style="color:#28a745;font-weight:600;">1.000</td><td style="color:#17a2b8;font-weight:600;">0.793</td><td style="color:#ffc107;font-weight:600;">0.542</td><td style="color:#17a2b8;font-weight:700;">0.834</td></tr><tr style="cursor:pointer" onclick="navigateTo('samples')"><td style="color:#436ef3;font-weight:600;" title="ee4fda9cfcfb4cebbe5b2d2027e8427a">ee4fda9cfc..</td><td style="color:#17a2b8;font-weight:600;">0.806</td><td style="color:#28a745;font-weight:600;">1.000</td><td style="color:#28a745;font-weight:600;">1.000</td><td style="color:#dc3545;font-weight:600;">0.250</td><td style="color:#17a2b8;font-weight:700;">0.764</td></tr><tr style="cursor:pointer" onclick="navigateTo('samples')"><td style="color:#436ef3;font-weight:600;" title="162bdaaee52f48ed87f6b199ab249682">162bdaaee5..</td><td style="color:#28a745;font-weight:600;">1.000</td><td style="color:#28a745;font-weight:600;">1.000</td><td style="color:#28a745;font-weight:600;">1.000</td><td style="color:#dc3545;font-weight:600;">0.327</td><td style="color:#17a2b8;font-weight:700;">0.832</td></tr></tbody></table>
+            </div>
+            <div class="section">
+                <h4 style="margin:0 0 8px;color:#333;font-size:0.92em;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;flex-shrink:0;"><path d="M13 17V9"/><path d="M18 17V5"/><path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="M8 17v-3"/></svg> 样本平均分分布</h4>
+                <div id="_ragas_hist" style="width:100%;height:280px;"></div>
+            </div></div>
+<div class="content-panel" id="panel-traceability">
+    <div class="section">
+        <h2><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-4px;flex-shrink:0;"><path d="M12 16v5"/><path d="M16 14v7"/><path d="M20 10v11"/><path d="m22 3-8.646 8.646a.5.5 0 0 1-.708 0L9.354 8.354a.5.5 0 0 0-.707 0L2 15"/><path d="M4 18v3"/><path d="M8 14v7"/></svg> 评测结果溯源</h2>
+        <p style="color:#888;margin:6px 0 0;font-size:0.82em;line-height:1.6;padding:8px 12px;background:#f8f9fa;border-radius:6px;border-left:3px solid #436ef3;">
+            <strong style="color:#555;">主要关注：</strong>本次评测相对于「基线」与「上次」的进退情况。通过对比各指标的历史趋势，帮助团队量化迭代效果——是真实进步还是偶发波动，让每次模型更新都有据可查、有迹可循。
+        </p>
+    </div>
+    <div class="section" style="padding:18px 22px;">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+            <div>
+                <p style="margin:0;color:#999;font-size:0.78em;">基线标识</p>
+                <p style="margin:3px 0 0;color:#333;font-weight:700;font-size:1em;">ragas_baseline</p>
+            </div>
+            <div>
+                <p style="margin:0;color:#999;font-size:0.78em;">基线时间</p>
+                <p style="margin:3px 0 0;color:#333;font-weight:700;font-size:1em;">2026-03-20 16:02:33</p>
+            </div>
+            <div>
+                <p style="margin:0;color:#999;font-size:0.78em;">对比基线</p>
+                <p style="margin:3px 0 0;color:#28a745;font-weight:600;font-size:0.92em;">4个指标提升 ↑</p>
+            </div>
+            <div>
+                <p style="margin:0;color:#999;font-size:0.78em;">对比上一次</p>
+                <p style="margin:3px 0 0;color:#28a745;font-weight:600;font-size:0.92em;">4个指标提升 ↑</p>
+            </div>
+            <div>
+                <p style="margin:0;color:#999;font-size:0.78em;">上一次任务</p>
+                <p style="margin:3px 0 0;color:#555;font-size:0.88em;word-break:break-all;">taskId_78a5951e600e40f69006</p>
+            </div>
+            <div>
+                <p style="margin:0;color:#999;font-size:0.78em;">历史评测</p>
+                <p style="margin:3px 0 0;color:#333;font-weight:700;font-size:1.1em;">共 2 次</p>
+            </div>
+        </div>
+        <div style="margin-top:12px;padding:8px 14px;background:#d4edda;border-radius:8px;color:#155724;font-size:0.88em;font-weight:600;display:flex;align-items:center;gap:6px;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#155724" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;flex-shrink:0;"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg> 本次结果已更新为新基线</div>
+        
+    </div>
+    <div class="section">
+        <h4 style="margin:0 0 12px;color:#333;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;flex-shrink:0;"><path d="M12 16v5"/><path d="M16 14v7"/><path d="M20 10v11"/><path d="m22 3-8.646 8.646a.5.5 0 0 1-.708 0L9.354 8.354a.5.5 0 0 0-.707 0L2 15"/><path d="M4 18v3"/><path d="M8 14v7"/></svg> 指标变化详情（对比基线）</h4>
+        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px;"><div style="padding:12px 14px;background:linear-gradient(135deg,#28a74518,#28a7450a);border:1.5px solid #28a74550;border-radius:10px;text-align:center;"><div style="font-size:0.78em;color:#888;margin-bottom:4px;font-weight:500;">上下文召回率</div><div style="font-size:1.5em;font-weight:800;color:#28a745;line-height:1.1;">+35.5%</div><div style="font-size:0.72em;color:#aaa;margin:4px 0 2px;">0.7381 ↑ 1.0000</div><div style="font-size:1.1em;"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#28a745" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;flex-shrink:0;"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg></div></div><div style="padding:12px 14px;background:linear-gradient(135deg,#28a74518,#28a7450a);border:1.5px solid #28a74550;border-radius:10px;text-align:center;"><div style="font-size:0.78em;color:#888;margin-bottom:4px;font-weight:500;">上下文精确度</div><div style="font-size:1.5em;font-weight:800;color:#28a745;line-height:1.1;">+35.2%</div><div style="font-size:0.72em;color:#aaa;margin:4px 0 2px;">0.6744 ↑ 0.9119</div><div style="font-size:1.1em;"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#28a745" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;flex-shrink:0;"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg></div></div><div style="padding:12px 14px;background:linear-gradient(135deg,#28a74518,#28a7450a);border:1.5px solid #28a74550;border-radius:10px;text-align:center;"><div style="font-size:0.78em;color:#888;margin-bottom:4px;font-weight:500;">忠实度</div><div style="font-size:1.5em;font-weight:800;color:#28a745;line-height:1.1;">+29.7%</div><div style="font-size:0.72em;color:#aaa;margin:4px 0 2px;">0.7180 ↑ 0.9315</div><div style="font-size:1.1em;"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#28a745" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;flex-shrink:0;"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg></div></div><div style="padding:12px 14px;background:linear-gradient(135deg,#6c757d18,#6c757d0a);border:1.5px solid #6c757d50;border-radius:10px;text-align:center;"><div style="font-size:0.78em;color:#888;margin-bottom:4px;font-weight:500;">答案相关性</div><div style="font-size:1.5em;font-weight:800;color:#6c757d;line-height:1.1;">0%</div><div style="font-size:0.72em;color:#aaa;margin:4px 0 2px;">0.4142 — 0.4156</div><div style="font-size:1.1em;"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6c757d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;flex-shrink:0;"><path d="M18 6 7 17l-5-5"/><path d="m22 10-7.5 7.5L13 16"/></svg></div></div><div style="padding:12px 14px;background:linear-gradient(135deg,#28a74518,#28a7450a);border:1.5px solid #28a74550;border-radius:10px;text-align:center;"><div style="font-size:0.78em;color:#888;margin-bottom:4px;font-weight:500;">综合得分</div><div style="font-size:1.5em;font-weight:800;color:#28a745;line-height:1.1;">+28.1%</div><div style="font-size:0.72em;color:#aaa;margin:4px 0 2px;">0.6362 ↑ 0.8148</div><div style="font-size:1.1em;"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#28a745" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;flex-shrink:0;"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg></div></div></div>
+    </div>
+    <div class="section">
+        <h4 style="margin:0 0 12px;color:#333;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;flex-shrink:0;"><path d="M12 16v5"/><path d="M16 14v7"/><path d="M20 10v11"/><path d="m22 3-8.646 8.646a.5.5 0 0 1-.708 0L9.354 8.354a.5.5 0 0 0-.707 0L2 15"/><path d="M4 18v3"/><path d="M8 14v7"/></svg> 指标变化详情（对比上一次）</h4>
+        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px;"><div style="padding:12px 14px;background:linear-gradient(135deg,#28a74518,#28a7450a);border:1.5px solid #28a74550;border-radius:10px;text-align:center;"><div style="font-size:0.78em;color:#888;margin-bottom:4px;font-weight:500;">上下文召回率</div><div style="font-size:1.5em;font-weight:800;color:#28a745;line-height:1.1;">+35.5%</div><div style="font-size:0.72em;color:#aaa;margin:4px 0 2px;">0.7381 ↑ 1.0000</div><div style="font-size:1.1em;"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#28a745" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;flex-shrink:0;"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg></div></div><div style="padding:12px 14px;background:linear-gradient(135deg,#28a74518,#28a7450a);border:1.5px solid #28a74550;border-radius:10px;text-align:center;"><div style="font-size:0.78em;color:#888;margin-bottom:4px;font-weight:500;">上下文精确度</div><div style="font-size:1.5em;font-weight:800;color:#28a745;line-height:1.1;">+35.2%</div><div style="font-size:0.72em;color:#aaa;margin:4px 0 2px;">0.6744 ↑ 0.9119</div><div style="font-size:1.1em;"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#28a745" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;flex-shrink:0;"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg></div></div><div style="padding:12px 14px;background:linear-gradient(135deg,#28a74518,#28a7450a);border:1.5px solid #28a74550;border-radius:10px;text-align:center;"><div style="font-size:0.78em;color:#888;margin-bottom:4px;font-weight:500;">忠实度</div><div style="font-size:1.5em;font-weight:800;color:#28a745;line-height:1.1;">+29.7%</div><div style="font-size:0.72em;color:#aaa;margin:4px 0 2px;">0.7180 ↑ 0.9315</div><div style="font-size:1.1em;"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#28a745" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;flex-shrink:0;"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg></div></div><div style="padding:12px 14px;background:linear-gradient(135deg,#6c757d18,#6c757d0a);border:1.5px solid #6c757d50;border-radius:10px;text-align:center;"><div style="font-size:0.78em;color:#888;margin-bottom:4px;font-weight:500;">答案相关性</div><div style="font-size:1.5em;font-weight:800;color:#6c757d;line-height:1.1;">0%</div><div style="font-size:0.72em;color:#aaa;margin:4px 0 2px;">0.4142 — 0.4156</div><div style="font-size:1.1em;"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6c757d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;flex-shrink:0;"><path d="M18 6 7 17l-5-5"/><path d="m22 10-7.5 7.5L13 16"/></svg></div></div><div style="padding:12px 14px;background:linear-gradient(135deg,#28a74518,#28a7450a);border:1.5px solid #28a74550;border-radius:10px;text-align:center;"><div style="font-size:0.78em;color:#888;margin-bottom:4px;font-weight:500;">综合得分</div><div style="font-size:1.5em;font-weight:800;color:#28a745;line-height:1.1;">+28.1%</div><div style="font-size:0.72em;color:#aaa;margin:4px 0 2px;">0.6362 ↑ 0.8148</div><div style="font-size:1.1em;"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#28a745" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;flex-shrink:0;"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg></div></div></div>
+    </div>
+    <div class="section"><h4 style="margin:0 0 12px 0;font-size:0.95em;color:#333;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;flex-shrink:0;"><path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="M7 16c.5-2 1.5-7 4-7 2 0 2 3 4 3 2.5 0 4.5-5 5-7"/></svg> 指标趋势图（最近 2 次评测）</h4><div id="_mc" style="width:100%;height:300px;"></div><div style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:8px;"><div id="_sc0" style="height:240px;"></div><div id="_sc1" style="height:240px;"></div><div id="_sc2" style="height:240px;"></div><div id="_sc3" style="height:240px;"></div></div></div><script>
+(function(){
+var D=JSON.parse('{"labels": ["03-20 16:02", "03-20 19:11"], "fullLabels": ["2026-03-20 16:02:33", "2026-03-20 19:11:02"], "overall": [0.6361756699033447, 0.8147732885978506], "subKeys": ["answer_relevancy", "context_precision", "context_recall", "faithfulness"], "subValues": {"answer_relevancy": [0.4142090710208879, 0.4156391314301488], "context_precision": [0.6743945868601048, 0.9119444444171922], "context_recall": [0.7380674413305992, 1.0], "faithfulness": [0.718031580401787, 0.9315095785440614]}, "baseline": {"context_precision": 0.6744, "context_recall": 0.7381, "faithfulness": 0.718, "overall_score": 0.6362, "answer_relevancy": 0.4142}, "oa": [{"i": 1, "v": 0.8148, "p": 0.6362}], "sa": {"answer_relevancy": [], "context_precision": [{"i": 1, "v": 0.9119, "p": 0.6744}], "context_recall": [{"i": 1, "v": 1.0, "p": 0.7381}], "faithfulness": [{"i": 1, "v": 0.9315, "p": 0.718}]}, "cn": {"answer_relevancy": "答案相关性", "context_precision": "上下文精确度", "context_recall": "上下文召回率", "faithfulness": "忠实度"}}');
+if(typeof echarts==='undefined'){
+document.getElementById('_mc').innerHTML='<p style="color:#999;text-align:center;padding:40px;">图表库加载失败，请检查网络连接</p>';return;}
+var lb=D.labels,fl=D.fullLabels,bl=D.baseline;
+var MC='#436ef3',SC=['#f08e35','#59bdf9','#f6c846','#65c444','#90959d','#7c6cf3'];
+function G(c){return new echarts.graphic.LinearGradient(0,0,0,1,[{offset:0,color:c+'30'},{offset:1,color:c+'05'}]);}
+function AP(arr){return arr.map(function(a){return{coord:[a.i,a.v],symbol:'circle',symbolSize:20,
+itemStyle:{color:'transparent',borderColor:'#f08e35',borderWidth:3},
+label:{show:true,formatter:'!',fontSize:10,fontWeight:'bold',color:'#f08e35'}};});}
+function BA(vs,bv){if(bv==null)return[];var li=-1,lv;for(var i=vs.length-1;i>=0;i--)if(vs[i]!=null){li=i;lv=vs[i];break;}
+if(li<0)return[];var d=lv-bv;if(Math.abs(d)<0.005)return[];var u=d>0,
+pc=bv?Math.abs(d/bv*100).toFixed(1):'0';
+return[{coord:[li,lv],symbol:'triangle',symbolRotate:u?0:180,symbolSize:[16,12],
+symbolOffset:[0,u?-18:18],itemStyle:{color:u?'#65c444':'#f08e35'},
+label:{show:true,formatter:(u?'↑':'↓')+pc+'%',position:u?'top':'bottom',
+color:u?'#65c444':'#f08e35',fontWeight:'bold',fontSize:11,
+backgroundColor:'#fff',borderRadius:3,padding:[2,4]}}];}
+function BL(bv){if(bv==null)return{};return{silent:true,symbol:'none',
+data:[{yAxis:bv,label:{formatter:'基线 '+bv.toFixed(2),position:'insideEndTop',
+fontSize:10,color:'#f08e35',backgroundColor:'#fff8f0',borderRadius:2,padding:[2,4]},
+lineStyle:{type:'dashed',color:'#f08e35',width:1.5}}]};}
+function TT(name,color,bv){return{trigger:'axis',
+axisPointer:{type:'line',lineStyle:{color:color+'60',width:1}},
+backgroundColor:'rgba(255,255,255,0.96)',borderColor:'#eee',borderWidth:1,
+textStyle:{fontSize:12,color:'#333'},
+formatter:function(p){if(!p||!p.length)return'';var i=p[0].dataIndex;
+var h='<div style="font-weight:600;margin-bottom:4px;color:#333">'+fl[i]+'</div>';
+p.forEach(function(x){var v=x.value;
+h+='<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:'+color+';margin-right:6px;vertical-align:middle"></span>';
+h+=name+': <b>'+(v!=null?v.toFixed(4):'N/A')+'</b>';
+if(bv!=null&&v!=null){var d=v-bv,pc=bv?Math.abs(d/bv*100).toFixed(1):'0',
+cl=d>0.005?'#65c444':d<-0.005?'#f08e35':'#90959d',
+ar=d>0.005?'↑':d<-0.005?'↓':'≈';
+h+=' <span style="color:'+cl+';font-size:11px">'+ar+pc+'% vs基线</span>';}
+h+='<br/>';});return h;}};}
+var YA={type:'value',min:0,max:1,splitNumber:4,axisLabel:{fontSize:11,color:'#999',
+formatter:function(v){return v.toFixed(2);}},splitLine:{lineStyle:{type:'dashed',color:'#f0f0f0'}}};
+
+var mc=echarts.init(document.getElementById('_mc'));mc.group='_TG';
+var obv=bl.overall_score;
+mc.setOption({animation:true,animationDuration:800,
+title:{text:'综合得分趋势',textStyle:{fontSize:14,color:'#333',fontWeight:600},left:10,top:8},
+tooltip:TT('综合得分',MC,obv),
+grid:{top:55,right:35,bottom:50,left:55,containLabel:false},
+xAxis:{type:'category',data:lb,boundaryGap:false,
+axisLabel:{rotate:25,fontSize:11,color:'#999',margin:12},
+axisLine:{lineStyle:{color:'#e0e0e0'}},axisTick:{show:false}},
+yAxis:YA,
+series:[{name:'综合得分',type:'line',data:D.overall,smooth:0.4,connectNulls:false,
+showSymbol:true,symbolSize:8,
+lineStyle:{width:3,color:MC,shadowColor:MC+'40',shadowBlur:8},
+itemStyle:{color:MC,borderColor:'#fff',borderWidth:2},
+areaStyle:{color:G(MC)},emphasis:{itemStyle:{borderWidth:3,shadowBlur:10,shadowColor:MC+'80'}},
+markLine:BL(obv),markPoint:{data:AP(D.oa).concat(BA(D.overall,obv))}}]});
+
+var scs=[],CN=D.cn||{};
+D.subKeys.forEach(function(k,idx){
+var el=document.getElementById('_sc'+idx);if(!el)return;
+var ch=echarts.init(el);ch.group='_TG';
+var vs=D.subValues[k],bv=bl[k],an=D.sa[k]||[],c=SC[idx%SC.length],dn=CN[k]||k;
+ch.setOption({animation:true,animationDuration:600,animationDelay:idx*100,
+title:{text:dn,textStyle:{fontSize:12,color:'#555',fontWeight:600},left:10,top:5},
+tooltip:TT(dn,c,bv),
+grid:{top:42,right:20,bottom:28,left:50,containLabel:false},
+xAxis:{type:'category',data:lb,boundaryGap:false,
+axisLabel:{show:true,fontSize:9,color:'#bbb',rotate:20,interval:Math.max(0,lb.length-5)},
+axisLine:{lineStyle:{color:'#e8e8e8'}},axisTick:{show:false}},
+yAxis:YA,
+series:[{name:dn,type:'line',data:vs,smooth:0.4,connectNulls:false,
+showSymbol:true,symbolSize:6,
+lineStyle:{width:2.5,color:c,shadowColor:c+'30',shadowBlur:6},
+itemStyle:{color:c,borderColor:'#fff',borderWidth:2},
+areaStyle:{color:G(c)},emphasis:{itemStyle:{borderWidth:3,shadowBlur:8,shadowColor:c+'60'}},
+markLine:BL(bv),markPoint:{data:AP(an).concat(BA(vs,bv))}}]});
+scs.push(ch);});
+
+echarts.connect('_TG');
+window.addEventListener('resize',function(){mc.resize();scs.forEach(function(c){c.resize();});});
+})();
+</script>
+        </div>
+<div class="content-panel" id="panel-badcase">
+            <div class="section">
+                <h2><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-4px;flex-shrink:0;"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg> 低质量样本分析</h2>
+                <p style="color:#888;margin:6px 0 0;font-size:0.82em;line-height:1.6;padding:8px 12px;background:#f8f9fa;border-radius:6px;border-left:3px solid #28a745;">
+                    <strong style="color:#555;">主要关注：</strong>平均分低于 0.5 的样本归为低质量。分析其主要失分指标分布，定位系统性薄弱环节——是检索不准（precision/recall）还是生成偏差（faithfulness/relevancy/correctness）。
+                </p>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:16px;">
+                <div class="section" style="text-align:center;margin-bottom:0;background:linear-gradient(135deg,#28a74522 0%,#28a74511 100%);border:2px solid #28a745;"><h3 style="margin:0;color:#28a745;font-size:1.8em;">0</h3><p style="margin:5px 0 0;color:#666;font-weight:bold;font-size:0.88em;">低质量样本数</p></div>
+                <div class="section" style="text-align:center;margin-bottom:0;background:linear-gradient(135deg,#28a74522 0%,#28a74511 100%);border:2px solid #28a745;"><h3 style="margin:0;color:#28a745;font-size:1.8em;">0.0%</h3><p style="margin:5px 0 0;color:#666;font-weight:bold;font-size:0.88em;">占比</p></div>
+                <div class="section" style="text-align:center;margin-bottom:0;background:linear-gradient(135deg,#28a74522 0%,#28a74511 100%);border:2px solid #28a745;"><h3 style="margin:0;color:#28a745;font-size:1.8em;">无</h3><p style="margin:5px 0 0;color:#666;font-weight:bold;font-size:0.88em;">严重程度</p></div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
+                <div class="section" style="margin-bottom:0;">
+                    <h4 style="margin:0 0 8px;color:#333;font-size:0.92em;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;flex-shrink:0;"><path d="M13 17V9"/><path d="M18 17V5"/><path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="M8 17v-3"/></svg> 主要失分来源</h4>
+                    <div id="_ragas_lq_bar" style="width:100%;height:260px;"></div>
+                </div>
+                <div class="section" style="margin-bottom:0;">
+                    <h4 style="margin:0 0 8px;color:#333;font-size:0.92em;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;flex-shrink:0;"><path d="M20.34 17.52a10 10 0 1 0-2.82 2.82"/><circle cx="19" cy="19" r="2"/><path d="m13.41 13.41 4.18 4.18"/><circle cx="12" cy="12" r="2"/></svg> 低质量 vs 全体雷达</h4>
+                    <div id="_ragas_lq_radar" style="width:100%;height:260px;"></div>
+                </div>
+            </div>
+            </div>
+<div class="content-panel" id="panel-samples">
+            <div class="section">
+                <h2><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-4px;flex-shrink:0;"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"/><path d="M14 2v5a1 1 0 0 0 1 1h5"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg> 样本详情</h2>
+                <p style="color:#888;margin:6px 0 0;font-size:0.82em;line-height:1.6;padding:8px 12px;background:#f8f9fa;border-radius:6px;border-left:3px solid #436ef3;">
+                    <strong style="color:#555;">主要关注：</strong>每条样本的完整评分与 LLM 评估推理详情。点击行展开查看问答原文与各指标评判依据，支持按 ID 检索。
+                </p>
+            </div>
+            <div class="section" id="sample-details-section">
+                <div style="display:flex;justify-content:flex-end;align-items:center;gap:6px;margin-bottom:10px;">
+                    <input id="ragas-sample-search" type="text" placeholder="输入样本 ID 检索（如 R0001）..."
+                        style="padding:6px 10px;border:1px solid #ddd;border-radius:8px;font-size:0.85em;width:220px;outline:none;"
+                        onfocus="this.style.borderColor='#436ef3'" onblur="this.style.borderColor='#ddd'" />
+                    <button onclick="searchRagasSample()"
+                        style="padding:6px 12px;background:#436ef3;color:white;border:none;border-radius:8px;font-size:0.85em;cursor:pointer;">检索</button>
+                    <button onclick="clearRagasSampleSearch()"
+                        style="padding:6px 10px;background:#f5f5f5;color:#666;border:1px solid #ddd;border-radius:8px;font-size:0.85em;cursor:pointer;">清除</button>
+                </div>
+                <div id="ragas-search-hint" style="display:none;margin-bottom:10px;padding:8px 14px;border-radius:8px;font-size:0.85em;"></div>
+                <table id="ragas-samples-table">
+                    <thead><tr><th style="text-align:center;">ID</th><th style="text-align:center;">问题</th><th style="text-align:center;">上下文精确度</th><th style="text-align:center;">上下文召回率</th><th style="text-align:center;">忠实度</th><th style="text-align:center;">答案相关性</th><th style="text-align:center;">均分</th><th style="text-align:center;">等级</th></tr></thead>
+                    <tbody><tr class="sample-row" data-sample-id="d6bcb9b27c604fe9ab96bfbf69dd2708" data-sample-index="0" style="cursor:pointer" onclick="toggleSampleDetail(this)"><td style="color:#436ef3;font-weight:600;text-align:center;" title="d6bcb9b27c604fe9ab96bfbf69dd2708">d6bcb9b27c60...</td><td style="text-align:center;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="告警：P1服务请求成功率较低 应用：phi-risk-model-scheduler 级别：WARN 详情：[null] 100.0 如何处理这个告警？有什么常见原因和解决方案？">告警：P1服务请求成功率较低 应用：phi-risk-model-schedul...</td><td style="color:#17a2b8;font-weight:600;text-align:center;">0.887</td><td style="color:#28a745;font-weight:600;text-align:center;">1.000</td><td style="color:#28a745;font-weight:600;text-align:center;">0.920</td><td style="color:#dc3545;font-weight:600;text-align:center;">0.431</td><td style="color:#17a2b8;font-weight:700;text-align:center;">0.810</td><td style="text-align:center;"><span style="background:#17a2b8;color:white;padding:2px 10px;border-radius:10px;font-size:0.82em;">良好</span></td></tr><tr class="sample-detail-row" data-sample-id="d6bcb9b27c604fe9ab96bfbf69dd2708" style="display:none;"><td colspan="8" style="padding:16px;background:#f8f9fa;border-left:5px solid #17a2b8;"><div style="padding:14px;background:white;border-radius:8px;margin-bottom:10px;text-align:left;"><div style="margin-bottom:10px;"><strong style="color:#333;font-size:0.9em;">问题</strong><div style="padding:10px;background:#f8f9fa;border-radius:5px;white-space:pre-wrap;word-wrap:break-word;line-height:1.6;color:#333;font-size:0.88em;margin-top:4px;">告警：P1服务请求成功率较低
+应用：phi-risk-model-scheduler
+级别：WARN
+详情：[null] 100.0
+
+如何处理这个告警？有什么常见原因和解决方案？</div></div><div style="margin-bottom:10px;"><strong style="color:#333;font-size:0.9em;">模型回复</strong><div style="padding:10px;background:#f8f9fa;border-radius:5px;white-space:pre-wrap;word-wrap:break-word;line-height:1.6;color:#333;font-size:0.88em;margin-top:4px;">1. **检查服务调用超时问题**：告警提示P1服务请求成功率较低，首先需要确认是哪个接口调用超时。可以通过告警详情页查看具体接口，并检查下游服务日志（对应时间点是否有报错、ERROR或WARN日志），同时查询下游服务Pod状态（CPU、内存等是否异常）。如果下游服务日志和Pod都正常，可以通过Istio日志查询接口duration确认对ETL任务运行是否有影响。
+
+2. **排查ERROR/WARN日志数量异常**：若告警与ERROR或WARN日志数量有关，需根据日志内容确认具体原因。优先止损再定位问题，例如判断是否为服务发布后出现的报错。排查技巧包括通过Rhino日志的trace_id字段末尾拼接的子任务ID定位是否是某个异常任务导致的报错，并关注最近的WARN日志是否变多。
+
+3. **评估任务失败原因并处理**：若该告警与ETL任务失败相关，则需要查看具体的错误信息和失败原因。对于无法重启成功的任务，应通知用户及开发人员进行处理，并通过TaskFailWaitConfirmJob修改任务状态为失败。
+
+4. **优化资源分配与并发配置**：若因资源不足或并发限制导致成功率下降，则可考虑调整风险线程池配置（如risk.thread_pool.etlThreadPoolCoreSize.ETL_RUN_OFFLINE_REVIEW）以增大并发能力，并确保离线审核相关的高优任务能按预期时间完成。
+
+5. **监控并分析算子耗时情况**：在Grafana上查看特征差异Row下的算子耗时情况，重点关注耗时较长的算子并进行优化。
+</div></div><div style="margin-top:10px;"><strong style="color:#333;font-size:0.9em;">参考答案</strong><div style="padding:10px;background:#f0f7ff;border-radius:5px;white-space:pre-wrap;word-wrap:break-word;line-height:1.6;color:#333;font-size:0.88em;margin-top:4px;border-left:3px solid #436ef3;">1. **检查服务调用超时问题**：告警提示P1服务请求成功率较低，首先需要确认是哪个接口调用超时。可以通过告警详情页查看具体接口，并检查下游服务日志（对应时间点是否有报错、ERROR或WARN日志），同时查询下游服务Pod状态（CPU、内存等是否异常）。如果下游服务日志和Pod都正常，可以通过Istio日志查询接口duration确认对ETL任务运行是否有影响。
+
+2. **排查ERROR/WARN日志数量异常**：若告警与ERROR或WARN日志数量有关，需根据日志内容确认具体原因。优先止损再定位问题，例如判断是否为服务发布后出现的报错。排查技巧包括通过Rhino日志的trace_id字段末尾拼接的子任务ID定位是否是某个异常任务导致的报错，并关注最近的WARN日志是否变多。
+
+3. **评估任务失败原因并处理**：若该告警与ETL任务失败相关，则需要查看具体的错误信息和失败原因。对于无法重启成功的任务，应通知用户及开发人员进行处理，并通过TaskFailWaitConfirmJob修改任务状态为失败。
+
+4. **优化资源分配与并发配置**：若因资源不足或并发限制导致成功率下降，则可考虑调整风险线程池配置（如risk.thread_pool.etlThreadPoolCoreSize.ETL_RUN_OFFLINE_REVIEW）以增大并发能力，并确保离线审核相关的高优任务能按预期时间完成。
+
+5. **监控并分析算子耗时情况**：在Grafana上查看特征差异Row下的算子耗时情况，重点关注耗时较长的算子并进行优化。
+</div></div></div><div style="padding:12px;background:white;border-radius:8px;margin-bottom:8px;border-left:4px solid #17a2b8;text-align:left;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;"><strong style="color:#17a2b8;font-size:0.9em;">上下文精确度</strong><span style="font-weight:bold;color:#17a2b8;font-size:0.9em;">0.887</span></div><div style="padding:8px;background:#f8f9fa;border-radius:5px;white-space:pre-wrap;word-wrap:break-word;line-height:1.6;color:#555;font-size:0.85em;">reason="The context provided detailed information about ETL alert handling, including false positives, Grafana monitoring for task durations, and procedures for developer intervention when tasks fail....</div></div><div style="padding:12px;background:white;border-radius:8px;margin-bottom:8px;border-left:4px solid #28a745;text-align:left;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;"><strong style="color:#28a745;font-size:0.9em;">上下文召回率</strong><span style="font-weight:bold;color:#28a745;font-size:0.9em;">1.000</span></div><div style="padding:8px;background:#f8f9fa;border-radius:5px;white-space:pre-wrap;word-wrap:break-word;line-height:1.6;color:#555;font-size:0.85em;">上下文4.1服务监控部分明确描述了接口超时排查流程，包括检查下游日志、Pod状态及Istio日志分析</div></div><div style="padding:12px;background:white;border-radius:8px;margin-bottom:8px;border-left:4px solid #28a745;text-align:left;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;"><strong style="color:#28a745;font-size:0.9em;">忠实度</strong><span style="font-weight:bold;color:#28a745;font-size:0.9em;">0.920</span></div><div style="padding:8px;background:#f8f9fa;border-radius:5px;white-space:pre-wrap;word-wrap:break-word;line-height:1.6;color:#555;font-size:0.85em;">statements=['The alert indicates low success rate for P1 service requests.', 'Identify which interface call is timing out.', 'View the specific interface on the alert details page.', 'Check downstream...
+
+The context does not mention success rates for P1 alerts; it focuses on impact and response requirements.</div></div><div style="padding:12px;background:white;border-radius:8px;margin-bottom:8px;border-left:4px solid #dc3545;text-align:left;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;"><strong style="color:#dc3545;font-size:0.9em;">答案相关性</strong><span style="font-weight:bold;color:#dc3545;font-size:0.9em;">0.431</span></div><div style="padding:8px;background:#f8f9fa;border-radius:5px;white-space:pre-wrap;word-wrap:break-word;line-height:1.6;color:#555;font-size:0.85em;">生成的评估问题: What are the troubleshooting steps for a P1 service request success rate alert?</div></div></td></tr><tr class="sample-row" data-sample-id="7371c2ec7a2647a4a08f1bfdf0ddcdb5" data-sample-index="1" style="cursor:pointer" onclick="toggleSampleDetail(this)"><td style="color:#436ef3;font-weight:600;text-align:center;" title="7371c2ec7a2647a4a08f1bfdf0ddcdb5">7371c2ec7a26...</td><td style="text-align:center;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="告警：菲律宾集群-风控Pod-持续处于非running状态 应用：cn-devops-aone-extra 级别：WARN 详情：[] 0.0 如何处理这个告警？有什么常见原因和解决方案？">告警：菲律宾集群-风控Pod-持续处于非running状态 应用：cn-devo...</td><td style="color:#17a2b8;font-weight:600;text-align:center;">0.867</td><td style="color:#28a745;font-weight:600;text-align:center;">1.000</td><td style="color:#28a745;font-weight:600;text-align:center;">0.944</td><td style="color:#ffc107;font-weight:600;text-align:center;">0.528</td><td style="color:#17a2b8;font-weight:700;text-align:center;">0.835</td><td style="text-align:center;"><span style="background:#17a2b8;color:white;padding:2px 10px;border-radius:10px;font-size:0.82em;">良好</span></td></tr><tr class="sample-detail-row" data-sample-id="7371c2ec7a2647a4a08f1bfdf0ddcdb5" style="display:none;"><td colspan="8" style="padding:16px;background:#f8f9fa;border-left:5px solid #17a2b8;"><div style="padding:14px;background:white;border-radius:8px;margin-bottom:10px;text-align:left;"><div style="margin-bottom:10px;"><strong style="color:#333;font-size:0.9em;">问题</strong><div style="padding:10px;background:#f8f9fa;border-radius:5px;white-space:pre-wrap;word-wrap:break-word;line-height:1.6;color:#333;font-size:0.88em;margin-top:4px;">告警：菲律宾集群-风控Pod-持续处于非running状态
+应用：cn-devops-aone-extra
+级别：WARN
+详情：[] 0.0
+
+如何处理这个告警？有什么常见原因和解决方案？</div></div><div style="margin-bottom:10px;"><strong style="color:#333;font-size:0.9em;">模型回复</strong><div style="padding:10px;background:#f8f9fa;border-radius:5px;white-space:pre-wrap;word-wrap:break-word;line-height:1.6;color:#333;font-size:0.88em;margin-top:4px;">1. **检查Pod状态**：确认菲律宾集群中风控Pod是否处于非Running状态，可以通过Tech平台查看Pod的详细信息和日志，排查是否存在异常。
+
+2. **查看相关日志**：通过Rhino日志查询与该Pod相关的ERROR或WARN日志，分析是否有任务失败、服务异常或其他错误信息。参考文档中的排查步骤，如查询下游服务日志、检查CPU和内存使用情况等。
+
+3. **确认接口超时原因**：如果告警涉及接口调用超时问题，需确认是哪个接口导致的，并结合Istio日志分析接口调用的duration（持续时间），判断是否对ETL任务运行有影响。
+
+4. **处理任务执行异常**：若告警与任务执行失败有关，则需要根据具体错误内容进行处理。例如，检查用户参数是否正确、代码逻辑是否有问题或下游服务报错等。对于无法重启成功的任务，需通知相关开发人员进行修复。
+
+5. **关注资源分配与调度问题**：如果出现高优任务积压或离线审核任务未按预期完成的情况，则需要评估资源分配是否合理，并调整并发配置以优化调度效率。
+</div></div><div style="margin-top:10px;"><strong style="color:#333;font-size:0.9em;">参考答案</strong><div style="padding:10px;background:#f0f7ff;border-radius:5px;white-space:pre-wrap;word-wrap:break-word;line-height:1.6;color:#333;font-size:0.88em;margin-top:4px;border-left:3px solid #436ef3;">1. **检查Pod状态**：确认菲律宾集群中风控Pod是否处于非Running状态，可以通过Tech平台查看Pod的详细信息和日志，排查是否存在异常。
+
+2. **查看相关日志**：通过Rhino日志查询与该Pod相关的ERROR或WARN日志，分析是否有任务失败、服务异常或其他错误信息。参考文档中的排查步骤，如查询下游服务日志、检查CPU和内存使用情况等。
+
+3. **确认接口超时原因**：如果告警涉及接口调用超时问题，需确认是哪个接口导致的，并结合Istio日志分析接口调用的duration（持续时间），判断是否对ETL任务运行有影响。
+
+4. **处理任务执行异常**：若告警与任务执行失败有关，则需要根据具体错误内容进行处理。例如，检查用户参数是否正确、代码逻辑是否有问题或下游服务报错等。对于无法重启成功的任务，需通知相关开发人员进行修复。
+
+5. **关注资源分配与调度问题**：如果出现高优任务积压或离线审核任务未按预期完成的情况，则需要评估资源分配是否合理，并调整并发配置以优化调度效率。
+</div></div></div><div style="padding:12px;background:white;border-radius:8px;margin-bottom:8px;border-left:4px solid #17a2b8;text-align:left;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;"><strong style="color:#17a2b8;font-size:0.9em;">上下文精确度</strong><span style="font-weight:bold;color:#17a2b8;font-size:0.9em;">0.867</span></div><div style="padding:8px;background:#f8f9fa;border-radius:5px;white-space:pre-wrap;word-wrap:break-word;line-height:1.6;color:#555;font-size:0.85em;">reason="The provided context was useful in arriving at the given answer. The context contains relevant information about handling ETL-related alerts, including troubleshooting steps for service issues...</div></div><div style="padding:12px;background:white;border-radius:8px;margin-bottom:8px;border-left:4px solid #28a745;text-align:left;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;"><strong style="color:#28a745;font-size:0.9em;">上下文召回率</strong><span style="font-weight:bold;color:#28a745;font-size:0.9em;">1.000</span></div><div style="padding:8px;background:#f8f9fa;border-radius:5px;white-space:pre-wrap;word-wrap:break-word;line-height:1.6;color:#555;font-size:0.85em;">Context discusses checking Pod status in sections like 4.1 Service Monitoring and 4.4 Basic Components.</div></div><div style="padding:12px;background:white;border-radius:8px;margin-bottom:8px;border-left:4px solid #28a745;text-align:left;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;"><strong style="color:#28a745;font-size:0.9em;">忠实度</strong><span style="font-weight:bold;color:#28a745;font-size:0.9em;">0.944</span></div><div style="padding:8px;background:#f8f9fa;border-radius:5px;white-space:pre-wrap;word-wrap:break-word;line-height:1.6;color:#555;font-size:0.85em;">statements=['Confirm whether the risk control Pod in the Philippines cluster is in a non-running state.', 'Check the detailed information and logs of the Pod through the Tech platform.', 'Investigate ...
+
+The context does not mention the Philippines cluster or specific Pod status checks for non-running states.</div></div><div style="padding:12px;background:white;border-radius:8px;margin-bottom:8px;border-left:4px solid #ffc107;text-align:left;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;"><strong style="color:#ffc107;font-size:0.9em;">答案相关性</strong><span style="font-weight:bold;color:#ffc107;font-size:0.9em;">0.528</span></div><div style="padding:8px;background:#f8f9fa;border-radius:5px;white-space:pre-wrap;word-wrap:break-word;line-height:1.6;color:#555;font-size:0.85em;">生成的评估问题: How to troubleshoot issues with risk control Pods in the Philippines cluster?</div></div></td></tr><tr class="sample-row" data-sample-id="c71fdf07268e41fbb7f036d44e8eeac8" data-sample-index="2" style="cursor:pointer" onclick="toggleSampleDetail(this)"><td style="color:#436ef3;font-weight:600;text-align:center;" title="c71fdf07268e41fbb7f036d44e8eeac8">c71fdf07268e...</td><td style="text-align:center;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="告警：【国内】离线审核任务数量样本数量监控 应用：loan-risk-stat-scheduler 级别：WARN 详情：监控结果: 监控时间: 2026-01-31 19:00:47 今日任务数: 133, 昨日任务数: 158, 增加: -25 今日样本数: 4710830, 昨日样本数: 2708239, 增长率: 73.94% 注意: 已排除以下特定导出任务ID: 149164 告警原因: 样本数量增长73.94%，超过阈值70% 如何处理这个告警？有什么常见原因和解决方案？">告警：【国内】离线审核任务数量样本数量监控 应用：loan-risk-stat-...</td><td style="color:#28a745;font-weight:600;text-align:center;">1.000</td><td style="color:#28a745;font-weight:600;text-align:center;">1.000</td><td style="color:#17a2b8;font-weight:600;text-align:center;">0.793</td><td style="color:#ffc107;font-weight:600;text-align:center;">0.542</td><td style="color:#17a2b8;font-weight:700;text-align:center;">0.834</td><td style="text-align:center;"><span style="background:#17a2b8;color:white;padding:2px 10px;border-radius:10px;font-size:0.82em;">良好</span></td></tr><tr class="sample-detail-row" data-sample-id="c71fdf07268e41fbb7f036d44e8eeac8" style="display:none;"><td colspan="8" style="padding:16px;background:#f8f9fa;border-left:5px solid #17a2b8;"><div style="padding:14px;background:white;border-radius:8px;margin-bottom:10px;text-align:left;"><div style="margin-bottom:10px;"><strong style="color:#333;font-size:0.9em;">问题</strong><div style="padding:10px;background:#f8f9fa;border-radius:5px;white-space:pre-wrap;word-wrap:break-word;line-height:1.6;color:#333;font-size:0.88em;margin-top:4px;">告警：【国内】离线审核任务数量样本数量监控
+应用：loan-risk-stat-scheduler
+级别：WARN
+详情：监控结果: 监控时间: 2026-01-31 19:00:47
+今日任务数: 133, 昨日任务数: 158, 增加: -25
+今日样本数: 4710830, 昨日样本数: 2708239, 增长率: 73.94%
+
+注意: 已排除以下特定导出任务ID: 149164
+
+告警原因:
+样本数量增长73.94%，超过阈值70%
+
+
+如何处理这个告警？有什么常见原因和解决方案？</div></div><div style="margin-bottom:10px;"><strong style="color:#333;font-size:0.9em;">模型回复</strong><div style="padding:10px;background:#f8f9fa;border-radius:5px;white-space:pre-wrap;word-wrap:break-word;line-height:1.6;color:#333;font-size:0.88em;margin-top:4px;">1. **告警原因分析**：当前样本数量增长73.94%，超过阈值70%。该告警是对比当天与前一天的数据量，提前通知开发关注。系统对离线审核任务所分配的资源是基于历史任务数量的，保证任务执行效率。
+
+2. **常见原因**：
+   - 当天创建的离线审核任务数量和样本数量比平常多，导致任务执行效率变低。
+   - 某些高优任务可能未在预期时间内完成，影响整体资源分配。
+   - 任务执行过程中出现资源不足、耗时增长异常或上下游资源受限等问题。
+
+3. **解决方案**：
+   - 通过Grafana监控面板查看离线审核相关的任务耗时和样本数变化趋势，确认是否为异常波动。
+   - 如果发现某天创建的任务数量和样本数显著增加，则需评估是否需要与业务方沟通调整需求或优化资源配置。
+   - 若因高优任务积压导致问题，则可通过调整`risk.stat.priorityLimitCountMap`配置限制不同优先级可以同时跑的任务数量（如高优5个、中优7个）来缓解压力。
+
+4. **排查步骤**：
+   - 在Grafana上拉长时间范围查看具体每天的任务数量和样本总数的变化情况；
+   - 检查是否有慢查询或其他数据库性能问题影响了ETL流程；
+   - 查看日志以确定是否存在报错信息，并根据具体情况解决相关错误。
+</div></div><div style="margin-top:10px;"><strong style="color:#333;font-size:0.9em;">参考答案</strong><div style="padding:10px;background:#f0f7ff;border-radius:5px;white-space:pre-wrap;word-wrap:break-word;line-height:1.6;color:#333;font-size:0.88em;margin-top:4px;border-left:3px solid #436ef3;">1. **告警原因分析**：当前样本数量增长73.94%，超过阈值70%。该告警是对比当天与前一天的数据量，提前通知开发关注。系统对离线审核任务所分配的资源是基于历史任务数量的，保证任务执行效率。
+
+2. **常见原因**：
+   - 当天创建的离线审核任务数量和样本数量比平常多，导致任务执行效率变低。
+   - 某些高优任务可能未在预期时间内完成，影响整体资源分配。
+   - 任务执行过程中出现资源不足、耗时增长异常或上下游资源受限等问题。
+
+3. **解决方案**：
+   - 通过Grafana监控面板查看离线审核相关的任务耗时和样本数变化趋势，确认是否为异常波动。
+   - 如果发现某天创建的任务数量和样本数显著增加，则需评估是否需要与业务方沟通调整需求或优化资源配置。
+   - 若因高优任务积压导致问题，则可通过调整`risk.stat.priorityLimitCountMap`配置限制不同优先级可以同时跑的任务数量（如高优5个、中优7个）来缓解压力。
+
+4. **排查步骤**：
+   - 在Grafana上拉长时间范围查看具体每天的任务数量和样本总数的变化情况；
+   - 检查是否有慢查询或其他数据库性能问题影响了ETL流程；
+   - 查看日志以确定是否存在报错信息，并根据具体情况解决相关错误。
+</div></div></div><div style="padding:12px;background:white;border-radius:8px;margin-bottom:8px;border-left:4px solid #28a745;text-align:left;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;"><strong style="color:#28a745;font-size:0.9em;">上下文精确度</strong><span style="font-weight:bold;color:#28a745;font-size:0.9em;">1.000</span></div><div style="padding:8px;background:#f8f9fa;border-radius:5px;white-space:pre-wrap;word-wrap:break-word;line-height:1.6;color:#555;font-size:0.85em;">reason="The context was partially useful as it provided insights into ETL task resource management and prioritization, which aligns with the answer's discussion on high-priority tasks affecting execut...</div></div><div style="padding:12px;background:white;border-radius:8px;margin-bottom:8px;border-left:4px solid #28a745;text-align:left;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;"><strong style="color:#28a745;font-size:0.9em;">上下文召回率</strong><span style="font-weight:bold;color:#28a745;font-size:0.9em;">1.000</span></div><div style="padding:8px;background:#f8f9fa;border-radius:5px;white-space:pre-wrap;word-wrap:break-word;line-height:1.6;color:#555;font-size:0.85em;">告警详情明确说明样本数量增长73.94%超过阈值70%</div></div><div style="padding:12px;background:white;border-radius:8px;margin-bottom:8px;border-left:4px solid #17a2b8;text-align:left;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;"><strong style="color:#17a2b8;font-size:0.9em;">忠实度</strong><span style="font-weight:bold;color:#17a2b8;font-size:0.9em;">0.793</span></div><div style="padding:8px;background:#f8f9fa;border-radius:5px;white-space:pre-wrap;word-wrap:break-word;line-height:1.6;color:#555;font-size:0.85em;">statements=['The current sample quantity growth is 73.94%.', 'The growth exceeds the threshold of 70%.', 'The alert compares data volume from the current day and the previous day.', 'The alert notifie...
+
+The context mentions a threshold of 70% for sample quantity growth but does not specify any exact growth percentage like 73.94%.</div></div><div style="padding:12px;background:white;border-radius:8px;margin-bottom:8px;border-left:4px solid #ffc107;text-align:left;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;"><strong style="color:#ffc107;font-size:0.9em;">答案相关性</strong><span style="font-weight:bold;color:#ffc107;font-size:0.9em;">0.542</span></div><div style="padding:8px;background:#f8f9fa;border-radius:5px;white-space:pre-wrap;word-wrap:break-word;line-height:1.6;color:#555;font-size:0.85em;">生成的评估问题: Why was the alert triggered due to a 73.94% increase in sample numbers?</div></div></td></tr><tr class="sample-row" data-sample-id="ee4fda9cfcfb4cebbe5b2d2027e8427a" data-sample-index="3" style="cursor:pointer" onclick="toggleSampleDetail(this)"><td style="color:#436ef3;font-weight:600;text-align:center;" title="ee4fda9cfcfb4cebbe5b2d2027e8427a">ee4fda9cfcfb...</td><td style="text-align:center;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="告警：【国内】回溯失败样本数检查 应用：loan-risk-stat-scheduler 级别：ERROR 详情：empty and clear 如何处理这个告警？有什么常见原因和解决方案？">告警：【国内】回溯失败样本数检查 应用：loan-risk-stat-sched...</td><td style="color:#17a2b8;font-weight:600;text-align:center;">0.806</td><td style="color:#28a745;font-weight:600;text-align:center;">1.000</td><td style="color:#28a745;font-weight:600;text-align:center;">1.000</td><td style="color:#dc3545;font-weight:600;text-align:center;">0.250</td><td style="color:#17a2b8;font-weight:700;text-align:center;">0.764</td><td style="text-align:center;"><span style="background:#17a2b8;color:white;padding:2px 10px;border-radius:10px;font-size:0.82em;">良好</span></td></tr><tr class="sample-detail-row" data-sample-id="ee4fda9cfcfb4cebbe5b2d2027e8427a" style="display:none;"><td colspan="8" style="padding:16px;background:#f8f9fa;border-left:5px solid #17a2b8;"><div style="padding:14px;background:white;border-radius:8px;margin-bottom:10px;text-align:left;"><div style="margin-bottom:10px;"><strong style="color:#333;font-size:0.9em;">问题</strong><div style="padding:10px;background:#f8f9fa;border-radius:5px;white-space:pre-wrap;word-wrap:break-word;line-height:1.6;color:#333;font-size:0.88em;margin-top:4px;">告警：【国内】回溯失败样本数检查
+应用：loan-risk-stat-scheduler
+级别：ERROR
+详情：empty and clear
+
+如何处理这个告警？有什么常见原因和解决方案？</div></div><div style="margin-bottom:10px;"><strong style="color:#333;font-size:0.9em;">模型回复</strong><div style="padding:10px;background:#f8f9fa;border-radius:5px;white-space:pre-wrap;word-wrap:break-word;line-height:1.6;color:#333;font-size:0.88em;margin-top:4px;">1. **检查最近10分钟内的日志**：通过rhino日志查询最近的WARN/ERROR日志和算子计算相关的记录，找到计算报错的原因。
+2. **分析根本原因**：查看底层error日志，分析聚合根本的日志原因（最底层的堆栈），并结合大模型分析根本原因。
+3. **处理具体问题**：根据具体日志依据、日志链接和人工check链接进行处理，并标记任务失败，同时给出原因或重启任务。
+4. **关注Mysql主从延迟**：如果是S_RH-流式人行数据计算的，需要检查是否是Mysql主从延迟导致的问题。
+</div></div><div style="margin-top:10px;"><strong style="color:#333;font-size:0.9em;">参考答案</strong><div style="padding:10px;background:#f0f7ff;border-radius:5px;white-space:pre-wrap;word-wrap:break-word;line-height:1.6;color:#333;font-size:0.88em;margin-top:4px;border-left:3px solid #436ef3;">1. **检查最近10分钟内的日志**：通过rhino日志查询最近的WARN/ERROR日志和算子计算相关的记录，找到计算报错的原因。
+2. **分析根本原因**：查看底层error日志，分析聚合根本的日志原因（最底层的堆栈），并结合大模型分析根本原因。
+3. **处理具体问题**：根据具体日志依据、日志链接和人工check链接进行处理，并标记任务失败，同时给出原因或重启任务。
+4. **关注Mysql主从延迟**：如果是S_RH-流式人行数据计算的，需要检查是否是Mysql主从延迟导致的问题。
+</div></div></div><div style="padding:12px;background:white;border-radius:8px;margin-bottom:8px;border-left:4px solid #17a2b8;text-align:left;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;"><strong style="color:#17a2b8;font-size:0.9em;">上下文精确度</strong><span style="font-weight:bold;color:#17a2b8;font-size:0.9em;">0.806</span></div><div style="padding:8px;background:#f8f9fa;border-radius:5px;white-space:pre-wrap;word-wrap:break-word;line-height:1.6;color:#555;font-size:0.85em;">reason="the context provided is an ETL alert SOP discussing general troubleshooting steps for various alert types, including job execution issues, thread limitations, and task monitoring. However, the...</div></div><div style="padding:12px;background:white;border-radius:8px;margin-bottom:8px;border-left:4px solid #28a745;text-align:left;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;"><strong style="color:#28a745;font-size:0.9em;">上下文召回率</strong><span style="font-weight:bold;color:#28a745;font-size:0.9em;">1.000</span></div><div style="padding:8px;background:#f8f9fa;border-radius:5px;white-space:pre-wrap;word-wrap:break-word;line-height:1.6;color:#555;font-size:0.85em;">上下文明确提到在出现该告警时需通过rhino查询最近的WARN/ERROR日志来定位计算报错原因</div></div><div style="padding:12px;background:white;border-radius:8px;margin-bottom:8px;border-left:4px solid #28a745;text-align:left;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;"><strong style="color:#28a745;font-size:0.9em;">忠实度</strong><span style="font-weight:bold;color:#28a745;font-size:0.9em;">1.000</span></div><div style="padding:8px;background:#f8f9fa;border-radius:5px;white-space:pre-wrap;word-wrap:break-word;line-height:1.6;color:#555;font-size:0.85em;">statements=['Check the Rhino logs for WARN or ERROR entries from the last 10 minutes.', 'Look for records related to operator calculations in the Rhino logs.', 'Identify the cause of the calculation e...
+
+The context explicitly mentions querying logs from the last 10-15 minutes for ERROR/WARN entries related to operator calculations.</div></div><div style="padding:12px;background:white;border-radius:8px;margin-bottom:8px;border-left:4px solid #dc3545;text-align:left;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;"><strong style="color:#dc3545;font-size:0.9em;">答案相关性</strong><span style="font-weight:bold;color:#dc3545;font-size:0.9em;">0.250</span></div><div style="padding:8px;background:#f8f9fa;border-radius:5px;white-space:pre-wrap;word-wrap:break-word;line-height:1.6;color:#555;font-size:0.85em;">生成的评估问题: What are the steps to troubleshoot calculation errors in the Rhino system?</div></div></td></tr><tr class="sample-row" data-sample-id="162bdaaee52f48ed87f6b199ab249682" data-sample-index="4" style="cursor:pointer" onclick="toggleSampleDetail(this)"><td style="color:#436ef3;font-weight:600;text-align:center;" title="162bdaaee52f48ed87f6b199ab249682">162bdaaee52f...</td><td style="text-align:center;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="告警：FeatureStore全量表Flink任务重启 应用：loan-risk-stat-scheduler 级别：WARN 如何处理这个告警？有什么常见原因和解决方案？">告警：FeatureStore全量表Flink任务重启 应用：loan-risk...</td><td style="color:#28a745;font-weight:600;text-align:center;">1.000</td><td style="color:#28a745;font-weight:600;text-align:center;">1.000</td><td style="color:#28a745;font-weight:600;text-align:center;">1.000</td><td style="color:#dc3545;font-weight:600;text-align:center;">0.327</td><td style="color:#17a2b8;font-weight:700;text-align:center;">0.832</td><td style="text-align:center;"><span style="background:#17a2b8;color:white;padding:2px 10px;border-radius:10px;font-size:0.82em;">良好</span></td></tr><tr class="sample-detail-row" data-sample-id="162bdaaee52f48ed87f6b199ab249682" style="display:none;"><td colspan="8" style="padding:16px;background:#f8f9fa;border-left:5px solid #17a2b8;"><div style="padding:14px;background:white;border-radius:8px;margin-bottom:10px;text-align:left;"><div style="margin-bottom:10px;"><strong style="color:#333;font-size:0.9em;">问题</strong><div style="padding:10px;background:#f8f9fa;border-radius:5px;white-space:pre-wrap;word-wrap:break-word;line-height:1.6;color:#333;font-size:0.88em;margin-top:4px;">告警：FeatureStore全量表Flink任务重启
+应用：loan-risk-stat-scheduler
+级别：WARN
+
+如何处理这个告警？有什么常见原因和解决方案？</div></div><div style="margin-bottom:10px;"><strong style="color:#333;font-size:0.9em;">模型回复</strong><div style="padding:10px;background:#f8f9fa;border-radius:5px;white-space:pre-wrap;word-wrap:break-word;line-height:1.6;color:#333;font-size:0.88em;margin-top:4px;">1. **检查任务日志**：在rhino上查询[任务ID level:ERROR/WARN]，查看具体的报错日志内容。分析聚合根本的日志原因（最底层的堆栈），并结合大模型分析根本原因，同时附上具体日志依据、日志链接和人工check链接。
+
+2. **确认任务失败原因**：常见的失败场景包括用户任务参数错误、下游服务报错或代码逻辑错误等。需要根据具体的日志内容判断问题根源，并通知相关开发人员进行处理。
+
+3. **手动重启任务**：如果告警触发后需要手动重启任务，请确保已解决导致告警的根本问题，否则可能无法成功重启。若无法重启成功，则需标记该任务为失败，并明确失败的原因。
+
+4. **关注资源使用情况**：如果Flink任务因资源不足而失败，可以考虑通过调整配置（如限制并发数）来优化资源分配。例如，在`risk.stat.priorityLimitCountMap`中设置高优和中优的任务数量限制，以避免某些慢速任务占用过多资源。
+
+5. **监控与恢复**：在Grafana上关注对应类型的任务执行情况，确认积压原因（如创建的任务变多或执行速度变慢）。若发现异常，请及时修改规则以清除告警，并确保恢复正常。
+</div></div><div style="margin-top:10px;"><strong style="color:#333;font-size:0.9em;">参考答案</strong><div style="padding:10px;background:#f0f7ff;border-radius:5px;white-space:pre-wrap;word-wrap:break-word;line-height:1.6;color:#333;font-size:0.88em;margin-top:4px;border-left:3px solid #436ef3;">1. **检查任务日志**：在rhino上查询[任务ID level:ERROR/WARN]，查看具体的报错日志内容。分析聚合根本的日志原因（最底层的堆栈），并结合大模型分析根本原因，同时附上具体日志依据、日志链接和人工check链接。
+
+2. **确认任务失败原因**：常见的失败场景包括用户任务参数错误、下游服务报错或代码逻辑错误等。需要根据具体的日志内容判断问题根源，并通知相关开发人员进行处理。
+
+3. **手动重启任务**：如果告警触发后需要手动重启任务，请确保已解决导致告警的根本问题，否则可能无法成功重启。若无法重启成功，则需标记该任务为失败，并明确失败的原因。
+
+4. **关注资源使用情况**：如果Flink任务因资源不足而失败，可以考虑通过调整配置（如限制并发数）来优化资源分配。例如，在`risk.stat.priorityLimitCountMap`中设置高优和中优的任务数量限制，以避免某些慢速任务占用过多资源。
+
+5. **监控与恢复**：在Grafana上关注对应类型的任务执行情况，确认积压原因（如创建的任务变多或执行速度变慢）。若发现异常，请及时修改规则以清除告警，并确保恢复正常。
+</div></div></div><div style="padding:12px;background:white;border-radius:8px;margin-bottom:8px;border-left:4px solid #28a745;text-align:left;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;"><strong style="color:#28a745;font-size:0.9em;">上下文精确度</strong><span style="font-weight:bold;color:#28a745;font-size:0.9em;">1.000</span></div><div style="padding:8px;background:#f8f9fa;border-radius:5px;white-space:pre-wrap;word-wrap:break-word;line-height:1.6;color:#555;font-size:0.85em;">The provided context includes details about handling ETL-related alerts, such as checking Grafana for job execution issues, adjusting thread counts or executors for resource constraints, and monitoring task execution. However, the answer primarily focuses on steps like checking Rhino logs for errors, identifying task failure causes, manual restarts, and resource optimization, which are not explicitly covered in the context. While the context mentions Grafana monitoring and resource adjustments, it does not directly support key aspects of the answer like log analysis in Rhino, task failure scenarios, or manual restart procedures.</div></div><div style="padding:12px;background:white;border-radius:8px;margin-bottom:8px;border-left:4px solid #28a745;text-align:left;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;"><strong style="color:#28a745;font-size:0.9em;">上下文召回率</strong><span style="font-weight:bold;color:#28a745;font-size:0.9em;">1.000</span></div><div style="padding:8px;background:#f8f9fa;border-radius:5px;white-space:pre-wrap;word-wrap:break-word;line-height:1.6;color:#555;font-size:0.85em;">上下文明确提到在rhino上查询ERROR/WARN日志，分析底层堆栈原因，并涉及大模型分析和日志链接</div></div><div style="padding:12px;background:white;border-radius:8px;margin-bottom:8px;border-left:4px solid #28a745;text-align:left;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;"><strong style="color:#28a745;font-size:0.9em;">忠实度</strong><span style="font-weight:bold;color:#28a745;font-size:0.9em;">1.000</span></div><div style="padding:8px;background:#f8f9fa;border-radius:5px;white-space:pre-wrap;word-wrap:break-word;line-height:1.6;color:#555;font-size:0.85em;">statements=['Check the task logs.', 'Query the task ID level:ERROR/WARN on rhino.', 'View specific error log content.', 'Analyze the root cause from the deepest stack trace in the logs.', 'Use a large...
+
+statements=[StatementFaithfulnessAnswer(statement='Check the task logs.', reason="The context explicitly mentions checking logs to troubleshoot issues, such as '触发的告警任务失败后查看对应的日志'.", verdict=1), State...</div></div><div style="padding:12px;background:white;border-radius:8px;margin-bottom:8px;border-left:4px solid #dc3545;text-align:left;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;"><strong style="color:#dc3545;font-size:0.9em;">答案相关性</strong><span style="font-weight:bold;color:#dc3545;font-size:0.9em;">0.327</span></div><div style="padding:8px;background:#f8f9fa;border-radius:5px;white-space:pre-wrap;word-wrap:break-word;line-height:1.6;color:#555;font-size:0.85em;">生成的评估问题: What are the steps to troubleshoot task failures?</div></div></td></tr></tbody>
+                </table>
+            </div></div>
+<div class="content-panel" id="panel-recommendations"><div class="section"><h2><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-4px;flex-shrink:0;"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg> 优化建议</h2><p style="color:#888;margin:6px 0 0;font-size:0.82em;line-height:1.6;padding:8px 12px;background:#f8f9fa;border-radius:6px;border-left:3px solid #ffc107;"><strong style="color:#555;">主要关注：</strong>低于 0.7 的指标按优先级排序，每条建议包含针对 RAG 流水线的具体优化步骤（检索侧 vs 生成侧），帮助团队快速找到下一步行动项。</p></div><div class="section" style="border-left:4px solid #dc3545;padding-bottom:16px;"><div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap;"><span style="display:flex;align-items:center;"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#dc3545" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-5px;flex-shrink:0;"><path d="M20 6 9 17l-5-5"/></svg></span><h4 style="margin:0;color:#333;font-size:0.95em;font-weight:700;">答案相关性 优化建议</h4><span style="padding:1px 8px;background:#dc354515;color:#dc3545;border:1px solid #dc354540;border-radius:10px;font-size:0.72em;font-weight:600;">↑ 高优先级</span><span style="margin-left:auto;padding:2px 12px;background:#dc354515;color:#dc3545;border:1px solid #dc354540;border-radius:10px;font-size:0.82em;font-weight:700;">0.416</span></div><p style="margin:0 0 12px;padding:8px 12px;background:#fff5f5;border-radius:6px;color:#444;font-size:0.87em;line-height:1.6;border:1px solid #dc354520;">生成的答案与问题的切题程度不够。</p><div><div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:8px;"><div style="flex-shrink:0;font-size:0.82em;font-weight:600;color:#dc3545;padding:2px 8px;background:#dc354515;border-radius:6px;white-space:nowrap;margin-top:1px;">优化 Prompt</div><div style="font-size:0.85em;color:#555;line-height:1.6;">明确要求模型围绕用户问题回答，避免发散。</div></div><div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:8px;"><div style="flex-shrink:0;font-size:0.82em;font-weight:600;color:#dc3545;padding:2px 8px;background:#dc354515;border-radius:6px;white-space:nowrap;margin-top:1px;">增加示例</div><div style="font-size:0.85em;color:#555;line-height:1.6;">在 Prompt 中加入 Few-shot 示例，引导模型生成更贴切的回复。</div></div><div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:8px;"><div style="flex-shrink:0;font-size:0.82em;font-weight:600;color:#dc3545;padding:2px 8px;background:#dc354515;border-radius:6px;white-space:nowrap;margin-top:1px;">Query 改写</div><div style="font-size:0.85em;color:#555;line-height:1.6;">对复杂或模糊的用户问题进行改写/扩展后再检索。</div></div></div></div></div>
+
+        </div>
+    </div>
+</body>
+</html>
