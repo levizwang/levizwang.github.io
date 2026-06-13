@@ -85,7 +85,7 @@ def rerun_failed(batch):
 
 ## Giving back
 
-While integrating the **Stirrup** agent I cleaned the integration up enough to send it **upstream to the open-source Harbor framework** as a reviewed pull request — isolating the reusable agent adapter from all the environment-specific glue. That's the real test of whether an integration is any good: can you separate the part that helps everyone from the part that only helps you?
+While integrating the **Stirrup** agent I cleaned it up enough to make it **upstream-ready for the open-source Harbor framework** — isolating the reusable agent adapter from all the environment-specific glue, on a clean fork. That's the real test of whether an integration is any good: can you separate the part that helps everyone from the part that only helps you?
 
 ## Takeaway
 

@@ -10,7 +10,7 @@ interface Stat {
 
 const STATS: Stat[] = [
   { value: 6, label: { en: 'model families benchmarked', zh: '个模型族横向评测' } },
-  { value: 19, label: { en: 'stage synthesis pipeline', zh: '节点合成流水线' } },
+  { value: 19, label: { en: 'stage synthesis architecture', zh: '节点合成架构' } },
   { value: 11, label: { en: 'automated quality checkers', zh: '个自动质量 checker' } },
   { value: 5, label: { en: 'agent harnesses integrated', zh: '种 agent harness 集成' } },
 ];

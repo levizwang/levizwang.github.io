@@ -20,15 +20,15 @@ const STUDIES: Study[] = [
   {
     eyebrow: { en: 'Flagship system', zh: '旗舰系统' },
     title: {
-      en: 'A 19-stage pipeline that proves each question is real.',
-      zh: '一条 19 节点的流水线，证明每道题都是真的。',
+      en: 'A 19-stage architecture that proves each question is real.',
+      zh: '一套 19 节点的架构，证明每道题都是真的。',
     },
     body: {
       en: 'The hard part of synthetic eval data isn’t writing questions — it’s proving each one genuinely measures what it claims, without the model that wrote it quietly grading its own homework. Every fact is extracted by two independent model families and bound to a source-file locator before a word of the prompt exists; the test-taker, reference author, rubric author and every checker are forced onto different families by a fail-closed validator; and each task must survive a three-way ablation — answer, files, files-removed — shipping only if removing the files makes the model fail.',
       zh: '合成评测数据真正难的不是写题，而是证明每道题确实测到了它声称要测的东西——还不能让出题的模型悄悄给自己判分。每条事实都由两个独立模型族抽取、并在写下任何题面之前就绑定到源文件 locator；解题者、参考答案作者、rubric 作者和每个 checker 都被一个 fail-closed 校验器强制分配到不同模型族；每道题还必须通过三向消融——给答案、给文件、抽走文件——只有"抽走文件后模型答不出"才放行。',
     },
     specs: [
-      { k: '19 / 11', v: { en: 'stages · per-node checkers', zh: '节点 · 按节点 checker' } },
+      { k: '19 / 11', v: { en: 'designed stages · live checkers', zh: '设计节点 · 已实现 checker' } },
       { k: '6 + 4', v: { en: 'reviewer jury · QC lenses', zh: '人评审团 · QC 维度' } },
       { k: 'E1≥.90 · E2≤.70 · E3≤.15', v: { en: 'anti-guessing gate', zh: '防蒙门槛' } },
       { k: '48', v: { en: 'adversarial-review findings', zh: '条对抗式评审 finding' } },
@@ -58,12 +58,12 @@ const STUDIES: Study[] = [
   {
     eyebrow: { en: 'Open source', zh: '开源' },
     title: {
-      en: 'An agent harness, contributed upstream.',
-      zh: '把一个 agent harness 贡献到上游。',
+      en: 'A new agent harness for an open-source framework.',
+      zh: '给一个开源框架写的新 agent harness。',
     },
     body: {
-      en: 'Built a production-grade integration of a new agent harness (Stirrup) into the public Harbor evaluation framework — runner, provider routing, ATIF trajectory capture, and a per-model max-token ceiling table to dodge provider hard-limits — with 50 unit tests covering both POSIX and Windows paths. The real test of an integration: can you isolate the part that helps everyone from the part that only helps you.',
-      zh: '为公开的 Harbor 评测框架做了一个生产级的新 agent harness（Stirrup）集成——runner、provider 路由、ATIF 轨迹捕获，以及一张按模型的 max-token 上限表来规避各家硬限——配 50 个覆盖 POSIX 与 Windows 路径的单测。检验一个集成好不好的真正标准：你能不能把"对所有人都有用的部分"从"只对你有用的部分"里剥离出来。',
+      en: 'Built a production-grade, upstream-ready integration of a new agent harness (Stirrup) for the public Harbor evaluation framework — runner, provider routing, ATIF trajectory capture, and a per-model max-token ceiling table to dodge provider hard-limits — with 50 unit tests covering both POSIX and Windows paths. It lives on a clean fork, isolated from environment-specific glue: the real test of an integration is whether you can separate the part that helps everyone from the part that only helps you.',
+      zh: '为公开的 Harbor 评测框架做了一个生产级、可直接上游的新 agent harness（Stirrup）集成——runner、provider 路由、ATIF 轨迹捕获，以及一张按模型的 max-token 上限表来规避各家硬限——配 50 个覆盖 POSIX 与 Windows 路径的单测。它放在一个干净的 fork 上，与环境相关代码彻底剥离：检验一个集成好不好的真正标准，就是你能不能把"对所有人都有用的部分"从"只对你有用的部分"里分开。',
     },
     specs: [
       { k: '+2,332 / 6', v: { en: 'lines added · files', zh: '行新增 · 文件' } },
