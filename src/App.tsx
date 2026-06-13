@@ -7,6 +7,7 @@ import { BlogList } from './components/BlogList';
 import { ProjectGrid } from './components/ProjectGrid';
 import { Footer } from './components/Footer';
 import { GridBackground } from './components/GridBackground';
+import { ScrollToTop } from './components/ScrollToTop';
 import { Projects } from './components/pages/Projects';
 import { Post } from './components/pages/Post';
 import { BlogPost } from './components/pages/BlogPost';
@@ -27,6 +28,7 @@ function Home() {
 export default function App() {
   return (
     <Router>
+      <ScrollToTop />
       <div className="min-h-screen bg-background text-foreground antialiased">
         <GridBackground />
         {/* Spacer for fixed header */}

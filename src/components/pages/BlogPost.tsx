@@ -31,6 +31,10 @@ export function BlogPost() {
 
     const parser = new DOMParser();
     const doc = parser.parseFromString(rawContent, 'text/html');
+    // The page already renders post.title as the <h1>; drop the markdown's
+    // leading H1 so the title doesn't appear twice.
+    const leadingH1 = doc.body.querySelector('h1');
+    if (leadingH1) leadingH1.remove();
     const headings = Array.from(doc.querySelectorAll('h2, h3'));
     const slugCounts = new Map<string, number>();
 

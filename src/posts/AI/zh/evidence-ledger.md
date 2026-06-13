@@ -10,37 +10,108 @@
 
 账本是一个中间产物。在写任何题目之前，流水线先读源文件，产出一份**事实清单**；而出题者**只被允许引用账本里的事实**。任何不在账本里的东西，对出题这件事来说就等于不存在。
 
-每条事实带三样东西：
+具体地，每条事实是一行，带 value、locator、caveat：
 
-- **原文照抄的 value**——`EBITDA margin = 18.4%`，照抄、不转述，带单位。
-- **locator（定位符）**——`page=14`、`sheet=Model!C27`、`heading=Liquidity`、`L88`。这是最承重的字段。
-- **caveat（口径陷阱）**——这条事实周围的坑：某个数字在两个 tab 之间从"千"切到"百万"、deck 和底层 model 对不上、脚注里悄悄限定了这个数的口径。
+```json
+{
+  "fact_id": "f_0142",
+  "value": "EBITDA margin = 18.4%",
+  "locator": { "file": "Model_v3.xlsx", "sheet": "Summary", "cell": "C27" },
+  "unit": "percent",
+  "caveat": "Model tab 以美元百万为单位；Deck（p.11）把它在协同前重述为 17.9%。",
+  "verdict": "confirm"
+}
+```
 
-locator 把一条**断言**变成一条**可核验**的事实。没有 locator 的值，只是模型的一面之词；有 locator 的值，可以被重新打开、重新读、被质疑——被另一个模型、被人工 reviewer、被之后必须核对参考答案的 grader。所有下游需要"可信"的东西，都挂在这一个字段上。
+**locator** 是最承重的字段。没有 locator 的值，只是模型的一面之词；有 locator 的值，可以被重新打开、重新读、被质疑——被另一个模型、被人工 reviewer、被之后必须核对参考答案的 grader。所有下游需要"可信"的东西，都挂在这一个字段上。而**caveat** 正是难度所在：某个数字在两个 tab 之间从"千"切到"百万"、deck 和底层 model 对不上、脚注里悄悄限定了这个数的口径。
 
 ## 出题者只能花它被发的那些事实
 
-账本一旦存在，生成的性质就变了。出题者不再是"读文档、写题目"——那是一个有无限漂移空间的过程；它变成了**从一个固定预算里花事实**。如果一道题需要一个数字，这个数字必须是一条账本条目，也就意味着它有 locator，也就意味着它真的在文件里。幻觉不是被 prompt 劝退的，而是**从可达空间里被设计掉的**。
+账本一旦存在，生成的性质就变了。出题者不再是"读文档、写题目"——那是一个有无限漂移空间的过程；它变成了**从一个固定预算里花事实**。如果一道题需要一个数字，这个数字必须是一条账本条目，也就意味着它有 locator，也就意味着它真的在文件里。
 
-这和"用类型系统去编译、而不是祈祷运行时字符串能对上"是同一个直觉。你把保证从"模型很小心"挪到了"模型根本没法不这样做"。
+这一点可以机械地强制。一道题被接受之前，它引用的每个数字都要匹配回某个 `fact_id`：
+
+```python
+def validate_item(item, ledger):
+    cited = extract_quantities(item.question + item.reference_answer)
+    ledger_values = {normalize(f.value) for f in ledger.facts}
+    orphans = [c for c in cited if normalize(c) not in ledger_values]
+    if orphans:
+        raise OverLedgerError(f"引用了账本外的事实: {orphans}")
+```
+
+幻觉不是被 prompt 劝退的，而是**从可达空间里被设计掉的**。这和"用类型系统去编译、而不是祈祷运行时字符串能对上"是同一个直觉。你把保证从"模型很小心"挪到了"模型根本没法不这样做"。
 
 ## 一个模型抽取，另一个**不同的**模型核验
 
 接下来是大多数人会跳过的部分：账本本身也可能是幻觉。抽取器也是个 LLM，它完全可能自信地记下一条根本不存在的事实。所以账本不是一个模型一遍跑出来的。
 
-第二个模型——刻意选**不同的厂商**——独立地对照源文件核验每条事实，返回三选一的 verdict：**confirm / refute / uncertain**，并附上**它自己**观测到的 locator。关键在于：分歧不会被平均成一个 confidence 分然后放行。`refute` 把该事实标记为删除；`uncertain` 标记为需要人看。用不同厂商的理由，和"不让同一个模型既出题又判分"是一样的：一个模型挑另一个模型的错，远比挑自己的错在行。相比交付一个建立在"根本不在页面上的事实"之上的 benchmark，cross-vendor 核验便宜得多。
+第二个模型——刻意选**不同的厂商**——独立地对照源文件核验每条事实，返回一个带**它自己**观测到的 locator 的 verdict：
+
+```python
+VERDICTS = {"confirm", "refute", "uncertain"}
+
+def cross_verify(fact, source_docs, verifier):
+    """verifier 与抽取器是不同厂商。"""
+    out = verifier.check(
+        claim=fact.value,
+        expected_at=fact.locator,
+        documents=source_docs,
+    )
+    assert out.verdict in VERDICTS
+    if out.verdict == "refute":
+        ledger.drop(fact.fact_id)            # 永远到不了出题者手里
+    elif out.verdict == "uncertain":
+        ledger.flag_for_human(fact.fact_id)  # 升级人工，而不是平均掉
+    else:
+        fact.observed_locator = out.locator  # 第二个证人也指向同一处
+    return out
+```
+
+关键在于：分歧不会被平均成一个 confidence 分然后放行。`refute` 直接删掉这条事实；`uncertain` 升级给人看。用不同厂商的理由，和"不让同一个模型既出题又判分"是一样的：一个模型挑另一个模型的错，远比挑自己的错在行。相比交付一个建立在"根本不在页面上的事实"之上的 benchmark，cross-vendor 核验便宜得多。
 
 ## 别名与脱敏：那个有三个名字的实体
 
 真实文档会用很多种方式指代同一个东西——公司和它的股票代码、交易对手和它脱敏后的代号、第 2 页写全称、第 40 页只写缩写的子公司。如果账本把它们当成三个不同实体，两件坏事就会发生：你可能写出一道"正确答案依赖于文档从未真正建立的某个映射"的题（不可判定），或者你不小心**泄漏**了这个映射，把一道难题变成送分题。
 
-所以有一个显式的 **alias-merge** 步骤：把实体归一化、记录它的各种 surface form，并检查脱敏在文件之间是否**一致**（一个名字若在一处被遮蔽，就不该在另一处以明文躺着）。这是不起眼的记账，却悄悄决定了一道多文档题公不公平。
+所以有一个显式的 **alias-merge** 步骤，把实体归一化，并检查脱敏在文件之间一致：
+
+```json
+{
+  "canonical": "Project Atlas (Target)",
+  "surface_forms": ["Atlas", "the Target", "PA Holdings", "[REDACTED-A]"],
+  "redaction_consistent": true
+}
+```
+
+一个名字若在一处被遮蔽，就不该在另一处以明文躺着。这是不起眼的记账，却悄悄决定了一道多文档题公不公平。
 
 ## must-hit points，以及最难的那一类题
 
-对每道题，账本会钉住 **3–5 个 must-hit points**——正确答案被要求用到的那几条具体事实。这一手身兼两职。它是**难度杠杆**：逼一道题去触碰分散在三个文件里的事实，模型就再也没法靠扫一个文件蒙混过关。它也是**可评分的 spec**：之后 rubric 正好检查这几个 must-hit，于是"模型到底有没有真的去做这件事"就成了一个具体、可核验的属性，而不是凭感觉。
+对每道题，账本会钉住 **3–5 个 must-hit points**——正确答案被要求用到的那几条具体事实：
 
-账本还记录它的反面——**uncertain boundaries**，也就是文档**不**让你得出的那些结论。这解锁了我觉得最能照出真本事的题型：正确答案是**"凭现有材料无法唯一确定"**的题。有能力的模型会识别出这个边界并明说；靠模式匹配硬凑出一个自信数字的模型则会翻车。而你只有先把这个边界画出来，才能**安全地**写这种题——画边界，正是账本的 caveat 和 uncertain 字段在干的事。没有账本，一道"资料不足"题只是你可能给自己挖的坑。
+```json
+{
+  "question_id": "q_07",
+  "must_hit": ["f_0142", "f_0090", "f_0211"],
+  "spans_files": ["Model_v3.xlsx", "CIM.pdf", "Credit_Agreement.pdf"]
+}
+```
+
+这一手身兼两职。它是**难度杠杆**：逼一道题去触碰分散在三个文件里的事实，模型就再也没法靠扫一个文件蒙混过关。它也是**可评分的 spec**：之后 rubric 正好检查这几个 must-hit，于是"模型到底有没有真的去做这件事"就成了一个具体、可核验的属性，而不是凭感觉。
+
+账本还记录它的反面——**uncertain boundaries**，也就是文档**不**让你得出的那些结论。这解锁了我觉得最能照出真本事的题型：正确答案是**"凭现有材料无法唯一确定"**的题。有能力的模型会识别出这个边界并明说；靠模式匹配硬凑出一个自信数字的模型则会翻车。
+
+```json
+{
+  "question_id": "q_11",
+  "type": "undecidable",
+  "expected": "无法确定：协同效应的分年节奏只给了 3 年总额（Deck p.14），计算 Year-1 增厚所需的逐年拆分从未披露。",
+  "trap_fact": "f_0233"
+}
+```
+
+而你只有先把这个边界画出来，才能**安全地**写这种题——画边界，正是账本的 caveat 和 uncertain 字段在干的事。没有账本，一道"资料不足"题只是你可能给自己挖的坑。
 
 ## 那个不起眼、却让一切站得住脚的产物
 
