@@ -15,7 +15,10 @@ export function Hero() {
           <p className="mb-2 text-neutral-600 dark:text-neutral-400">
             {siteConfig.bio}
           </p>
-          
+          <p className="mt-3 font-mono text-xs tracking-wide text-neutral-500 dark:text-neutral-500">
+            {siteConfig.location} · {siteConfig.resumeEmail}
+          </p>
+
           <div className="flex items-center gap-5 mt-6">
             {siteConfig.social.map((item) => (
               <a

@@ -1,26 +1,21 @@
 
 import { Mail, Linkedin } from 'lucide-react';
 import { FaXTwitter } from 'react-icons/fa6';
-import { FaGithub, FaEthereum } from 'react-icons/fa';
-import { SiBinance, SiSolana } from 'react-icons/si';
+import { FaGithub } from 'react-icons/fa';
 import { AiOutlineZhihu } from 'react-icons/ai';
 import avatarImage from '../images/IMG_4812.JPG';
 
 export const siteConfig = {
-  name: "Levi",
-  title: "Here is Levi",
-  description: "Code is cheap, show me the prompt!",
-  bio: "Ex-PwC IT Auditor → Ex-Bytedance AI Evaluation Expert → Current Fintech AI Engineer\nPart-time Web3 Analyst & Professional Liquidated Trader & Smart Contract Auditor",
+  name: "Levi Wang",
+  title: "Levi Wang",
+  description: "I build where infrastructure meets algorithms — agent systems, LLM-evaluation infra, and the synthetic data that trains and grades frontier models.",
+  bio: "AI R&D Engineer. Agent architecture & infra · Evaluation infrastructure · Synthetic-data algorithms. Currently @ Fintopia; previously VLM-evaluation @ ByteDance and IT risk assurance @ PwC.",
+  location: "Beijing, China",
+  resumeEmail: "wang.z.levi@gmail.com",
   startDate: "2026-01-01",
   avatar: avatarImage,
-  
+
   social: [
-    {
-      name: "X",
-      url: "https://x.com/Levi2Crypto",
-      icon: FaXTwitter,
-      size: 16
-    },
     {
       name: "GitHub",
       url: "https://github.com/levizwang",
@@ -34,22 +29,10 @@ export const siteConfig = {
       size: 20
     },
     {
-      name: "Binance",
-      url: "https://app.binance.com/uni-qr/cpro/Levi_eth",
-      icon: SiBinance,
-      size: 20
-    },
-    {
-      name: "Ethereum",
-      url: "https://etherscan.io/address/0x0cfd6476c2fc06455548514227129dbea35f9a3e",
-      icon: FaEthereum,
-      size: 20
-    },
-    {
-      name: "Solana",
-      url: "https://explorer.solana.com/address/26QWQzwStTLSfh67KfLxnKQWrenfvKA6L3u2MbSdjzdv",
-      icon: SiSolana,
-      size: 20
+      name: "X",
+      url: "https://x.com/Levi2Crypto",
+      icon: FaXTwitter,
+      size: 16
     },
     {
       name: "Zhihu",
@@ -67,8 +50,8 @@ export const siteConfig = {
 
   nav: [
     { name: "Home", path: "/" },
-    { name: "Posts", path: "/posts" },
     { name: "Projects", path: "/projects" },
+    { name: "Writing", path: "/posts" },
     { name: "Optics", path: "/optics" },
   ],
 };

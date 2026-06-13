@@ -1,3 +1,6 @@
+import { html as aiValidityContent } from '../posts/AI/eval-validity-failure-modes.md';
+import { html as aiJudgeContent } from '../posts/AI/agent-as-judge-vs-metric.md';
+import { html as aiPlumbingContent } from '../posts/AI/plumbing-of-llm-evaluation.md';
 import { html as post1Content } from '../posts/MEV/MEV1:SolanaMEV_Technical_Analysis.md';
 import { html as post2Content } from '../posts/MEV/MEV2:ControlPlane_Strategy_Scheduling_and_Configuration.md';
 import { html as post3Content } from '../posts/MEV/MEV3:Inventory_Network_Wide_Token_Index.md';
@@ -7,6 +10,7 @@ import { html as post6Content } from '../posts/MEV/MEV6:StrategyArb_Cross_DEX_Ar
 import { html as post7Content } from '../posts/MEV/MEV7:Jito.md';
 import { html as post8Content } from '../posts/MEV/MEV8:Risk_Risk_Control_and_Safety_Checks.md';
 import { html as post9Content } from '../posts/Detailed_Explanation_of_Blockchain/Detailed_Explanation_of_Blockchain.md';
+import agentImage from '../images/projects/Agent_eval.png';
 import mev1Image from '../images/posts/MEV_img/MEV1.jpg';
 import mev2Image from '../images/posts/MEV_img/MEV2.jpg';
 import mev3Image from '../images/posts/MEV_img/MEV3.jpg';
@@ -32,6 +36,37 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
+    id: 'eval-validity',
+    title: 'Your Benchmark Is Lying to You: Validity Failure Modes in Agentic Eval Data',
+    excerpt:
+      'Generation is easy; validity is hard. The three quiet failure modes — guessability, prompt↔rubric leakage, judge noise — and how to defend against each.',
+    content: aiValidityContent,
+    date: 'Jun 12, 2026',
+    category: 'AI Evaluation',
+    tags: ['LLM Eval', 'Agents', 'Synthetic Data'],
+    image: agentImage,
+  },
+  {
+    id: 'agent-as-judge',
+    title: 'Agent-as-Judge vs. a Metric You Wrote by Hand',
+    excerpt:
+      'An honest, measured comparison: LLM judge vs. a deterministic metric on precision, recall, agreement, cost, and latency — and how to choose per task.',
+    content: aiJudgeContent,
+    date: 'Jun 06, 2026',
+    category: 'AI Evaluation',
+    tags: ['LLM Eval', 'LLM-as-judge'],
+  },
+  {
+    id: 'eval-plumbing',
+    title: 'The Plumbing of LLM Evaluation: Six Model Families on One Harness',
+    excerpt:
+      'Eval is infrastructure, not a script. File-output gaps, reasoning-only turns, judge hallucination, harness diversity, cost accounting — and an upstream OSS contribution.',
+    content: aiPlumbingContent,
+    date: 'May 28, 2026',
+    category: 'AI Evaluation',
+    tags: ['LLM Eval', 'Infrastructure', 'Open Source'],
+  },
+  {
     id: '9',
     title: 'Detailed Explanation of Blockchain',
     excerpt: 'Detailed explanation of blockchain, including its concepts, technology, and applications',
@@ -47,7 +82,7 @@ export const blogPosts: BlogPost[] = [
     excerpt: 'Conclusion of Solana MEV, including MEV bots, MEV opportunities, and MEV risks',
     content: post8Content,
     date: 'Jan 20, 2026',
-    category: 'MEV',
+    category: 'Web3',
     tags: ['MEV', 'Blockchain'],
     image: mev8Image,
   },
@@ -57,7 +92,7 @@ export const blogPosts: BlogPost[] = [
     excerpt: 'Conclusion of Solana MEV, including MEV bots, MEV opportunities, and MEV risks',
     content: post7Content,
     date: 'Jan 20, 2026',
-    category: 'MEV',
+    category: 'Web3',
     tags: ['MEV', 'Blockchain'],
     image: mev7Image,
   },
@@ -67,7 +102,7 @@ export const blogPosts: BlogPost[] = [
     excerpt: 'Industry impact of Solana MEV, including MEV bots, MEV opportunities, and MEV risks',
     content: post6Content,
     date: 'Jan 20, 2026',
-    category: 'MEV',
+    category: 'Web3',
     tags: ['MEV', 'Blockchain'],
     image: mev6Image,
   },
@@ -77,7 +112,7 @@ export const blogPosts: BlogPost[] = [
     excerpt: 'Regulation and law of Solana MEV, including MEV bots, MEV opportunities, and MEV risks',
     content: post5Content,
     date: 'Jan 20, 2026',
-    category: 'MEV',
+    category: 'Web3',
     tags: ['MEV', 'Blockchain'],
     image: mev5Image,
   },
@@ -87,7 +122,7 @@ export const blogPosts: BlogPost[] = [
     excerpt: 'Future trends of Solana MEV, including MEV bots, MEV opportunities, and MEV risks',
     content: post4Content,
     date: 'Jan 20, 2026',
-    category: 'MEV',
+    category: 'Web3',
     tags: ['MEV', 'Blockchain'],
     image: mev4Image,
   },
@@ -97,7 +132,7 @@ export const blogPosts: BlogPost[] = [
     excerpt: 'Impact and challenges of Solana MEV, including MEV bots, MEV opportunities, and MEV risks',
     content: post3Content,
     date: 'Jan 20, 2026',
-    category: 'MEV',
+    category: 'Web3',
     tags: ['MEV', 'Blockchain'],
     image: mev3Image,
   },
@@ -107,7 +142,7 @@ export const blogPosts: BlogPost[] = [
     excerpt: 'Practical applications of Solana MEV, including MEV bots, MEV opportunities, and MEV risks',
     content: post2Content,
     date: 'Jan 20, 2026',
-    category: 'MEV',
+    category: 'Web3',
     tags: ['MEV', 'Blockchain'],
     image: mev2Image,
   },
@@ -117,7 +152,7 @@ export const blogPosts: BlogPost[] = [
     excerpt: 'Technical analysis of Solana MEV, including MEV bots, MEV opportunities, and MEV risks',
     content: post1Content,
     date: 'Jan 20, 2026',
-    category: 'MEV',
+    category: 'Web3',
     tags: ['MEV', 'Blockchain'],
     image: mev1Image,
   },

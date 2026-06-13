@@ -1,6 +1,8 @@
 import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
+import { Experience } from './components/Experience';
+import { Resume } from './components/Resume';
 import { BlogList } from './components/BlogList';
 import { ProjectGrid } from './components/ProjectGrid';
 import { Footer } from './components/Footer';
@@ -14,8 +16,10 @@ function Home() {
   return (
     <>
       <Hero />
-      <BlogList limit={3} showViewAll />
-      <ProjectGrid limit={3} showViewAll />
+      <Experience />
+      <ProjectGrid limit={6} showViewAll />
+      <BlogList limit={4} showViewAll />
+      <Resume />
     </>
   );
 }

@@ -62,9 +62,14 @@ export function BlogList({ limit, showViewAll = true }: { limit?: number; showVi
 
   return (
     <>
-      {showViewAll && <SectionDivider label="My Articles" />}
-      
+      {showViewAll && <SectionDivider label="Writing" />}
+
       <section id="articles" className="max-w-4xl mx-auto px-7 lg:px-0">
+        {showViewAll && (
+          <h2 className="mb-3 text-2xl font-medium tracking-tight text-neutral-900 dark:text-neutral-100">
+            Writing
+          </h2>
+        )}
         <p className="mb-2 mt-2 text-neutral-600 dark:text-neutral-400">
           Categories:{' '}
           {categories.map(([category, count], index) => (
