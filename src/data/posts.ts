@@ -1,3 +1,7 @@
+import { html as aiLedgerEn } from '../posts/AI/evidence-ledger.md';
+import { html as aiLedgerZh } from '../posts/AI/zh/evidence-ledger.md';
+import { html as aiAdvqcEn } from '../posts/AI/adversarial-qc.md';
+import { html as aiAdvqcZh } from '../posts/AI/zh/adversarial-qc.md';
 import { html as aiValidityEn } from '../posts/AI/eval-validity-failure-modes.md';
 import { html as aiJudgeEn } from '../posts/AI/agent-as-judge-vs-metric.md';
 import { html as aiPlumbingEn } from '../posts/AI/plumbing-of-llm-evaluation.md';
@@ -24,6 +28,21 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
+    id: 'evidence-ledger',
+    title: {
+      en: "The Evidence Ledger: Making an LLM Write Questions It Can't Fabricate",
+      zh: '证据账本：让 LLM 写出它无法编造的题目',
+    },
+    excerpt: {
+      en: 'Hallucinating answers is bad; hallucinating questions silently rots your benchmark. How a locator-bound, cross-vendor-verified evidence ledger makes anti-hallucination structural instead of hopeful.',
+      zh: '编造答案很糟，编造题目则会悄悄烂掉你的 benchmark。一个绑定 locator、跨厂商核验的证据账本，如何把"防幻觉"从祈愿变成结构保证。',
+    },
+    content: { en: aiLedgerEn, zh: aiLedgerZh },
+    date: 'Jun 13, 2026',
+    category: 'AI Evaluation',
+    tags: ['LLM Eval', 'Synthetic Data', 'Anti-Hallucination'],
+  },
+  {
     id: 'eval-validity',
     title: {
       en: 'Your Benchmark Is Lying to You: Validity Failure Modes in Agentic Eval Data',
@@ -38,6 +57,21 @@ export const blogPosts: BlogPost[] = [
     category: 'AI Evaluation',
     tags: ['LLM Eval', 'Agents', 'Synthetic Data'],
     image: agentImage,
+  },
+  {
+    id: 'adversarial-qc',
+    title: {
+      en: "Don't Trust Data You Generated Yourself: Adversarial QC for Synthetic Data",
+      zh: '别信你自己生成的数据：合成数据的对抗式质检',
+    },
+    excerpt: {
+      en: 'Synthetic data is plausible by construction — which is exactly the failure. The Actor-Critic-Monitor loop, and the concrete taxonomy of lies self-generated data tells: derived-value drift, cross-file conflicts, impossible timelines, template contamination, provenance leakage.',
+      zh: '合成数据天生显得合理——而这恰恰是失效。Actor-Critic-Monitor 闭环，以及自生成数据撒谎的具体分类学：派生值漂移、跨文件冲突、不可能的时间线、模板污染、来源泄漏。',
+    },
+    content: { en: aiAdvqcEn, zh: aiAdvqcZh },
+    date: 'Jun 09, 2026',
+    category: 'AI Evaluation',
+    tags: ['Synthetic Data', 'Adversarial QC', 'Agents'],
   },
   {
     id: 'agent-as-judge',
