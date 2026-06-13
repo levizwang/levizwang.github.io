@@ -73,6 +73,7 @@ export function useT() {
 export const ui = {
   viewWork: { en: 'Selected work', zh: '精选项目' },
   readWriting: { en: 'Read writing', zh: '阅读文章' },
+  readDeepDive: { en: 'Read the deep dive', zh: '阅读深度文章' },
   atScale: { en: 'At scale', zh: '规模' },
   atScaleTitle: {
     en: 'Evaluation and synthetic-data systems, run at production scale.',

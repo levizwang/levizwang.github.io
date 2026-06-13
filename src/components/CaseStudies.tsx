@@ -1,5 +1,6 @@
+import { Link } from 'react-router-dom';
 import { Reveal } from './Reveal';
-import { useT, type L } from '../i18n/lang';
+import { useT, ui, type L } from '../i18n/lang';
 
 interface Spec {
   k: string;
@@ -11,6 +12,7 @@ interface Study {
   body: L;
   specs: Spec[];
   link?: { href: string; label: L };
+  article?: string;
   tags: string[];
 }
 
@@ -31,6 +33,7 @@ const STUDIES: Study[] = [
       { k: 'E1≥.90 · E2≤.70 · E3≤.15', v: { en: 'anti-guessing gate', zh: '防蒙门槛' } },
       { k: '48', v: { en: 'adversarial-review findings', zh: '条对抗式评审 finding' } },
     ],
+    article: 'evidence-ledger',
     tags: ['Cross-vendor independence', 'Evidence ledger', 'Resumable state machine'],
   },
   {
@@ -49,6 +52,7 @@ const STUDIES: Study[] = [
       { k: '566 / 15', v: { en: 'judgments · tasks (pilot)', zh: '次判定 · 任务（pilot）' } },
       { k: '69k vs 5.3M', v: { en: 'tokens — more accurate, cheaper', zh: 'token —— 更准且更便宜' } },
     ],
+    article: 'agent-as-judge',
     tags: ['Agent-as-judge', 'Human-aligned', 'Cost-aware'],
   },
   {
@@ -94,16 +98,27 @@ export function CaseStudies() {
                       </span>
                     ))}
                   </div>
-                  {s.link && (
-                    <a
-                      href={s.link.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-foreground"
-                    >
-                      {t(s.link.label)} <span aria-hidden>↗</span>
-                    </a>
-                  )}
+                  <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2">
+                    {s.article && (
+                      <Link
+                        to={`/post/${s.article}`}
+                        className="group/link inline-flex items-center gap-1.5 text-sm font-semibold text-foreground"
+                      >
+                        {t(ui.readDeepDive)}
+                        <span aria-hidden className="transition-transform group-hover/link:translate-x-0.5">→</span>
+                      </Link>
+                    )}
+                    {s.link && (
+                      <a
+                        href={s.link.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 text-sm font-semibold text-muted-foreground transition-colors hover:text-foreground"
+                      >
+                        {t(s.link.label)} <span aria-hidden>↗</span>
+                      </a>
+                    )}
+                  </div>
                 </div>
 
                 {/* spec sheet */}
