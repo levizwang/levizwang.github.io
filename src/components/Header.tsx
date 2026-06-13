@@ -1,10 +1,13 @@
-import { Menu, Moon, Sun, X } from 'lucide-react';
+import { Languages, Menu, Moon, Sun, X } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Typewriter, { TypewriterClass } from 'typewriter-effect';
 import { siteConfig } from '../config/site';
+import { useLang, useT } from '../i18n/lang';
 
 export function Header() {
+  const { lang, toggle: toggleLang } = useLang();
+  const t = useT();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isDark, setIsDark] = useState(() => {
@@ -96,25 +99,40 @@ export function Header() {
             {siteConfig.nav.map((item) => (
               item.path.startsWith('http') ? (
                 <a
-                  key={item.name}
+                  key={item.path}
                   href={item.path}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="relative flex items-center justify-center w-full px-3 py-2 tracking-wide text-center duration-200 ease-out sm:py-0 sm:mb-0 md:w-auto hover:text-neutral-900 dark:hover:text-[#CCFF00]"
                 >
-                  {item.name}
+                  {t(item.name)}
                 </a>
               ) : (
                 <Link
-                  key={item.name}
+                  key={item.path}
                   to={item.path}
                   className="relative flex items-center justify-center w-full px-3 py-2 tracking-wide text-center duration-200 ease-out sm:py-0 sm:mb-0 md:w-auto hover:text-neutral-900 dark:hover:text-[#CCFF00]"
                 >
-                  {item.name}
+                  {t(item.name)}
                 </Link>
               )
             ))}
           </div>
+
+          <button
+            type="button"
+            aria-label={lang === 'en' ? '切换到中文' : 'Switch to English'}
+            title={lang === 'en' ? '中文' : 'English'}
+            onClick={toggleLang}
+            className={`relative z-30 ml-2 inline-flex h-9 items-center justify-center gap-1 rounded-md px-2 text-xs font-medium transition-colors ${
+              isScrolled
+                ? 'border border-neutral-200/60 bg-white/60 backdrop-blur-2xl hover:bg-neutral-100/80 dark:border-neutral-700/50 dark:bg-neutral-900/40 dark:hover:bg-neutral-800/60'
+                : 'hover:bg-neutral-100/60 dark:hover:bg-neutral-900/60'
+            }`}
+          >
+            <Languages className="h-4 w-4" />
+            <span>{lang === 'en' ? '中' : 'EN'}</span>
+          </button>
 
           <button
             type="button"

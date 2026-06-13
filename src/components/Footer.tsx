@@ -1,6 +1,8 @@
 import { siteConfig } from '../config/site';
+import { useT, ui } from '../i18n/lang';
 
 export function Footer() {
+  const t = useT();
   const currentYear = new Date().getFullYear();
   const startDate = new Date(siteConfig.startDate);
   const today = new Date();
@@ -17,15 +19,15 @@ export function Footer() {
         </a>
         
         <p className="mt-4 text-neutral-700 dark:text-neutral-100 sm:ml-4 sm:pl-4 sm:border-l sm:border-neutral-300 dark:sm:border-neutral-700 sm:mt-0">
-          Running for {daysSinceStart} days
-        </p>
-        
-        <p className="mt-4 text-neutral-700 dark:text-neutral-100 sm:ml-4 sm:pl-4 sm:border-l sm:border-neutral-300 dark:sm:border-neutral-700 sm:mt-0">
-          © {currentYear} {siteConfig.name}. All rights reserved.
+          {t(ui.runningFor)} {daysSinceStart} {t(ui.days)}
         </p>
 
         <p className="mt-4 text-neutral-700 dark:text-neutral-100 sm:ml-4 sm:pl-4 sm:border-l sm:border-neutral-300 dark:sm:border-neutral-700 sm:mt-0">
-          Inspired by <a href="https://diygod.me">DIYgod</a>
+          © {currentYear} {siteConfig.name}. {t(ui.rights)}
+        </p>
+
+        <p className="mt-4 text-neutral-700 dark:text-neutral-100 sm:ml-4 sm:pl-4 sm:border-l sm:border-neutral-300 dark:sm:border-neutral-700 sm:mt-0">
+          {t(ui.inspiredBy)} <a href="https://diygod.me">DIYgod</a>
         </p>
       </div>
     </footer>

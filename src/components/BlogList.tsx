@@ -3,8 +3,11 @@ import { Link, useNavigate } from 'react-router-dom';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 import { SectionDivider } from './SectionDivider';
 import { blogPosts } from '../data/posts';
+import { useT, ui, categoryLabels } from '../i18n/lang';
 
 export function BlogList({ limit, showViewAll = true }: { limit?: number; showViewAll?: boolean }) {
+  const t = useT();
+  const catLabel = (c: string) => t(categoryLabels[c] ?? { en: c, zh: c });
   const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
@@ -67,11 +70,11 @@ export function BlogList({ limit, showViewAll = true }: { limit?: number; showVi
       <section id="articles" className="max-w-4xl mx-auto px-7 lg:px-0">
         {showViewAll && (
           <h2 className="mb-3 text-2xl font-medium tracking-tight text-neutral-900 dark:text-neutral-100">
-            Writing
+            {t(ui.writing)}
           </h2>
         )}
         <p className="mb-2 mt-2 text-neutral-600 dark:text-neutral-400">
-          Categories:{' '}
+          {t(ui.categories)}{' '}
           {categories.map(([category, count], index) => (
             <span key={category}>
               {index > 0 && ', '}
@@ -81,14 +84,14 @@ export function BlogList({ limit, showViewAll = true }: { limit?: number; showVi
                   selectedCategory === category ? 'text-black dark:text-white font-bold underline' : ''
                 }`}
               >
-                {category} ({count})
+                {catLabel(category)} ({count})
               </button>
             </span>
           ))}
         </p>
-        
+
         <p className="mb-6 text-neutral-600 dark:text-neutral-400">
-          Tags:{' '}
+          {t(ui.tags)}{' '}
           {tags.map(([tag, count], index) => (
             <span key={tag}>
               {index > 0 && ', '}
@@ -131,7 +134,7 @@ export function BlogList({ limit, showViewAll = true }: { limit?: number; showVi
                             onClick={(e) => e.stopPropagation()} // 防止触发 article 的 onClick
                             className="leading-tight tracking-tight dark:text-neutral-100 hover:underline decoration-dashed underline-offset-4"
                           >
-                            {post.title}
+                            {t(post.title)}
                           </Link>
                           <svg
                             className="group-hover:translate-x-0 flex-shrink-0 translate-y-0.5 -translate-x-1 w-2.5 h-2.5 stroke-current ml-1 transition-all ease-in-out duration-200 transform"
@@ -162,17 +165,17 @@ export function BlogList({ limit, showViewAll = true }: { limit?: number; showVi
                           </svg>
                         </h3>
                         
-                        <p className="text-neutral-600 dark:text-neutral-400 line-clamp-3 break-all">
-                          {post.excerpt}
+                        <p className="text-neutral-600 dark:text-neutral-400 line-clamp-3">
+                          {t(post.excerpt)}
                         </p>
-                        
+
                         <div className="mt-2.5 text-neutral-800 dark:text-neutral-300">
                           {post.date} ·{' '}
-                          <button 
+                          <button
                             onClick={(e) => handleCategoryClick(e, post.category)}
                             className="hover:underline decoration-dashed underline-offset-4"
                           >
-                            {post.category}
+                            {catLabel(post.category)}
                           </button>
                           {post.tags && (
                             <>
@@ -197,7 +200,7 @@ export function BlogList({ limit, showViewAll = true }: { limit?: number; showVi
                         <div className="hidden ml-2 size-32 md:block md:ml-7">
                           <ImageWithFallback
                             src={post.image}
-                            alt={post.title}
+                            alt={t(post.title)}
                             className="aspect-square object-cover rounded-xl"
                           />
                         </div>
@@ -207,7 +210,7 @@ export function BlogList({ limit, showViewAll = true }: { limit?: number; showVi
                 ))
               ) : (
                 <div className="text-center py-10 text-neutral-500">
-                  No articles found matching your criteria
+                  {t(ui.noArticles)}
                 </div>
               )}
             </div>
@@ -220,7 +223,7 @@ export function BlogList({ limit, showViewAll = true }: { limit?: number; showVi
               to="/posts"
               className="inline-flex w-auto px-4 py-2 mt-5 duration-300 ease-out border rounded-full bg-transparent border-gray-300 dark:border-[#333333] text-gray-600 dark:text-gray-400 hover:text-neutral-900 hover:border-neutral-900 dark:hover:text-[#CCFF00] dark:hover:border-[#CCFF00] active:text-[#CCFF00] active:border-[#CCFF00] active:bg-transparent"
             >
-              View All Articles
+              {t(ui.viewAllArticles)}
             </Link>
           </div>
         )}

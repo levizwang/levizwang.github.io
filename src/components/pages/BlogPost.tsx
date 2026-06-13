@@ -4,6 +4,7 @@ import { blogPosts } from '../../data/posts';
 import { SectionDivider } from '../SectionDivider';
 import { ImageWithFallback } from '../figma/ImageWithFallback';
 import { PageLayout } from '../PageLayout';
+import { useT, ui, categoryLabels } from '../../i18n/lang';
 import Prism from 'prismjs';
 import 'prismjs/components/prism-bash';
 import 'prismjs/components/prism-go';
@@ -17,16 +18,19 @@ import 'prismjs/components/prism-tsx';
 import 'prismjs/components/prism-yaml';
 
 export function BlogPost() {
+  const t = useT();
+  const catLabel = (c: string) => t(categoryLabels[c] ?? { en: c, zh: c });
   const { id } = useParams<{ id: string }>();
   const post = blogPosts.find((p) => p.id === id);
+  const rawContent = post?.content ? t(post.content) : '';
 
   const { contentHtml, tocItems } = useMemo(() => {
-    if (!post?.content || typeof window === 'undefined') {
-      return { contentHtml: post?.content ?? '', tocItems: [] as Array<{ id: string; text: string; level: number }> };
+    if (!rawContent || typeof window === 'undefined') {
+      return { contentHtml: rawContent, tocItems: [] as Array<{ id: string; text: string; level: number }> };
     }
 
     const parser = new DOMParser();
-    const doc = parser.parseFromString(post.content, 'text/html');
+    const doc = parser.parseFromString(rawContent, 'text/html');
     const headings = Array.from(doc.querySelectorAll('h2, h3'));
     const slugCounts = new Map<string, number>();
 
@@ -48,7 +52,7 @@ export function BlogPost() {
     }).filter(item => item.text.length > 0);
 
     return { contentHtml: doc.body.innerHTML, tocItems: toc };
-  }, [post?.content]);
+  }, [rawContent]);
 
   useEffect(() => {
     Prism.highlightAll();
@@ -64,8 +68,8 @@ export function BlogPost() {
     return (
       <PageLayout>
         <div className="min-h-[50vh] flex flex-col items-center justify-center">
-          <h1 className="text-2xl font-bold mb-4 dark:text-neutral-100">Article Not Found</h1>
-          <Link to="/posts" className="text-blue-500 hover:underline">View All Articles</Link>
+          <h1 className="text-2xl font-bold mb-4 dark:text-neutral-100">{t(ui.articleNotFound)}</h1>
+          <Link to="/posts" className="text-blue-500 hover:underline">{t(ui.viewAllArticles)}</Link>
         </div>
       </PageLayout>
     );
@@ -77,7 +81,7 @@ export function BlogPost() {
         <div className="grid gap-10 lg:grid-cols-[240px_minmax(0,900px)]">
           <aside className="hidden lg:block">
             <div className="sticky top-24">
-              <div className="text-sm font-semibold text-neutral-800 dark:text-neutral-100 mb-3">目录</div>
+              <div className="text-sm font-semibold text-neutral-800 dark:text-neutral-100 mb-3">{t(ui.toc)}</div>
               <nav className="space-y-2 text-sm text-neutral-600 dark:text-neutral-400">
                 {tocItems.length > 0 ? (
                   tocItems.map((item) => (
@@ -91,7 +95,7 @@ export function BlogPost() {
                     </button>
                   ))
                 ) : (
-                  <div className="text-neutral-500">暂无目录</div>
+                  <div className="text-neutral-500">{t(ui.tocEmpty)}</div>
                 )}
               </nav>
             </div>
@@ -100,11 +104,11 @@ export function BlogPost() {
           <div className="min-w-0">
             <header className="max-w-[900px] w-full mb-8">
               <div className="mb-4 text-sm text-neutral-500 dark:text-neutral-400">
-                {post.date} · {post.category}
+                {post.date} · {catLabel(post.category)}
                 {post.tags && ` · #${post.tags.join(' #')}`}
               </div>
               <h1 className="text-3xl font-bold md:text-4xl lg:text-5xl dark:text-neutral-100 leading-tight">
-                {post.title}
+                {t(post.title)}
               </h1>
             </header>
 
@@ -112,14 +116,14 @@ export function BlogPost() {
               <div className="max-w-[900px] w-full mb-10">
                 <ImageWithFallback
                   src={post.image}
-                  alt={post.title}
+                  alt={t(post.title)}
                   className="w-full h-auto rounded-xl shadow-sm"
                 />
               </div>
             )}
 
             <article className="w-full max-w-[900px] prose prose-neutral dark:prose-invert lg:prose-lg px-2 lg:px-0 mb-20">
-              <p className="lead">{post.excerpt}</p>
+              <p className="lead">{t(post.excerpt)}</p>
               <hr />
               {contentHtml ? (
                 <div dangerouslySetInnerHTML={{ __html: contentHtml }} />
@@ -135,7 +139,7 @@ export function BlogPost() {
 
             <div className="flex justify-center mb-10">
               <Link to="/posts" className="px-6 py-2 border rounded-full transition-all bg-transparent border-gray-300 dark:border-[#333333] text-gray-600 dark:text-gray-400 dark:hover:text-[#CCFF00] dark:hover:border-[#CCFF00] dark:active:text-[#CCFF00] dark:active:border-[#CCFF00] dark:active:bg-transparent">
-                View All Articles
+                {t(ui.viewAllArticles)}
               </Link>
             </div>
           </div>

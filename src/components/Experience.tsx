@@ -1,17 +1,19 @@
 import { SectionDivider } from './SectionDivider';
 import { experience } from '../data/resume';
+import { useT, ui } from '../i18n/lang';
 
 export function Experience() {
+  const t = useT();
   return (
     <>
       <SectionDivider label="Experience" />
 
       <section id="experience" className="max-w-4xl mx-auto px-7 lg:px-0">
         <h2 className="mb-1 text-2xl font-medium tracking-tight text-neutral-900 dark:text-neutral-100">
-          Experience
+          {t(ui.experience)}
         </h2>
         <p className="mb-7 font-mono text-sm text-neutral-500 dark:text-neutral-400">
-          Agents · evaluation infra · synthetic data.
+          {t(ui.experienceSub)}
         </p>
 
         <div className="space-y-5">
@@ -24,17 +26,17 @@ export function Experience() {
                 <h3 className="text-lg tracking-tight text-neutral-900 dark:text-neutral-100">
                   <span className="font-semibold">{job.company}</span>
                   <span className="text-neutral-400 dark:text-neutral-500"> · </span>
-                  <span className="text-neutral-700 dark:text-neutral-300">{job.role}</span>
+                  <span className="text-neutral-700 dark:text-neutral-300">{t(job.role)}</span>
                 </h3>
                 <p className="flex-shrink-0 font-mono text-xs text-neutral-500 dark:text-neutral-400 sm:text-right">
                   {job.period}
                   <span className="hidden sm:inline"> · </span>
-                  <span className="block sm:inline">{job.location}</span>
+                  <span className="block sm:inline">{t(job.location)}</span>
                 </p>
               </div>
 
               {job.summary && (
-                <p className="mt-3 text-neutral-600 dark:text-neutral-400">{job.summary}</p>
+                <p className="mt-3 text-neutral-600 dark:text-neutral-400">{t(job.summary)}</p>
               )}
 
               <ul className="mt-3 space-y-2">
@@ -43,7 +45,7 @@ export function Experience() {
                     key={i}
                     className="relative pl-5 text-sm leading-relaxed text-neutral-700 dark:text-neutral-300 before:absolute before:left-0 before:top-2.5 before:h-1 before:w-1 before:rounded-full before:bg-neutral-400 dark:before:bg-neutral-500"
                   >
-                    {h}
+                    {t(h)}
                   </li>
                 ))}
               </ul>
