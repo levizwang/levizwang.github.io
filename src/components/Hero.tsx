@@ -28,7 +28,7 @@ export function Hero() {
           </a>
 
           {/* Display headline */}
-          <h1 className="mt-7 text-[2.6rem] font-semibold leading-[1.04] tracking-tightest text-balance sm:text-6xl md:text-[4rem]">
+          <h1 className="mt-7 text-[2.15rem] font-semibold leading-[1.06] tracking-tightest text-balance sm:text-5xl md:text-[4rem]">
             {headline.split('\n').map((line, i) => (
               <span key={i} className="block text-gradient">
                 {line}
