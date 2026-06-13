@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { PhotoCard } from './PhotoCard';
 import { Photo } from '@/types/optics';
 import { photos } from '@/data/optics';
+import { useT, ui } from '@/i18n/lang';
 
 interface GalleryProps {
   filter: string;
@@ -9,6 +10,7 @@ interface GalleryProps {
 }
 
 export function Gallery({ filter, onPhotoClick }: GalleryProps) {
+  const t = useT();
   const [visibleCount, setVisibleCount] = useState(9);
   
   const filteredPhotos = filter === 'All' 
@@ -37,7 +39,7 @@ export function Gallery({ filter, onPhotoClick }: GalleryProps) {
               onClick={() => setVisibleCount(prev => prev + 6)}
               className="px-8 py-3 border border-gray-300 dark:border-[#333333] rounded-lg text-sm font-medium hover:border-[#CCFF00] hover:text-[#CCFF00] transition-all"
             >
-              Load More
+              {t(ui.loadMore)}
             </button>
           </div>
         )}

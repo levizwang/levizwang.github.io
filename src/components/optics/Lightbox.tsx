@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
-import { X, MapPin, Download, Camera } from 'lucide-react';
+import { X, MapPin, Camera } from 'lucide-react';
 import { Photo } from '@/types/optics';
+import { useT, ui } from '@/i18n/lang';
 
 interface LightboxProps {
   photo: Photo;
@@ -8,6 +9,7 @@ interface LightboxProps {
 }
 
 export function Lightbox({ photo, onClose }: LightboxProps) {
+  const t = useT();
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
@@ -27,12 +29,12 @@ export function Lightbox({ photo, onClose }: LightboxProps) {
       <button
         onClick={onClose}
         className="absolute top-6 right-6 w-10 h-10 flex items-center justify-center rounded-full bg-gray-200 dark:bg-white/10 hover:bg-gray-300 dark:hover:bg-white/20 transition-colors z-10 text-gray-900 dark:text-white"
-        aria-label="Close lightbox"
+        aria-label={t(ui.closeLightbox)}
       >
         <X className="w-5 h-5" />
       </button>
 
-      <div className="max-w-7xl w-full grid md:grid-cols-[1fr,400px] gap-8 max-h-[90vh]">
+      <div className="max-w-7xl w-full grid md:grid-cols-[1fr_400px] gap-8 max-h-[90vh]">
         {/* Image */}
         <div className="flex items-center justify-center">
           <img
@@ -57,27 +59,27 @@ export function Lightbox({ photo, onClose }: LightboxProps) {
           <div className="bg-gray-50 dark:bg-[#0A0A0A] border border-gray-200 dark:border-[#1A1A1A] rounded-lg p-4">
             <div className="flex items-center gap-2 mb-3">
               <Camera className="w-4 h-4 text-[#CCFF00]" />
-              <h3 className="font-semibold text-sm text-gray-900 dark:text-white">Technical Specifications</h3>
+              <h3 className="font-semibold text-sm text-gray-900 dark:text-white">{t(ui.techSpecs)}</h3>
             </div>
             <div className="font-mono text-xs space-y-2 text-gray-700 dark:text-gray-300">
               <div className="grid grid-cols-2 gap-2">
-                <span className="text-gray-400 dark:text-gray-500">Camera:</span>
+                <span className="text-gray-400 dark:text-gray-500">{t(ui.camera)}</span>
                 <span>{photo.camera}</span>
               </div>
               <div className="grid grid-cols-2 gap-2">
-                <span className="text-gray-400 dark:text-gray-500">Lens:</span>
+                <span className="text-gray-400 dark:text-gray-500">{t(ui.lens)}</span>
                 <span>{photo.lens}</span>
               </div>
               <div className="grid grid-cols-2 gap-2">
-                <span className="text-gray-400 dark:text-gray-500">ISO:</span>
+                <span className="text-gray-400 dark:text-gray-500">{t(ui.iso)}</span>
                 <span>{photo.iso}</span>
               </div>
               <div className="grid grid-cols-2 gap-2">
-                <span className="text-gray-400 dark:text-gray-500">Aperture:</span>
+                <span className="text-gray-400 dark:text-gray-500">{t(ui.aperture)}</span>
                 <span>{photo.aperture}</span>
               </div>
               <div className="grid grid-cols-2 gap-2">
-                <span className="text-gray-400 dark:text-gray-500">Shutter:</span>
+                <span className="text-gray-400 dark:text-gray-500">{t(ui.shutter)}</span>
                 <span>{photo.shutter}</span>
               </div>
             </div>
@@ -85,7 +87,7 @@ export function Lightbox({ photo, onClose }: LightboxProps) {
 
           {/* Story */}
           <div>
-            <h3 className="font-semibold mb-2 text-gray-900 dark:text-white">The Story</h3>
+            <h3 className="font-semibold mb-2 text-gray-900 dark:text-white">{t(ui.story)}</h3>
             <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
               {photo.story}
             </p>

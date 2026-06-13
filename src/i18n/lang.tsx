@@ -87,7 +87,7 @@ export const ui = {
   days: { en: 'days', zh: '天' },
   rights: { en: 'All rights reserved.', zh: '保留所有权利。' },
   inspiredBy: { en: 'Inspired by', zh: '灵感来自' },
-  postsTitle: { en: 'Posts', zh: '文章' },
+  postsTitle: { en: 'Writing', zh: '文章' },
   postsSub: { en: 'Writing about evaluation, agents, and the occasional rabbit hole.', zh: '关于 evaluation、agent 的一些思考与记录。' },
   projectsTitle: { en: 'Projects', zh: '项目' },
   projectsSub: { en: 'A collection of my work and experiments.', zh: '一些项目与实验的合集。' },
@@ -96,6 +96,15 @@ export const ui = {
   articleNotFound: { en: 'Article Not Found', zh: '文章未找到' },
   toc: { en: 'Contents', zh: '目录' },
   tocEmpty: { en: 'No headings', zh: '暂无目录' },
+  loadMore: { en: 'Load More', zh: '加载更多' },
+  closeLightbox: { en: 'Close', zh: '关闭' },
+  techSpecs: { en: 'Technical Specifications', zh: '技术参数' },
+  story: { en: 'The Story', zh: '拍摄手记' },
+  camera: { en: 'Camera', zh: '机身' },
+  lens: { en: 'Lens', zh: '镜头' },
+  iso: { en: 'ISO', zh: 'ISO' },
+  aperture: { en: 'Aperture', zh: '光圈' },
+  shutter: { en: 'Shutter', zh: '快门' },
 } satisfies Record<string, Localized>;
 
 /** Post category display labels (category stays an English key for filtering). */

@@ -5,7 +5,7 @@ interface FilterBarProps {
   onFilterChange: (filter: string) => void;
 }
 
-const filters = ['All', 'Street', 'Urban', 'Monochrome', 'Nature'];
+const filters = ['All', 'Nature', 'Urban', 'Street'];
 
 export function FilterBar({ selectedFilter, onFilterChange }: FilterBarProps) {
   const t = useT();
