@@ -22,7 +22,7 @@ export function Gallery({ filter, onPhotoClick }: GalleryProps) {
 
   return (
     <div className="px-6 pb-16">
-      <div className="max-w-[1600px] mx-auto">
+      <div className="max-w-content mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {displayedPhotos.map((photo) => (
             <PhotoCard 
@@ -37,7 +37,7 @@ export function Gallery({ filter, onPhotoClick }: GalleryProps) {
           <div className="flex justify-center mt-12">
             <button
               onClick={() => setVisibleCount(prev => prev + 6)}
-              className="px-8 py-3 border border-gray-300 dark:border-[#333333] rounded-lg text-sm font-medium hover:border-[#CCFF00] hover:text-[#CCFF00] transition-all"
+              className="rounded-full border border-hairline px-6 py-2.5 text-sm font-semibold text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
             >
               {t(ui.loadMore)}
             </button>

@@ -10,8 +10,8 @@ export function PhotoCard({ photo, onClick }: PhotoCardProps) {
   const [isLoaded, setIsLoaded] = useState(false);
 
   return (
-    <div 
-      className="group relative aspect-[4/3] rounded-lg overflow-hidden border border-gray-200 dark:border-[#1A1A1A] cursor-pointer transition-all duration-300 hover:border-[#CCFF00]/50 hover:shadow-xl"
+    <div
+      className="lift group relative aspect-[4/3] cursor-pointer overflow-hidden rounded-2xl border border-hairline"
       onClick={onClick}
     >
       {/* Loading placeholder */}

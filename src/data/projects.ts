@@ -1,6 +1,6 @@
 import mev1Image from '../images/projects/SOLANA_MEV.jpg';
-import agentImage from '../images/projects/Agent_eval.png';
-import ragImage from '../images/projects/RAG_eval.jpg';
+import agentImage from '../images/projects/Agent_eval.webp';
+import ragImage from '../images/projects/RAG_eval.webp';
 import type { L } from '../i18n/lang';
 
 export interface Project {

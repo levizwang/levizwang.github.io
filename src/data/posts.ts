@@ -10,9 +10,9 @@ import { html as aiJudgeZh } from '../posts/AI/zh/agent-as-judge-vs-metric.md';
 import { html as aiPlumbingZh } from '../posts/AI/zh/plumbing-of-llm-evaluation.md';
 import { html as mevGuide } from '../posts/MEV/Solana_MEV_Complete_Guide.md';
 import { html as post9Content } from '../posts/Detailed_Explanation_of_Blockchain/Detailed_Explanation_of_Blockchain.md';
-import agentImage from '../images/projects/Agent_eval.png';
+import agentImage from '../images/projects/Agent_eval.webp';
 import mev1Image from '../images/posts/MEV_img/MEV1.jpg';
-import blockchainImage from '../images/posts/web3/web3.jpg';
+import blockchainImage from '../images/posts/web3/web3.webp';
 import type { L } from '../i18n/lang';
 
 export interface BlogPost {

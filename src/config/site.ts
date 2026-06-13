@@ -9,6 +9,14 @@ import type { L } from '../i18n/lang';
 export const siteConfig = {
   name: "Levi Wang",
   title: "Levi Wang",
+  headline: {
+    en: "Infrastructure for measuring\nand training frontier AI.",
+    zh: "为前沿 AI 构建\n测量与训练的基础设施。",
+  } as L,
+  status: {
+    en: "Founding engineer @ HUMANLAYA AI",
+    zh: "HUMANLAYA AI 创始期工程师",
+  } as L,
   description: {
     en: "I build where infrastructure meets algorithms — agent systems, LLM-evaluation infra, and the synthetic data that trains and grades frontier models.",
     zh: "主要从事 infrastructure 与算法交叉方向的工作：agent 系统、LLM evaluation 基础设施，以及用于训练和评估前沿模型的合成数据。",

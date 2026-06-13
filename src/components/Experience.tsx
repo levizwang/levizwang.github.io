@@ -1,69 +1,60 @@
-import { SectionDivider } from './SectionDivider';
+import { Reveal } from './Reveal';
 import { experience } from '../data/resume';
 import { useT, ui } from '../i18n/lang';
 
 export function Experience() {
   const t = useT();
   return (
-    <>
-      <SectionDivider label="Experience" />
+    <section id="experience" className="mx-auto mt-28 max-w-content px-6 md:mt-36">
+      <Reveal>
+        <p className="eyebrow">{t(ui.expEyebrow)}</p>
+        <h2 className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">{t(ui.experience)}</h2>
+        <p className="mt-3 text-muted-foreground">{t(ui.experienceSub)}</p>
+      </Reveal>
 
-      <section id="experience" className="max-w-4xl mx-auto px-7 lg:px-0">
-        <h2 className="mb-1 text-2xl font-medium tracking-tight text-neutral-900 dark:text-neutral-100">
-          {t(ui.experience)}
-        </h2>
-        <p className="mb-7 font-mono text-sm text-neutral-500 dark:text-neutral-400">
-          {t(ui.experienceSub)}
-        </p>
-
-        <div className="space-y-5">
-          {experience.map((job) => (
-            <article
-              key={`${job.company}-${job.period}`}
-              className="relative px-6 py-5 border border-dashed md:p-7 rounded-2xl border-neutral-300 dark:border-neutral-700"
-            >
-              <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">
-                <h3 className="text-lg tracking-tight text-neutral-900 dark:text-neutral-100">
+      <div className="mt-12 space-y-5">
+        {experience.map((job, idx) => (
+          <Reveal key={`${job.company}-${job.period}`} delay={Math.min(idx, 3) * 60}>
+            <article className="surface lift p-7 md:p-9">
+              <div className="flex flex-col gap-1.5 sm:flex-row sm:items-baseline sm:justify-between">
+                <h3 className="text-xl tracking-tight">
                   <span className="font-semibold">{job.company}</span>
-                  <span className="text-neutral-400 dark:text-neutral-500"> · </span>
-                  <span className="text-neutral-700 dark:text-neutral-300">{t(job.role)}</span>
+                  <span className="text-muted-foreground"> · {t(job.role)}</span>
                 </h3>
-                <p className="flex-shrink-0 font-mono text-xs text-neutral-500 dark:text-neutral-400 sm:text-right">
-                  {job.period}
-                  <span className="hidden sm:inline"> · </span>
-                  <span className="block sm:inline">{t(job.location)}</span>
+                <p className="shrink-0 font-mono text-xs text-muted-foreground sm:text-right">
+                  {job.period} · {t(job.location)}
                 </p>
               </div>
 
               {job.summary && (
-                <p className="mt-3 text-neutral-600 dark:text-neutral-400">{t(job.summary)}</p>
+                <p className="mt-4 max-w-3xl leading-relaxed text-muted-foreground">{t(job.summary)}</p>
               )}
 
-              <ul className="mt-3 space-y-2">
+              <ul className="mt-4 space-y-2.5">
                 {job.highlights.map((h, i) => (
                   <li
                     key={i}
-                    className="relative pl-5 text-sm leading-relaxed text-neutral-700 dark:text-neutral-300 before:absolute before:left-0 before:top-2.5 before:h-1 before:w-1 before:rounded-full before:bg-neutral-400 dark:before:bg-neutral-500"
+                    className="relative max-w-3xl pl-5 text-[0.95rem] leading-relaxed text-foreground/85 before:absolute before:left-0 before:top-[0.6em] before:h-1.5 before:w-1.5 before:rounded-full before:bg-brand/70"
                   >
                     {t(h)}
                   </li>
                 ))}
               </ul>
 
-              <div className="flex flex-wrap gap-2 mt-4">
+              <div className="mt-6 flex flex-wrap gap-2">
                 {job.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="px-2.5 py-1 font-mono text-[11px] rounded-full border border-dashed border-neutral-300 dark:border-neutral-600 text-neutral-600 dark:text-neutral-400"
+                    className="rounded-full bg-secondary px-2.5 py-1 font-mono text-[11px] text-muted-foreground"
                   >
                     {tag}
                   </span>
                 ))}
               </div>
             </article>
-          ))}
-        </div>
-      </section>
-    </>
+          </Reveal>
+        ))}
+      </div>
+    </section>
   );
 }

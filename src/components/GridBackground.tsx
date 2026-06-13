@@ -1,29 +1,39 @@
+/** Ambient backdrop: two slow, soft brand-tinted auroras over the page,
+ *  plus a faint grain. Deliberately subtle — it should register only
+ *  as a sense of depth, never as decoration. */
 export function GridBackground() {
-  const GridSide = ({ side }: { side: 'left' | 'right' }) => (
-    <div className={`absolute top-0 ${side}-0 w-1/2 h-auto bg-neutral-100 dark:bg-neutral-800`}>
-      <div className={`absolute inset-0 z-30 w-full h-full pointer-events-none bg-gradient-to-${side === 'left' ? 'tl' : 'tr'} from-white dark:from-neutral-950 from-50% via-90% to-100% via-transparent to-transparent`}></div>
-      <div className="flex flex-col w-full h-full border-t border-l divide-y divide-dashed divide-neutral-300 dark:divide-neutral-700 border-neutral-300 dark:border-neutral-900">
-        {[...Array(6)].map((_, rowIndex) => (
-          <div
-            key={rowIndex}
-            className="relative flex w-full divide-x h-[30px] sm:h-[45px] md:h-[60px] xl:h-[88px] divide-neutral-300 dark:divide-neutral-700 divide-dashed"
-          >
-            {[...Array(9)].map((_, colIndex) => (
-              <div
-                key={colIndex}
-                className="w-full h-auto bg-white dark:bg-neutral-950 aspect-square"
-              />
-            ))}
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-
   return (
-    <div className="absolute w-full h-auto" style={{ zIndex: -1 }}>
-      <GridSide side="left" />
-      <GridSide side="right" />
+    <div
+      aria-hidden
+      className="pointer-events-none fixed inset-0 -z-10 overflow-hidden"
+    >
+      {/* top-left aurora */}
+      <div
+        className="absolute -top-[18rem] -left-[14rem] h-[42rem] w-[42rem] rounded-full animate-aurora"
+        style={{
+          background:
+            'radial-gradient(closest-side, hsl(var(--brand) / 0.16), transparent 70%)',
+          filter: 'blur(40px)',
+        }}
+      />
+      {/* bottom-right aurora */}
+      <div
+        className="absolute -bottom-[20rem] -right-[16rem] h-[46rem] w-[46rem] rounded-full animate-aurora"
+        style={{
+          animationDelay: '-11s',
+          background:
+            'radial-gradient(closest-side, hsl(210 90% 56% / 0.10), transparent 70%)',
+          filter: 'blur(48px)',
+        }}
+      />
+      {/* very faint grain for an analog, non-flat surface */}
+      <div
+        className="absolute inset-0 opacity-[0.025] dark:opacity-[0.04] mix-blend-overlay"
+        style={{
+          backgroundImage:
+            "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")",
+        }}
+      />
     </div>
   );
 }

@@ -1,6 +1,9 @@
 import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
+import { Highlights } from './components/Highlights';
+import { Capabilities } from './components/Capabilities';
+import { CaseStudies } from './components/CaseStudies';
 import { Experience } from './components/Experience';
 import { Resume } from './components/Resume';
 import { BlogList } from './components/BlogList';
@@ -17,6 +20,9 @@ function Home() {
   return (
     <>
       <Hero />
+      <Highlights />
+      <Capabilities />
+      <CaseStudies />
       <Experience />
       <ProjectGrid limit={6} showViewAll />
       <BlogList limit={4} showViewAll />
@@ -29,11 +35,10 @@ export default function App() {
   return (
     <Router>
       <ScrollToTop />
-      <div className="min-h-screen bg-background text-foreground antialiased">
+      <div className="relative min-h-screen bg-background text-foreground antialiased">
         <GridBackground />
-        {/* Spacer for fixed header */}
-        <div className="relative w-full h-20 opacity-0 pointer-events-none"></div>
         <Header />
+        <div className="h-16 sm:h-20" />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/projects" element={<Projects />} />

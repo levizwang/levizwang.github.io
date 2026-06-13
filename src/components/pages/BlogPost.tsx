@@ -80,75 +80,83 @@ export function BlogPost() {
   }
 
   return (
-    <PageLayout className="max-w-[1240px] w-full">
-      <div className="mx-auto w-full max-w-[1240px] px-2 lg:px-0">
-        <div className="grid gap-10 lg:grid-cols-[240px_minmax(0,900px)]">
-          <aside className="hidden lg:block">
-            <div className="sticky top-24">
-              <div className="text-sm font-semibold text-neutral-800 dark:text-neutral-100 mb-3">{t(ui.toc)}</div>
-              <nav className="space-y-2 text-sm text-neutral-600 dark:text-neutral-400">
-                {tocItems.length > 0 ? (
-                  tocItems.map((item) => (
-                    <button
-                      key={item.id}
-                      type="button"
-                      onClick={() => handleTocClick(item.id)}
-                      className={`block w-full text-left hover:text-neutral-900 dark:hover:text-white ${item.level === 3 ? 'pl-3' : ''}`}
-                    >
-                      {item.text}
-                    </button>
-                  ))
-                ) : (
-                  <div className="text-neutral-500">{t(ui.tocEmpty)}</div>
-                )}
-              </nav>
-            </div>
-          </aside>
+    <div className="relative z-10 mx-auto w-full max-w-[1180px] px-6 pt-6 md:pt-10">
+      <Link
+        to="/posts"
+        className="inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
+      >
+        <span aria-hidden>←</span> {t(ui.writing)}
+      </Link>
 
-          <div className="min-w-0">
-            <header className="max-w-[900px] w-full mb-8">
-              <div className="mb-4 text-sm text-neutral-500 dark:text-neutral-400">
-                {post.date} · {catLabel(post.category)}
-                {post.tags && ` · #${post.tags.join(' #')}`}
-              </div>
-              <h1 className="text-3xl font-bold md:text-4xl lg:text-5xl dark:text-neutral-100 leading-tight">
-                {t(post.title)}
-              </h1>
-            </header>
-
-            {post.image && (
-              <div className="max-w-[900px] w-full mb-10">
-                <ImageWithFallback
-                  src={post.image}
-                  alt={t(post.title)}
-                  className="w-full h-auto rounded-xl shadow-sm"
-                />
-              </div>
-            )}
-
-            <article className="w-full max-w-[900px] prose prose-neutral dark:prose-invert lg:prose-lg px-2 lg:px-0 mb-20">
-              <p className="lead">{t(post.excerpt)}</p>
-              <hr />
-              {contentHtml ? (
-                <div dangerouslySetInnerHTML={{ __html: contentHtml }} />
+      <div className="mt-8 grid gap-12 lg:grid-cols-[200px_minmax(0,46rem)] lg:justify-center">
+        <aside className="hidden lg:block">
+          <div className="sticky top-28">
+            <div className="eyebrow mb-4">{t(ui.toc)}</div>
+            <nav className="space-y-2.5 text-sm">
+              {tocItems.length > 0 ? (
+                tocItems.map((item) => (
+                  <button
+                    key={item.id}
+                    type="button"
+                    onClick={() => handleTocClick(item.id)}
+                    className={`block w-full text-left leading-snug text-muted-foreground transition-colors hover:text-foreground ${
+                      item.level === 3 ? 'pl-3.5 text-[0.8rem]' : ''
+                    }`}
+                  >
+                    {item.text}
+                  </button>
+                ))
               ) : (
-                <div className="p-8 bg-neutral-100 dark:bg-neutral-900 rounded-lg text-center text-neutral-500 dark:text-neutral-400">
-                  <p>Content loading...</p>
-                  <p className="text-sm mt-2">(This is a generic template, actual content needs to be loaded)</p>
-                </div>
+                <div className="text-muted-foreground">{t(ui.tocEmpty)}</div>
               )}
-            </article>
+            </nav>
+          </div>
+        </aside>
 
-            <SectionDivider label="End" />
-
-            <div className="flex justify-center mb-10">
-              <Link to="/posts" className="px-6 py-2 border rounded-full transition-all bg-transparent border-gray-300 dark:border-[#333333] text-gray-600 dark:text-gray-400 dark:hover:text-[#CCFF00] dark:hover:border-[#CCFF00] dark:active:text-[#CCFF00] dark:active:border-[#CCFF00] dark:active:bg-transparent">
-                {t(ui.viewAllArticles)}
-              </Link>
+        <div className="min-w-0">
+          <header className="mb-10">
+            <div className="flex items-center gap-2.5 font-mono text-xs text-muted-foreground">
+              <span className="text-brand">{catLabel(post.category)}</span>
+              <span className="h-1 w-1 rounded-full bg-muted-foreground/50" />
+              <span>{post.date}</span>
             </div>
+            <h1 className="mt-4 text-3xl font-semibold leading-[1.1] tracking-tight text-balance md:text-[2.75rem]">
+              {t(post.title)}
+            </h1>
+            <p className="mt-5 text-lg leading-relaxed text-muted-foreground">{t(post.excerpt)}</p>
+          </header>
+
+          {post.image && (
+            <div className="mb-10 overflow-hidden rounded-2xl border border-hairline">
+              <ImageWithFallback src={post.image} alt={t(post.title)} className="h-auto w-full object-cover" />
+            </div>
+          )}
+
+          <article
+            className="prose prose-neutral dark:prose-invert lg:prose-lg mb-16 max-w-none
+              prose-headings:tracking-tight prose-headings:font-semibold
+              prose-a:text-foreground prose-a:underline prose-a:decoration-brand prose-a:underline-offset-4
+              prose-code:font-mono prose-code:text-[0.85em] prose-pre:rounded-2xl prose-pre:border prose-pre:border-hairline
+              prose-img:rounded-2xl prose-th:text-left"
+          >
+            {contentHtml ? (
+              <div dangerouslySetInnerHTML={{ __html: contentHtml }} />
+            ) : (
+              <p className="text-muted-foreground">…</p>
+            )}
+          </article>
+
+          <div className="hr-line" />
+          <div className="mt-10 flex justify-center">
+            <Link
+              to="/posts"
+              className="inline-flex items-center gap-2 rounded-full border border-hairline px-5 py-2.5 text-sm font-semibold transition-colors hover:bg-secondary"
+            >
+              {t(ui.viewAllArticles)} <span aria-hidden>→</span>
+            </Link>
           </div>
         </div>
       </div>
-    </PageLayout>
+    </div>
   );
 }

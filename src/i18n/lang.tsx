@@ -71,6 +71,19 @@ export function useT() {
 
 /** UI chrome strings. */
 export const ui = {
+  viewWork: { en: 'Selected work', zh: '精选项目' },
+  readWriting: { en: 'Read writing', zh: '阅读文章' },
+  atScale: { en: 'At scale', zh: '规模' },
+  atScaleTitle: {
+    en: 'Evaluation and synthetic-data systems, run at production scale.',
+    zh: '在生产规模上运行的评测与合成数据系统。',
+  },
+  buildEyebrow: { en: 'What I build', zh: '我做什么' },
+  buildTitle: { en: 'Four problems I keep coming back to.', zh: '我反复回到的四类问题。' },
+  expEyebrow: { en: 'Career', zh: '履历' },
+  workEyebrow: { en: 'Work', zh: '项目' },
+  writingEyebrow: { en: 'Writing', zh: '文章' },
+  eduEyebrow: { en: 'Background', zh: '背景' },
   experience: { en: 'Experience', zh: '工作经历' },
   experienceSub: { en: 'Agents · evaluation infra · synthetic data.', zh: 'Agent · evaluation 基础设施 · 合成数据' },
   selectedWork: { en: 'Selected Work', zh: '精选项目' },

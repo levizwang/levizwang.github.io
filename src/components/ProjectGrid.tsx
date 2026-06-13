@@ -1,134 +1,96 @@
 import { ImageWithFallback } from './figma/ImageWithFallback';
-import { SectionDivider } from './SectionDivider';
+import { Reveal } from './Reveal';
 import { projects, type Project } from '../data/projects';
 import { Link } from 'react-router-dom';
 import { useT, ui } from '../i18n/lang';
 
-function ProjectThumb({ project }: { project: Project }) {
-  const t = useT();
-  const name = t(project.name);
+function Thumb({ project, name }: { project: Project; name: string }) {
   if (project.image) {
     return (
       <ImageWithFallback
         src={project.image}
         alt={name}
-        className="w-full h-auto rounded-lg aspect-[16/9] object-cover"
+        className="aspect-[16/10] w-full rounded-xl object-cover"
       />
     );
   }
-  // Text placeholder for projects without a thumbnail.
   return (
-    <span className="flex items-center justify-center w-full aspect-[16/9] rounded-lg border border-dashed border-neutral-300 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-900/40">
-      <span className="font-mono text-2xl tracking-tight text-neutral-400 dark:text-neutral-600">
+    <span
+      className="flex aspect-[16/10] w-full items-center justify-center rounded-xl border border-hairline"
+      style={{ background: 'radial-gradient(120% 120% at 0% 0%, hsl(var(--brand) / 0.10), hsl(var(--secondary)) 60%)' }}
+    >
+      <span className="font-mono text-2xl tracking-tight text-muted-foreground">
         {name.split(' ')[0]}
       </span>
     </span>
   );
 }
 
-function ProjectCardInner({ project }: { project: Project }) {
+function Card({ project }: { project: Project }) {
   const t = useT();
-  return (
-    <span className="relative z-30 block duration-300 ease-out group-hover:-translate-x-1 group-hover:-translate-y-1">
-      <span className="block w-full">
-        <ProjectThumb project={project} />
-      </span>
-      <span className="block w-full px-1 mt-5 mb-1 sm:mt-3">
-        <span className="flex items-center mb-0 tracking-tight text-neutral-900 dark:text-neutral-100">
-          <span>{t(project.name)}</span>
-          {project.link && (
-            <svg
-              className="group-hover:translate-x-0 group-hover:translate-y-0 -rotate-45 translate-y-1 -translate-x-1 w-2.5 h-2.5 stroke-current ml-1 transition-all ease-in-out duration-200 transform"
-              viewBox="0 0 13 15"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <g stroke="none" strokeWidth="1" fill="none" strokeLinecap="round" strokeLinejoin="round">
-                <g stroke="currentColor" strokeWidth="2.4">
-                  <polyline
-                    className="transition-all duration-200 ease-out opacity-0 delay-0 group-hover:opacity-100"
-                    points="5.33333333 0 10.8333333 5.5 5.33333333 11"
-                  />
-                  <line
-                    className="transition-all duration-200 ease-out transform -translate-x-1 opacity-0 group-hover:translate-x-0 group-hover:opacity-100"
-                    x1="10.8333333"
-                    y1="5.5"
-                    x2="0.833333333"
-                    y2="5.16666667"
-                  />
-                </g>
-              </g>
-            </svg>
-          )}
-        </span>
-        {project.tag && (
-          <span className="inline-block mt-1 font-mono text-[11px] text-neutral-500 dark:text-neutral-500">
-            {t(project.tag)}
+  const name = t(project.name);
+  const external = project.link?.startsWith('http');
+  const inner = (
+    <>
+      <Thumb project={project} name={name} />
+      <div className="mt-5 flex items-baseline justify-between gap-3">
+        <h3 className="text-lg font-semibold tracking-tight">{name}</h3>
+        {project.link && (
+          <span className="shrink-0 text-muted-foreground transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5">
+            ↗
           </span>
         )}
-        <span className="block mt-1 text-neutral-600 dark:text-neutral-400 line-clamp-4">
-          {t(project.description)}
-        </span>
-      </span>
-    </span>
+      </div>
+      {project.tag && (
+        <span className="mt-1 block font-mono text-[11px] text-brand">{t(project.tag)}</span>
+      )}
+      <p className="mt-2 line-clamp-4 text-sm leading-relaxed text-muted-foreground">
+        {t(project.description)}
+      </p>
+    </>
+  );
+
+  const cls = 'surface lift group flex h-full flex-col p-5';
+  return project.link ? (
+    <a href={project.link} target={external ? '_blank' : undefined} rel={external ? 'noopener noreferrer' : undefined} className={cls}>
+      {inner}
+    </a>
+  ) : (
+    <div className={cls}>{inner}</div>
   );
 }
 
 export function ProjectGrid({ limit, showViewAll = true }: { limit?: number; showViewAll?: boolean }) {
   const t = useT();
-  const displayedProjects = limit ? projects.slice(0, limit) : projects;
-
-  const cardClass =
-    'relative flex flex-col items-stretch duration-300 ease-out p-7 sm:p-3 group rounded-2xl';
-  const layers = (
-    <>
-      <span className="absolute inset-0 z-20 block w-full h-full duration-300 ease-out bg-transparent border border-transparent border-dashed group-hover:-translate-x-1 group-hover:-translate-y-1 group-hover:border group-hover:border-neutral-300 dark:group-hover:border-neutral-600 group-hover:border-dashed rounded-2xl group-hover:bg-white dark:group-hover:bg-neutral-800"></span>
-      <span className="absolute inset-0 z-10 block w-full h-full duration-300 ease-out border border-dashed rounded-2xl border-neutral-300 dark:border-neutral-600 group-hover:translate-x-1 group-hover:translate-y-1"></span>
-    </>
-  );
+  const shown = limit ? projects.slice(0, limit) : projects;
 
   return (
-    <>
-      {showViewAll && <SectionDivider label="Projects" />}
+    <section id="projects" className={`mx-auto max-w-content px-6 ${showViewAll ? 'mt-28 md:mt-36' : 'mt-8 md:mt-12'}`}>
+      <Reveal>
+        <p className="eyebrow">{t(ui.workEyebrow)}</p>
+        <h2 className="mt-3 text-3xl font-semibold tracking-tight sm:text-5xl">
+          {showViewAll ? t(ui.selectedWork) : t(ui.projectsTitle)}
+        </h2>
+      </Reveal>
 
-      <section id="projects" className="max-w-4xl mx-auto px-7 lg:px-0">
-        {showViewAll && (
-          <h2 className="mb-1 text-2xl font-medium tracking-tight text-neutral-900 dark:text-neutral-100">
-            {t(ui.selectedWork)}
-          </h2>
-        )}
-        <div className="grid items-stretch w-full grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-7 mt-7">
-          {displayedProjects.map((project) =>
-            project.link ? (
-              <a
-                key={project.id}
-                href={project.link}
-                target={project.link.startsWith('http') ? '_blank' : undefined}
-                rel={project.link.startsWith('http') ? 'noopener noreferrer' : undefined}
-                className={cardClass}
-              >
-                {layers}
-                <ProjectCardInner project={project} />
-              </a>
-            ) : (
-              <div key={project.id} className={cardClass}>
-                {layers}
-                <ProjectCardInner project={project} />
-              </div>
-            )
-          )}
+      <div className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {shown.map((project, i) => (
+          <Reveal key={project.id} delay={(i % 3) * 70}>
+            <Card project={project} />
+          </Reveal>
+        ))}
+      </div>
+
+      {showViewAll && (
+        <div className="mt-12 flex justify-center">
+          <Link
+            to="/projects"
+            className="inline-flex items-center gap-2 rounded-full border border-hairline px-5 py-2.5 text-sm font-semibold transition-colors hover:bg-secondary"
+          >
+            {t(ui.viewAllProjects)} <span aria-hidden>→</span>
+          </Link>
         </div>
-
-        {showViewAll && (
-          <div className="flex items-center justify-center w-full py-5">
-            <Link
-              to="/projects"
-              className="inline-flex w-auto px-4 py-2 mt-5 duration-300 ease-out border rounded-full bg-transparent border-gray-300 dark:border-[#333333] text-gray-600 dark:text-gray-400 hover:text-neutral-900 hover:border-neutral-900 dark:hover:text-[#CCFF00] dark:hover:border-[#CCFF00] active:text-[#CCFF00] active:border-[#CCFF00] active:bg-transparent"
-            >
-              {t(ui.viewAllProjects)}
-            </Link>
-          </div>
-        )}
-      </section>
-    </>
+      )}
+    </section>
   );
 }
