@@ -14,8 +14,8 @@ export const siteConfig = {
     zh: "我在“基础设施”与“算法”的交界处工作——构建智能体系统、大模型评测基础设施，以及训练和评判前沿模型的合成数据。",
   } as L,
   bio: {
-    en: "AI R&D Engineer. Agent architecture & infra · Evaluation infrastructure · Synthetic-data algorithms. Currently @ Fintopia; previously VLM-evaluation @ ByteDance and IT risk assurance @ PwC.",
-    zh: "AI 研发工程师。智能体架构与基础设施 · 评测基础设施 · 合成数据算法。现任职于 Fintopia；曾在字节跳动做 VLM 评测、在普华永道（PwC）做 IT 风险审计。",
+    en: "AI Infra Engineer. Agentic & evaluation infrastructure · RL environments · synthetic / SFT data. Founding-stage engineer @ HUMANLAYA AI (Sequoia / Capital Today / BAI-backed, in the mold of Surge & Mercor); previously @ Fintopia, ByteDance (Doubao VLM evals), and PwC.",
+    zh: "AI Infra 工程师。智能体与评测基础设施 · 强化学习环境 · 合成 / SFT 数据。现任红杉 / 今日资本 / BAI 投资的 HUMANLAYA AI（对标 Surge 与 Mercor）创始期工程师；曾任职于 Fintopia、字节跳动（豆包 VLM 评测）与普华永道（PwC）。",
   } as L,
   location: { en: "Beijing, China", zh: "中国 · 北京" } as L,
   resumeEmail: "wang.z.levi@gmail.com",
