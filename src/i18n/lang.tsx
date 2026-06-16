@@ -90,8 +90,6 @@ export const ui = {
   selectedWork: { en: 'Selected Work', zh: '精选项目' },
   viewAllProjects: { en: 'View All Projects', zh: '查看全部项目' },
   writing: { en: 'Writing', zh: '文章' },
-  categories: { en: 'Categories:', zh: '分类：' },
-  tags: { en: 'Tags:', zh: '标签：' },
   viewAllArticles: { en: 'View All Articles', zh: '查看全部文章' },
   noArticles: { en: 'No articles found matching your criteria', zh: '没有符合条件的文章' },
   education: { en: 'Education', zh: '教育经历' },
@@ -99,12 +97,8 @@ export const ui = {
   beyondWork: { en: 'Beyond Work', zh: '工作之外' },
   runningFor: { en: 'Running for', zh: '已运行' },
   days: { en: 'days', zh: '天' },
-  rights: { en: 'All rights reserved.', zh: '保留所有权利。' },
   inspiredBy: { en: 'Inspired by', zh: '灵感来自' },
-  postsTitle: { en: 'Writing', zh: '文章' },
-  postsSub: { en: 'Writing about evaluation, agents, and the occasional rabbit hole.', zh: '关于 evaluation、agent 的一些思考与记录。' },
   projectsTitle: { en: 'Projects', zh: '项目' },
-  projectsSub: { en: 'A collection of my work and experiments.', zh: '一些项目与实验的合集。' },
   opticsTitle: { en: 'Optics', zh: '光影' },
   opticsSub: { en: 'Capturing light in the Dark Forest. 35mm & Digital.', zh: '在黑暗森林中捕捉光。35mm 与数码。' },
   articleNotFound: { en: 'Article Not Found', zh: '文章未找到' },
@@ -125,7 +119,6 @@ export const ui = {
 export const categoryLabels: Record<string, Localized> = {
   'AI Evaluation': { en: 'AI Evaluation', zh: 'AI 评测' },
   Web3: { en: 'Web3', zh: 'Web3' },
-  MEV: { en: 'MEV', zh: 'MEV' },
 };
 
 /** Optics filter display labels (filter value stays an English key). */
@@ -133,6 +126,5 @@ export const filterLabels: Record<string, Localized> = {
   All: { en: 'All', zh: '全部' },
   Street: { en: 'Street', zh: '街拍' },
   Urban: { en: 'Urban', zh: '城市' },
-  Monochrome: { en: 'Monochrome', zh: '黑白' },
   Nature: { en: 'Nature', zh: '自然' },
 };
