@@ -2,12 +2,14 @@ import { useState, useMemo } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 import { Reveal } from './Reveal';
+import { SectionHeader } from './ui/SectionHeader';
+import { PillLink } from './ui/PillLink';
 import { blogPosts } from '../data/posts';
-import { useT, ui, categoryLabels } from '../i18n/lang';
+import { useT, ui, categoryLabels, labelFor } from '../i18n/lang';
 
 export function BlogList({ limit, showViewAll = true }: { limit?: number; showViewAll?: boolean }) {
   const t = useT();
-  const catLabel = (c: string) => t(categoryLabels[c] ?? { en: c, zh: c });
+  const catLabel = (c: string) => t(labelFor(categoryLabels, c));
   const navigate = useNavigate();
   const [category, setCategory] = useState<string | null>(null);
 
@@ -28,8 +30,11 @@ export function BlogList({ limit, showViewAll = true }: { limit?: number; showVi
       <Reveal>
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
-            <p className="eyebrow">{t(ui.writingEyebrow)}</p>
-            <h2 className={`mt-3 font-semibold tracking-tight ${showViewAll ? 'text-3xl sm:text-4xl' : 'text-3xl sm:text-5xl'}`}>{t(ui.writing)}</h2>
+            <SectionHeader
+              eyebrow={ui.writingEyebrow}
+              title={ui.writing}
+              size={showViewAll ? 'section' : 'page'}
+            />
           </div>
           {!showViewAll && (
             <div className="flex flex-wrap gap-2">
@@ -97,12 +102,9 @@ export function BlogList({ limit, showViewAll = true }: { limit?: number; showVi
 
       {showViewAll && (
         <div className="mt-12 flex justify-center">
-          <Link
-            to="/posts"
-            className="inline-flex items-center gap-2 rounded-full border border-hairline px-5 py-2.5 text-sm font-semibold transition-colors hover:bg-secondary"
-          >
+          <PillLink to="/posts">
             {t(ui.viewAllArticles)} <span aria-hidden>→</span>
-          </Link>
+          </PillLink>
         </div>
       )}
     </section>

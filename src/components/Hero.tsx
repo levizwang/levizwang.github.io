@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { ImageWithFallback } from './figma/ImageWithFallback';
+import { SocialLinks } from './ui/SocialLinks';
 import { siteConfig } from '../config/site';
 import { useT, ui } from '../i18n/lang';
 
@@ -59,20 +60,7 @@ export function Hero() {
           </div>
 
           {/* Socials */}
-          <div className="mt-9 flex items-center gap-5">
-            {siteConfig.social.map((item) => (
-              <a
-                key={item.name}
-                href={item.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={item.name}
-                className="text-muted-foreground transition-colors hover:text-foreground"
-              >
-                <item.icon size={item.size} />
-              </a>
-            ))}
-          </div>
+          <SocialLinks className="mt-9" />
         </div>
 
         {/* Right: portrait */}

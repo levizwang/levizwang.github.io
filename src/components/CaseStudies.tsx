@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { Reveal } from './Reveal';
 import { useT, ui, type L } from '../i18n/lang';
 import { type PostId } from '../data/posts';
+import { TagPill } from './ui/TagPill';
 import { evalPipeline as pipelineImage, agentAsJudge as judgeImage, harbor as harborImage } from '../images/projects';
 
 interface Spec {
@@ -108,9 +109,7 @@ export function CaseStudies() {
                   <p className="mt-4 leading-relaxed text-muted-foreground">{t(s.body)}</p>
                   <div className="mt-6 flex flex-wrap items-center gap-2">
                     {s.tags.map((tag) => (
-                      <span key={tag} className="rounded-full bg-secondary px-2.5 py-1 font-mono text-[11px] text-muted-foreground">
-                        {tag}
-                      </span>
+                      <TagPill key={tag}>{tag}</TagPill>
                     ))}
                   </div>
                   <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2">

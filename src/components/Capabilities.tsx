@@ -1,5 +1,7 @@
 import { Workflow, Gauge, FlaskConical, Layers, type LucideIcon } from 'lucide-react';
 import { Reveal } from './Reveal';
+import { SectionHeader } from './ui/SectionHeader';
+import { TagPill } from './ui/TagPill';
 import { useT, ui } from '../i18n/lang';
 import { pillars, type PillarIcon } from '../data/capabilities';
 
@@ -15,10 +17,7 @@ export function Capabilities() {
   return (
     <section className="mx-auto mt-28 max-w-content px-6 md:mt-36">
       <Reveal>
-        <p className="eyebrow">{t(ui.buildEyebrow)}</p>
-        <h2 className="mt-3 max-w-2xl text-3xl font-semibold tracking-tight sm:text-4xl">
-          {t(ui.buildTitle)}
-        </h2>
+        <SectionHeader eyebrow={ui.buildEyebrow} title={ui.buildTitle} narrow />
       </Reveal>
 
       <div className="mt-12 grid gap-5 sm:grid-cols-2">
@@ -34,12 +33,7 @@ export function Capabilities() {
               <p className="mt-2.5 leading-relaxed text-muted-foreground">{t(p.body)}</p>
               <div className="mt-5 flex flex-wrap gap-2">
                 {p.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="rounded-full bg-secondary px-2.5 py-1 font-mono text-[11px] text-muted-foreground"
-                  >
-                    {tag}
-                  </span>
+                  <TagPill key={tag}>{tag}</TagPill>
                 ))}
               </div>
             </article>

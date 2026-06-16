@@ -3,7 +3,8 @@ import { useParams, Link } from 'react-router-dom';
 import { blogPosts } from '../../data/posts';
 import { ImageWithFallback } from '../figma/ImageWithFallback';
 import { PageLayout } from '../PageLayout';
-import { useT, ui, categoryLabels } from '../../i18n/lang';
+import { PillLink } from '../ui/PillLink';
+import { useT, ui, categoryLabels, labelFor } from '../../i18n/lang';
 import Prism from 'prismjs';
 import 'prismjs/components/prism-bash';
 import 'prismjs/components/prism-go';
@@ -18,7 +19,7 @@ import 'prismjs/components/prism-yaml';
 
 export function BlogPost() {
   const t = useT();
-  const catLabel = (c: string) => t(categoryLabels[c] ?? { en: c, zh: c });
+  const catLabel = (c: string) => t(labelFor(categoryLabels, c));
   const { id } = useParams<{ id: string }>();
   const post = blogPosts.find((p) => p.id === id);
   const rawContent = post?.content ? t(post.content) : '';
@@ -150,12 +151,9 @@ export function BlogPost() {
 
           <div className="hr-line" />
           <div className="mt-10 flex justify-center">
-            <Link
-              to="/posts"
-              className="inline-flex items-center gap-2 rounded-full border border-hairline px-5 py-2.5 text-sm font-semibold transition-colors hover:bg-secondary"
-            >
+            <PillLink to="/posts">
               {t(ui.viewAllArticles)} <span aria-hidden>→</span>
-            </Link>
+            </PillLink>
           </div>
         </div>
       </div>

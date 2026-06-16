@@ -1,4 +1,5 @@
 import { Reveal } from './Reveal';
+import { SectionHeader } from './ui/SectionHeader';
 import { education, skills, interests } from '../data/resume';
 import { useT, ui } from '../i18n/lang';
 
@@ -7,8 +8,7 @@ export function Resume() {
   return (
     <section id="education" className="mx-auto mt-28 max-w-content px-6 md:mt-36">
       <Reveal>
-        <p className="eyebrow">{t(ui.eduEyebrow)}</p>
-        <h2 className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">{t(ui.education)}</h2>
+        <SectionHeader eyebrow={ui.eduEyebrow} title={ui.education} />
       </Reveal>
 
       <div className="mt-12 space-y-5">

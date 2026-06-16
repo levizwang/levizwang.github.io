@@ -69,6 +69,11 @@ export function useT() {
   return (v: L | undefined | null) => pick(lang, v);
 }
 
+/** Look up a display label, falling back to the raw key in both languages. */
+export function labelFor(map: Record<string, Localized>, key: string): L {
+  return map[key] ?? { en: key, zh: key };
+}
+
 /** UI chrome strings. */
 export const ui = {
   viewWork: { en: 'Selected work', zh: '精选项目' },

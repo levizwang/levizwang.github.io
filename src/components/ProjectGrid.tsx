@@ -1,7 +1,8 @@
 import { ImageWithFallback } from './figma/ImageWithFallback';
 import { Reveal } from './Reveal';
+import { SectionHeader } from './ui/SectionHeader';
+import { PillLink } from './ui/PillLink';
 import { projects, type Project } from '../data/projects';
-import { Link } from 'react-router-dom';
 import { useT, ui } from '../i18n/lang';
 
 function Thumb({ project, name }: { project: Project; name: string }) {
@@ -67,10 +68,11 @@ export function ProjectGrid({ limit, showViewAll = true }: { limit?: number; sho
   return (
     <section id="projects" className={`mx-auto max-w-content px-6 ${showViewAll ? 'mt-28 md:mt-36' : 'mt-8 md:mt-12'}`}>
       <Reveal>
-        <p className="eyebrow">{t(ui.workEyebrow)}</p>
-        <h2 className="mt-3 text-3xl font-semibold tracking-tight sm:text-5xl">
-          {showViewAll ? t(ui.selectedWork) : t(ui.projectsTitle)}
-        </h2>
+        <SectionHeader
+          eyebrow={ui.workEyebrow}
+          title={showViewAll ? ui.selectedWork : ui.projectsTitle}
+          size="page"
+        />
       </Reveal>
 
       <div className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -83,12 +85,9 @@ export function ProjectGrid({ limit, showViewAll = true }: { limit?: number; sho
 
       {showViewAll && (
         <div className="mt-12 flex justify-center">
-          <Link
-            to="/projects"
-            className="inline-flex items-center gap-2 rounded-full border border-hairline px-5 py-2.5 text-sm font-semibold transition-colors hover:bg-secondary"
-          >
+          <PillLink to="/projects">
             {t(ui.viewAllProjects)} <span aria-hidden>→</span>
-          </Link>
+          </PillLink>
         </div>
       )}
     </section>

@@ -1,4 +1,4 @@
-import { useT, filterLabels } from '../../i18n/lang';
+import { useT, filterLabels, labelFor } from '../../i18n/lang';
 
 interface FilterBarProps {
   selectedFilter: string;
@@ -22,7 +22,7 @@ export function FilterBar({ selectedFilter, onFilterChange }: FilterBarProps) {
                 : 'border-hairline text-muted-foreground hover:text-foreground'
             }`}
           >
-            {t(filterLabels[filter] ?? { en: filter, zh: filter })}
+            {t(labelFor(filterLabels, filter))}
           </button>
         ))}
       </div>

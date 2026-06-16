@@ -1,4 +1,6 @@
 import { Reveal } from './Reveal';
+import { SectionHeader } from './ui/SectionHeader';
+import { TagPill } from './ui/TagPill';
 import { experience } from '../data/resume';
 import { useT, ui } from '../i18n/lang';
 
@@ -7,9 +9,7 @@ export function Experience() {
   return (
     <section id="experience" className="mx-auto mt-28 max-w-content px-6 md:mt-36">
       <Reveal>
-        <p className="eyebrow">{t(ui.expEyebrow)}</p>
-        <h2 className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">{t(ui.experience)}</h2>
-        <p className="mt-3 text-muted-foreground">{t(ui.experienceSub)}</p>
+        <SectionHeader eyebrow={ui.expEyebrow} title={ui.experience} sub={ui.experienceSub} />
       </Reveal>
 
       <div className="mt-12 space-y-5">
@@ -43,12 +43,7 @@ export function Experience() {
 
               <div className="mt-6 flex flex-wrap gap-2">
                 {job.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="rounded-full bg-secondary px-2.5 py-1 font-mono text-[11px] text-muted-foreground"
-                  >
-                    {tag}
-                  </span>
+                  <TagPill key={tag}>{tag}</TagPill>
                 ))}
               </div>
             </article>

@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { SocialLinks } from './ui/SocialLinks';
 import { siteConfig } from '../config/site';
 import { useT, ui } from '../i18n/lang';
 
@@ -19,20 +20,7 @@ export function Footer() {
           <p className="mt-2 max-w-xs text-sm text-muted-foreground">{t(siteConfig.bio)}</p>
         </div>
 
-        <div className="flex items-center gap-5">
-          {siteConfig.social.map((item) => (
-            <a
-              key={item.name}
-              href={item.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={item.name}
-              className="text-muted-foreground transition-colors hover:text-foreground"
-            >
-              <item.icon size={item.size} />
-            </a>
-          ))}
-        </div>
+        <SocialLinks />
       </div>
 
       <div className="mt-10 flex flex-col gap-1 font-mono text-xs text-muted-foreground sm:flex-row sm:items-center sm:gap-4">
