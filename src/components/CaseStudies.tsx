@@ -1,6 +1,9 @@
 import { Link } from 'react-router-dom';
 import { Reveal } from './Reveal';
 import { useT, ui, type L } from '../i18n/lang';
+import pipelineImage from '../images/projects/Eval_Pipeline.webp';
+import judgeImage from '../images/projects/Agent_as_Judge.webp';
+import harborImage from '../images/projects/Harbor.webp';
 
 interface Spec {
   k: string;
@@ -10,6 +13,7 @@ interface Study {
   eyebrow: L;
   title: L;
   body: L;
+  image: string;
   specs: Spec[];
   link?: { href: string; label: L };
   article?: string;
@@ -33,6 +37,7 @@ const STUDIES: Study[] = [
       { k: 'E1≥.90 · E2≤.70 · E3≤.15', v: { en: 'anti-guessing gate', zh: '防蒙门槛' } },
       { k: '48', v: { en: 'adversarial-review findings', zh: '条对抗式评审 finding' } },
     ],
+    image: pipelineImage,
     article: 'evidence-ledger',
     tags: ['Cross-vendor independence', 'Evidence ledger', 'Resumable state machine'],
   },
@@ -52,6 +57,7 @@ const STUDIES: Study[] = [
       { k: '566 / 15', v: { en: 'judgments · tasks (pilot)', zh: '次判定 · 任务（pilot）' } },
       { k: '69k vs 5.3M', v: { en: 'tokens — more accurate, cheaper', zh: 'token —— 更准且更便宜' } },
     ],
+    image: judgeImage,
     article: 'agent-as-judge',
     tags: ['Agent-as-judge', 'Human-aligned', 'Cost-aware'],
   },
@@ -70,6 +76,7 @@ const STUDIES: Study[] = [
       { k: '50', v: { en: 'unit tests', zh: '个单元测试' } },
       { k: 'harbor-framework/harbor', v: { en: 'public framework', zh: '公开框架' } },
     ],
+    image: harborImage,
     link: { href: 'https://github.com/levizwang/harbor', label: { en: 'View the fork', zh: '查看 fork' } },
     tags: ['Harbor', 'Agent adapter', 'Tested'],
   },
@@ -83,6 +90,15 @@ export function CaseStudies() {
         {STUDIES.map((s, i) => (
           <Reveal key={i}>
             <article className="surface overflow-hidden">
+              {/* figure */}
+              <div className="flex justify-center border-b border-hairline bg-[hsl(220_16%_97%)] px-6 py-7 md:py-9">
+                <img
+                  src={s.image}
+                  alt={t(s.title)}
+                  loading="lazy"
+                  className="max-h-[300px] w-auto max-w-full rounded-lg object-contain md:max-h-[340px]"
+                />
+              </div>
               <div className="grid gap-px md:grid-cols-[1.35fr_1fr]">
                 {/* narrative */}
                 <div className="p-8 md:p-11">
