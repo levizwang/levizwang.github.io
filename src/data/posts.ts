@@ -10,8 +10,11 @@ import { html as aiJudgeZh } from '../posts/AI/zh/agent-as-judge-vs-metric.md';
 import { html as aiPlumbingZh } from '../posts/AI/zh/plumbing-of-llm-evaluation.md';
 import { html as mevGuide } from '../posts/MEV/Solana_MEV_Complete_Guide.md';
 import { html as post9Content } from '../posts/Detailed_Explanation_of_Blockchain/Detailed_Explanation_of_Blockchain.md';
-import agentImage from '../images/projects/Agent_eval.webp';
-import mev1Image from '../images/posts/MEV_img/MEV1.jpg';
+import pipelineImage from '../images/projects/Eval_Pipeline.webp';
+import judgeImage from '../images/projects/Agent_as_Judge.webp';
+import nvwaImage from '../images/projects/Nvwa.webp';
+import harborImage from '../images/projects/Harbor.webp';
+import mevImage from '../images/projects/Solana_MEV.webp';
 import blockchainImage from '../images/posts/web3/web3.webp';
 import type { L } from '../i18n/lang';
 
@@ -41,6 +44,7 @@ export const blogPosts: BlogPost[] = [
     date: 'Jun 13, 2026',
     category: 'AI Evaluation',
     tags: ['LLM Eval', 'Synthetic Data', 'Anti-Hallucination'],
+    image: pipelineImage,
   },
   {
     id: 'eval-validity',
@@ -56,7 +60,7 @@ export const blogPosts: BlogPost[] = [
     date: 'Jun 12, 2026',
     category: 'AI Evaluation',
     tags: ['LLM Eval', 'Agents', 'Synthetic Data'],
-    image: agentImage,
+    image: judgeImage,
   },
   {
     id: 'adversarial-qc',
@@ -72,6 +76,7 @@ export const blogPosts: BlogPost[] = [
     date: 'Jun 09, 2026',
     category: 'AI Evaluation',
     tags: ['Synthetic Data', 'Adversarial QC', 'Agents'],
+    image: nvwaImage,
   },
   {
     id: 'agent-as-judge',
@@ -87,6 +92,7 @@ export const blogPosts: BlogPost[] = [
     date: 'Jun 06, 2026',
     category: 'AI Evaluation',
     tags: ['LLM Eval', 'LLM-as-judge'],
+    image: judgeImage,
   },
   {
     id: 'eval-plumbing',
@@ -102,6 +108,7 @@ export const blogPosts: BlogPost[] = [
     date: 'May 28, 2026',
     category: 'AI Evaluation',
     tags: ['LLM Eval', 'Infrastructure', 'Open Source'],
+    image: harborImage,
   },
   {
     id: '9',
@@ -130,6 +137,6 @@ export const blogPosts: BlogPost[] = [
     date: 'Jan 20, 2026',
     category: 'Web3',
     tags: ['MEV', 'Solana', 'Rust'],
-    image: mev1Image,
+    image: mevImage,
   },
 ];

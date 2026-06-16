@@ -1,6 +1,9 @@
-import mev1Image from '../images/projects/SOLANA_MEV.jpg';
-import agentImage from '../images/projects/Agent_eval.webp';
-import ragImage from '../images/projects/RAG_eval.webp';
+import agentImage from '../images/projects/Agent_as_Judge.webp';
+import pipelineImage from '../images/projects/Eval_Pipeline.webp';
+import harborImage from '../images/projects/Harbor.webp';
+import ragImage from '../images/projects/RAG_Eval.webp';
+import nvwaImage from '../images/projects/Nvwa.webp';
+import mevImage from '../images/projects/Solana_MEV.webp';
 import type { L } from '../i18n/lang';
 
 export interface Project {
@@ -31,15 +34,17 @@ export const projects: Project[] = [
       en: 'Multi-agent pipeline that turns expert workspaces into hard, evidence-grounded agentic exam items (finance / consulting / law). Cross-vendor model independence, evidence ledgers, and anti-leakage / anti-guessing validity safeguards.',
       zh: '多智能体流水线，将专家工作区转化为高难度、以证据为依据的智能体考题（金融 / 咨询 / 法律）。跨厂商模型独立、证据账本、防泄漏 / 防蒙的有效性保障。',
     },
+    image: pipelineImage,
     tag: { en: 'Synthetic Data', zh: '合成数据' },
   },
   {
     id: 'harbor-eval',
     name: { en: 'Harbor — Eval Execution Framework', zh: 'Harbor — 评测执行框架' },
     description: {
-      en: 'Operated and extended a containerized eval framework across 6 model families × 5 agent harnesses (Claude Code, OpenHands, Codex, Stirrup, OpenRouter). Contributed a Stirrup-agent integration upstream via a reviewed pull request.',
-      zh: '操作并扩展容器化评测框架，覆盖 6 个模型族 × 5 种 agent harness（Claude Code、OpenHands、Codex、Stirrup、OpenRouter）。以经 review 的 PR 向上游贡献了 Stirrup agent 集成。',
+      en: 'Operated and extended a containerized eval framework across 6 model families × 5 agent harnesses (Claude Code, OpenHands, Codex, Stirrup, OpenRouter). Built a production-grade, upstream-ready Stirrup-agent integration (50 unit tests) on a clean fork.',
+      zh: '操作并扩展容器化评测框架，覆盖 6 个模型族 × 5 种 agent harness（Claude Code、OpenHands、Codex、Stirrup、OpenRouter）。在干净的 fork 上做了一个生产级、可直接上游的 Stirrup agent 集成（50 个单测）。',
     },
+    image: harborImage,
     link: 'https://github.com/levizwang/harbor',
     tag: { en: 'Open Source', zh: '开源' },
   },
@@ -61,6 +66,7 @@ export const projects: Project[] = [
       en: 'A layered “1 seed → N tasks” office-document synthesis framework with ~21 automated checkers plus LLM QC/repair and seed-provenance tracing — built to beat the low-diversity failure mode of single-shot generation.',
       zh: '分层的“1 种子 → N 题”办公文档合成框架，含 ~21 个自动 checker、LLM 质检/修复与种子溯源——专为克服单轮生成的“低多样性”失效而建。',
     },
+    image: nvwaImage,
     tag: { en: 'Synthetic Data', zh: '合成数据' },
   },
   {
@@ -70,7 +76,7 @@ export const projects: Project[] = [
       en: 'A personal Web3 side-project: a Solana MEV searcher (scout → pricing → cross-DEX arbitrage → Jito bundles). Written up as an 8-part technical series — see Writing.',
       zh: '个人 Web3 副项目：Solana MEV 搜索器（监听 → 定价 → 跨 DEX 套利 → Jito bundle）。整理为 8 篇技术系列——见文章。',
     },
-    image: mev1Image,
+    image: mevImage,
     link: 'https://github.com/levizwang/Solana-MEV',
     tag: { en: 'Web3 · interest', zh: 'Web3 · 兴趣' },
   },
