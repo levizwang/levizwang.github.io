@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { PhotoCard } from './PhotoCard';
 import { Photo } from '@/types/optics';
 import { photos } from '@/data/optics';
@@ -12,8 +12,13 @@ interface GalleryProps {
 export function Gallery({ filter, onPhotoClick }: GalleryProps) {
   const t = useT();
   const [visibleCount, setVisibleCount] = useState(9);
-  
-  const filteredPhotos = filter === 'All' 
+
+  // Reset pagination whenever the active filter changes.
+  useEffect(() => {
+    setVisibleCount(9);
+  }, [filter]);
+
+  const filteredPhotos = filter === 'All'
     ? photos 
     : photos.filter(photo => photo.category === filter);
 

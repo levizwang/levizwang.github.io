@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { siteConfig } from '../config/site';
 import { useT, ui } from '../i18n/lang';
 
@@ -12,9 +13,9 @@ export function Footer() {
       <div className="hr-line" />
       <div className="flex flex-col items-start gap-8 pt-12 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <a href="/" className="text-lg font-semibold tracking-tight">
+          <Link to="/" className="text-lg font-semibold tracking-tight">
             Levi Wang
-          </a>
+          </Link>
           <p className="mt-2 max-w-xs text-sm text-muted-foreground">{t(siteConfig.bio)}</p>
         </div>
 

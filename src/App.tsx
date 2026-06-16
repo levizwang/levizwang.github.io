@@ -1,4 +1,4 @@
-import { HashRouter as Router, Routes, Route } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { Highlights } from './components/Highlights';
@@ -45,6 +45,7 @@ export default function App() {
           <Route path="/posts" element={<Post />} />
           <Route path="/post/:id" element={<BlogPost />} />
           <Route path="/optics" element={<Optics />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
         <Footer />
       </div>

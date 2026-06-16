@@ -181,6 +181,7 @@
   html { scroll-behavior: auto; }
   .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
   .lift { transition: none; }
+  .animate-marquee, .animate-aurora, .animate-ping, .animate-pulse { animation: none !important; }
 }
 
 @keyframes fadeIn {

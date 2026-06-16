@@ -37,16 +37,19 @@ export function BlogPost() {
     const headings = Array.from(doc.querySelectorAll('h2, h3'));
     const slugCounts = new Map<string, number>();
 
+    // Keep CJK ideographs so all-Chinese headings still produce a real id
+    // (\w is ASCII-only, which would otherwise collapse them to '').
     const slugify = (value: string) => value
       .trim()
       .toLowerCase()
-      .replace(/[^\w\s-]/g, '')
+      .replace(/[^\w一-鿿\s-]/g, '')
       .replace(/\s+/g, '-')
-      .replace(/-+/g, '-');
+      .replace(/-+/g, '-')
+      .replace(/^-+|-+$/g, '');
 
-    const toc = headings.map((heading) => {
+    const toc = headings.map((heading, index) => {
       const text = heading.textContent?.trim() ?? '';
-      const baseId = slugify(text || 'section');
+      const baseId = slugify(text) || `section-${index}`;
       const count = slugCounts.get(baseId) ?? 0;
       slugCounts.set(baseId, count + 1);
       const id = count === 0 ? baseId : `${baseId}-${count}`;

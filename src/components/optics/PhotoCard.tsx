@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Photo } from '@/types/optics';
 
 interface PhotoCardProps {
@@ -8,6 +8,12 @@ interface PhotoCardProps {
 
 export function PhotoCard({ photo, onClick }: PhotoCardProps) {
   const [isLoaded, setIsLoaded] = useState(false);
+  const imgRef = useRef<HTMLImageElement>(null);
+
+  // A cached image can finish loading before React attaches onLoad — catch that.
+  useEffect(() => {
+    if (imgRef.current?.complete) setIsLoaded(true);
+  }, []);
 
   return (
     <div
@@ -21,6 +27,7 @@ export function PhotoCard({ photo, onClick }: PhotoCardProps) {
       
       {/* Image */}
       <img
+        ref={imgRef}
         src={photo.url}
         alt={photo.title}
         loading="lazy"

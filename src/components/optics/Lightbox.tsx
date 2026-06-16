@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { X, MapPin, Camera } from 'lucide-react';
 import { Photo } from '@/types/optics';
 import { useT, ui } from '@/i18n/lang';
@@ -10,21 +10,58 @@ interface LightboxProps {
 
 export function Lightbox({ photo, onClose }: LightboxProps) {
   const t = useT();
+  const containerRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
-    const handleEsc = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
+    const previouslyFocused = document.activeElement as HTMLElement | null;
+    const focusables = () =>
+      Array.from(
+        containerRef.current?.querySelectorAll<HTMLElement>(
+          'button, a[href], [tabindex]:not([tabindex="-1"])',
+        ) ?? [],
+      );
+    focusables()[0]?.focus();
+
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose();
+        return;
+      }
+      if (e.key === 'Tab') {
+        const els = focusables();
+        if (els.length === 0) {
+          e.preventDefault();
+          return;
+        }
+        const first = els[0];
+        const last = els[els.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
     };
-    window.addEventListener('keydown', handleEsc);
+    window.addEventListener('keydown', handleKey);
     document.body.style.overflow = 'hidden';
-    
+
     return () => {
-      window.removeEventListener('keydown', handleEsc);
+      window.removeEventListener('keydown', handleKey);
       document.body.style.overflow = 'unset';
+      previouslyFocused?.focus?.();
     };
   }, [onClose]);
 
   return (
-    <div className="fixed inset-0 z-50 bg-white/95 dark:bg-black/95 backdrop-blur-sm flex items-center justify-center p-4 animate-fadeIn">
+    <div
+      ref={containerRef}
+      role="dialog"
+      aria-modal="true"
+      aria-label={photo.title}
+      className="fixed inset-0 z-50 bg-white/95 dark:bg-black/95 backdrop-blur-sm flex items-center justify-center p-4 animate-fadeIn"
+    >
       {/* Close button */}
       <button
         onClick={onClose}
