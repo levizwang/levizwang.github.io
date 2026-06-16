@@ -34,7 +34,7 @@ const STUDIES: Study[] = [
     specs: [
       { k: '19 / 11', v: { en: 'designed stages · live checkers', zh: '设计节点 · 已实现 checker' } },
       { k: '6 + 4', v: { en: 'reviewer jury · QC lenses', zh: '人评审团 · QC 维度' } },
-      { k: 'E1≥.90 · E2≤.70 · E3≤.15', v: { en: 'anti-guessing gate', zh: '防蒙门槛' } },
+      { k: '3-way', v: { en: 'anti-guessing ablation gate', zh: '防蒙消融门槛' } },
       { k: '48', v: { en: 'adversarial-review findings', zh: '条对抗式评审 finding' } },
     ],
     image: pipelineImage,

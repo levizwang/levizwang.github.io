@@ -27,7 +27,7 @@ export const pillars: Pillar[] = [
       en: 'LLM-as-judge and validity engineering — anti-guessing probes, leakage control, rubric design — so a benchmark measures ability, not noise.',
       zh: 'LLM-as-judge 与有效性工程——防蒙探针、泄漏控制、rubric 设计——让 benchmark 测的是能力，而不是噪声。',
     },
-    tags: ['LLM-as-judge', 'E1 / E2 / E3', 'Rubric DAGs'],
+    tags: ['LLM-as-judge', 'Anti-guessing gates', 'Rubric DAGs'],
   },
   {
     icon: 'flask',
