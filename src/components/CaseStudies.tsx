@@ -1,9 +1,8 @@
 import { Link } from 'react-router-dom';
 import { Reveal } from './Reveal';
 import { useT, ui, type L } from '../i18n/lang';
-import pipelineImage from '../images/projects/Eval_Pipeline.webp';
-import judgeImage from '../images/projects/Agent_as_Judge.webp';
-import harborImage from '../images/projects/Harbor.webp';
+import { type PostId } from '../data/posts';
+import { evalPipeline as pipelineImage, agentAsJudge as judgeImage, harbor as harborImage } from '../images/projects';
 
 interface Spec {
   k: string;
@@ -16,7 +15,7 @@ interface Study {
   image: string;
   specs: Spec[];
   link?: { href: string; label: L };
-  article?: string;
+  article?: PostId;
   tags: string[];
 }
 

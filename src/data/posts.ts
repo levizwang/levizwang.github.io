@@ -10,11 +10,13 @@ import { html as aiJudgeZh } from '../posts/AI/zh/agent-as-judge-vs-metric.md';
 import { html as aiPlumbingZh } from '../posts/AI/zh/plumbing-of-llm-evaluation.md';
 import { html as mevGuide } from '../posts/MEV/Solana_MEV_Complete_Guide.md';
 import { html as post9Content } from '../posts/Detailed_Explanation_of_Blockchain/Detailed_Explanation_of_Blockchain.md';
-import pipelineImage from '../images/projects/Eval_Pipeline.webp';
-import judgeImage from '../images/projects/Agent_as_Judge.webp';
-import nvwaImage from '../images/projects/Nvwa.webp';
-import harborImage from '../images/projects/Harbor.webp';
-import mevImage from '../images/projects/Solana_MEV.webp';
+import {
+  evalPipeline as pipelineImage,
+  agentAsJudge as judgeImage,
+  nvwa as nvwaImage,
+  harbor as harborImage,
+  solanaMev as mevImage,
+} from '../images/projects';
 import blockchainImage from '../images/posts/web3/web3.webp';
 import type { L } from '../i18n/lang';
 
@@ -140,3 +142,6 @@ export const blogPosts: BlogPost[] = [
     image: mevImage,
   },
 ];
+
+/** Union of valid post ids — lets cross-references (e.g. case studies) be type-checked. */
+export type PostId = (typeof blogPosts)[number]['id'];

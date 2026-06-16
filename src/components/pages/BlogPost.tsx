@@ -82,7 +82,7 @@ export function BlogPost() {
   }
 
   return (
-    <div className="relative z-10 mx-auto w-full max-w-[1180px] px-6 pt-6 md:pt-10">
+    <PageLayout width="max-w-[1180px]">
       <Link
         to="/posts"
         className="inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
@@ -159,6 +159,6 @@ export function BlogPost() {
           </div>
         </div>
       </div>
-    </div>
+    </PageLayout>
   );
 }

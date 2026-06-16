@@ -1,9 +1,11 @@
-import agentImage from '../images/projects/Agent_as_Judge.webp';
-import pipelineImage from '../images/projects/Eval_Pipeline.webp';
-import harborImage from '../images/projects/Harbor.webp';
-import ragImage from '../images/projects/RAG_Eval.webp';
-import nvwaImage from '../images/projects/Nvwa.webp';
-import mevImage from '../images/projects/Solana_MEV.webp';
+import {
+  agentAsJudge as agentImage,
+  evalPipeline as pipelineImage,
+  harbor as harborImage,
+  ragEval as ragImage,
+  nvwa as nvwaImage,
+  solanaMev as mevImage,
+} from '../images/projects';
 import type { L } from '../i18n/lang';
 
 export interface Project {

@@ -1,25 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Reveal } from './Reveal';
-import { useT, ui, type L } from '../i18n/lang';
-
-interface Stat {
-  value: number;
-  suffix?: string;
-  label: L;
-}
-
-const STATS: Stat[] = [
-  { value: 6, label: { en: 'model families benchmarked', zh: '个模型族横向评测' } },
-  { value: 19, label: { en: 'stage synthesis architecture', zh: '节点合成架构' } },
-  { value: 11, label: { en: 'automated quality checkers', zh: '个自动质量 checker' } },
-  { value: 5, label: { en: 'agent harnesses integrated', zh: '种 agent harness 集成' } },
-];
-
-const MARQUEE = [
-  'Evidence Ledger', 'Actor–Critic–Monitor', 'Cross-vendor Independence', 'LLM-as-Judge',
-  'RL Environments', 'Agent Harnesses', 'GDPval', 'WLE', 'Toolathlon', 'Apex',
-  'MCP', 'RAGAS', 'Daytona', 'OpenHands', 'Stirrup', 'Claude Code', 'Codex', 'OpenRouter',
-];
+import { useT, ui } from '../i18n/lang';
+import { stats, marquee, type Stat } from '../data/highlights';
 
 function useCountUp(target: number, run: boolean, ms = 1100) {
   const [n, setN] = useState(0);
@@ -90,7 +72,7 @@ export function Highlights() {
           ref={ref}
           className="mt-12 grid grid-cols-2 gap-x-6 gap-y-12 border-t border-hairline pt-12 md:grid-cols-4"
         >
-          {STATS.map((s, i) => (
+          {stats.map((s, i) => (
             <StatCard key={i} stat={s} active={active} />
           ))}
         </div>
@@ -100,7 +82,7 @@ export function Highlights() {
       <Reveal delay={120}>
         <div className="relative mt-16 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
           <div className="flex w-max animate-marquee gap-3 hover:[animation-play-state:paused]">
-            {[...MARQUEE, ...MARQUEE].map((term, i) => (
+            {[...marquee, ...marquee].map((term, i) => (
               <span
                 key={i}
                 className="whitespace-nowrap rounded-full border border-hairline bg-surface/50 px-4 py-1.5 font-mono text-xs text-muted-foreground"
