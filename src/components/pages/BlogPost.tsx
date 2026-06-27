@@ -83,7 +83,7 @@ export function BlogPost() {
   }
 
   return (
-    <PageLayout width="max-w-[1600px]">
+    <PageLayout width="max-w-[1280px]">
       <Link
         to="/posts"
         className="inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
@@ -91,7 +91,7 @@ export function BlogPost() {
         <span aria-hidden>←</span> {t(ui.writing)}
       </Link>
 
-      <div className="mt-8 grid gap-12 lg:grid-cols-[220px_minmax(0,1fr)] xl:gap-16">
+      <div className="mt-8 grid gap-10 lg:grid-cols-[190px_minmax(0,52rem)] lg:justify-center xl:grid-cols-[200px_minmax(0,54rem)] xl:gap-12">
         <aside className="hidden lg:block">
           <div className="sticky top-28">
             <div className="eyebrow mb-4">{t(ui.toc)}</div>
@@ -117,21 +117,21 @@ export function BlogPost() {
         </aside>
 
         <div className="min-w-0">
-          <header className="mb-10">
+          <header className="mb-9">
             <div className="flex items-center gap-2.5 font-mono text-xs text-muted-foreground">
               <span className="text-brand">{catLabel(post.category)}</span>
               <span className="h-1 w-1 rounded-full bg-muted-foreground/50" />
               <span>{post.date}</span>
             </div>
-            <h1 className="mt-4 text-3xl font-semibold leading-[1.1] tracking-tight text-balance md:text-[2.75rem]">
+            <h1 className="mt-4 text-3xl font-semibold leading-[1.1] tracking-tight text-balance md:text-[2.55rem]">
               {t(post.title)}
             </h1>
             <p className="mt-5 text-lg leading-relaxed text-muted-foreground">{t(post.excerpt)}</p>
           </header>
 
           {post.image && (
-            <div className="mb-10 overflow-hidden rounded-2xl border border-hairline">
-              <ImageWithFallback src={post.image} alt={t(post.title)} className="h-auto w-full object-cover" />
+            <div className="mx-auto mb-10 max-w-[46rem] overflow-hidden rounded-2xl border border-hairline bg-surface">
+              <ImageWithFallback src={post.image} alt={t(post.title)} className="h-auto w-full object-contain" />
             </div>
           )}
 
