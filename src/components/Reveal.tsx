@@ -36,11 +36,12 @@ export function Reveal({ children, delay = 0, className = '', as = 'div' }: Reve
   }, []);
 
   const Tag = as as 'div';
+  const delayClass = delay ? `reveal-delay-${delay}` : '';
+
   return (
     <Tag
       ref={ref as never}
-      className={`reveal ${visible ? 'is-visible' : ''} ${className}`}
-      style={delay ? { transitionDelay: `${delay}ms` } : undefined}
+      className={`reveal ${delayClass} ${visible ? 'is-visible' : ''} ${className}`}
     >
       {children}
     </Tag>

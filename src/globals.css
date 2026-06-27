@@ -70,10 +70,14 @@
     border-color: hsl(var(--hairline));
   }
   html {
+    color-scheme: light;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
     scroll-behavior: smooth;
+  }
+  html.dark {
+    color-scheme: dark;
   }
   body {
     background-color: hsl(var(--background));
@@ -82,6 +86,9 @@
       "Helvetica Neue", Inter, "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
     font-feature-settings: "kern", "liga", "calt";
     letter-spacing: -0.011em;
+  }
+  body.scroll-locked {
+    overflow: hidden;
   }
   ::selection {
     background: hsl(var(--brand) / 0.28);
@@ -174,6 +181,36 @@
   .reveal.is-visible {
     opacity: 1;
     transform: none;
+  }
+  .reveal-delay-55 { transition-delay: 55ms; }
+  .reveal-delay-60 { transition-delay: 60ms; }
+  .reveal-delay-70 { transition-delay: 70ms; }
+  .reveal-delay-80 { transition-delay: 80ms; }
+  .reveal-delay-110 { transition-delay: 110ms; }
+  .reveal-delay-120 { transition-delay: 120ms; }
+  .reveal-delay-140 { transition-delay: 140ms; }
+  .reveal-delay-165 { transition-delay: 165ms; }
+  .reveal-delay-180 { transition-delay: 180ms; }
+  .reveal-delay-210 { transition-delay: 210ms; }
+  .reveal-delay-220 { transition-delay: 220ms; }
+
+  .aurora-brand {
+    background: radial-gradient(closest-side, hsl(var(--brand) / 0.16), transparent 70%);
+    filter: blur(40px);
+  }
+  .aurora-blue {
+    animation-delay: -11s;
+    background: radial-gradient(closest-side, hsl(210 90% 56% / 0.10), transparent 70%);
+    filter: blur(48px);
+  }
+  .grain-overlay {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  .portrait-glow {
+    background: radial-gradient(closest-side, hsl(var(--brand) / 0.22), transparent 72%);
+  }
+  .project-fallback-thumb {
+    background: radial-gradient(120% 120% at 0% 0%, hsl(var(--brand) / 0.10), hsl(var(--secondary)) 60%);
   }
 }
 

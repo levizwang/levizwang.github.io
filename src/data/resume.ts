@@ -17,28 +17,36 @@ export const experience: ExperienceItem[] = [
     location: { en: 'Beijing, China', zh: '中国 · 北京' },
     period: 'Apr 2026 – Present',
     summary: {
-      en: 'Founding-stage engineer at a Sequoia China (HongShan) / Capital Today / BAI Capital-backed AI-data startup — in the mold of Surge AI and Mercor — building the foundational infrastructure for next-generation agentic intelligence and defining the standards for autonomous-system evaluation.',
-      zh: '在一家 AI data 初创公司任创始期工程师——红杉中国、今日资本、BAI 投资，方向对标 Surge AI 与 Mercor。主要负责下一代 agent 的底层 infrastructure，以及自治系统 evaluation 的标准设计。',
+      en: 'Founding-stage engineer building agentic-evaluation datasets and the infrastructure to synthesize, grade, benchmark, and deliver them to frontier-model teams. Public-facing descriptions intentionally abstract away client names, internal repositories, and exact implementation recipes.',
+      zh: '创始期工程师，构建 agentic-evaluation 数据集，以及合成、评分、benchmark 与交付这些数据的基础设施。公开表述刻意抽象客户名、内部仓库名与具体实现配方。',
     },
     highlights: [
       {
-        en: 'Agentic infrastructure & RL environments: architected scalable RL environments and specialized agent harnesses for standardized model interaction, tool-use execution, and robust performance tracking across complex action spaces; operated and extended a containerized eval framework across 6 model families × 5 harnesses and contributed a Stirrup-agent integration upstream as a reviewed open-source PR.',
-        zh: 'Agentic infrastructure & RL 环境：构建可扩展的 RL environment 与专用 agent harness，支持标准化的模型交互、tool-use 执行，以及复杂动作空间下的稳定性能追踪；将一套容器化 eval 框架跑通 6 个模型族 × 5 种 harness，并把自研的 Stirrup agent 集成以 PR 合入开源上游。',
+        en: 'Agentic eval execution: operated and extended a containerized framework across six model families and five agent harnesses, with cloud fan-out, smoke-test gates, retry/rerun workflows, cost/latency accounting, and a reusable harness adapter isolated on a clean public fork.',
+        zh: 'Agentic eval 执行：操作并扩展一套容器化框架，覆盖六个模型族与五种 agent harness，包含云端 fan-out、冒烟门控、失败重跑、成本/时延核算，以及在干净公开 fork 上隔离出的可复用 harness adapter。',
       },
       {
-        en: 'Strategic project leadership (0→1): led cross-functional teams of domain experts to build high-fidelity agent benchmarks and specialized SFT datasets — including a multi-agent pipeline that turns expert workspaces into hard, evidence-grounded agentic exam items (finance / consulting / law) with cross-vendor model independence and anti-leakage / anti-guessing validity safeguards, plus an Actor-Critic-Monitor adversarial QC loop for synthetic clinical data.',
-        zh: '0→1 战略项目：带领领域专家团队构建高保真 agent benchmark 与 SFT 数据集——包括一条将专家 workspace 转化为高难度、可溯源到证据的 agentic 考题（金融 / 咨询 / 法律）的 multi-agent pipeline，跨厂商出题，兼顾防泄漏与防蒙；以及一套用于合成病历的 Actor-Critic-Monitor 对抗式 QC 闭环。',
+        en: 'Evidence-grounded synthesis: led 0→1 design of a multi-agent pipeline that turns expert workspaces into hard agentic exam items across finance, consulting, and legal domains, with locator-bound evidence, independent verification roles, leakage review, and anti-guessing gates.',
+        zh: '证据约束合成：主导 0→1 设计多智能体流水线，将金融、咨询、法律领域专家 workspace 转化为高难度 agentic 考题，包含 locator 绑定证据、独立核验角色、防泄漏审查与防蒙门控。',
       },
       {
-        en: 'Evaluation methodology: defined the “source of truth” for agent reasoning via automated evaluation pipelines that assess trajectory alignment, planning efficiency, and multi-step tool-invocation accuracy; ran a controlled agent-as-judge vs. hand-written-metric study and shipped a rubric-based Verifier.',
-        zh: 'Evaluation 方法：为 agent reasoning 定义 “source of truth”，用自动化 evaluation pipeline 衡量 trajectory 对齐、planning 效率与多步 tool 调用的准确率；做过一次 agent-as-judge 与人工 metric 的对照实验，并交付了基于 rubric 的 Verifier。',
+        en: 'Verifier product and evaluation research: shipped a rubric-based Verifier for office-document agent tasks, including visual evidence paths and reason guards; ran a controlled agent-as-judge vs. deterministic-metric comparison on precision, recall, agreement, cost, and latency.',
+        zh: 'Verifier 产品与评测研究：交付面向 Office 文档智能体任务的 rubric Verifier，包含视觉证据路径与 reason guard；并围绕准确率、召回率、一致率、成本与时延做 agent-as-judge vs 确定性 metric 对照实验。',
       },
       {
-        en: 'Expert data orchestration: curated gold-standard datasets for agent fine-tuning (alignment) in high-stakes professional domains (finance, engineering), and mocked MCP tool services so tool-using agents can train at scale on the Toolathlon benchmark.',
-        zh: '专家数据编排：为金融、工程等高风险领域的 agent 微调（alignment）构建 gold-standard 数据集；并 mock MCP 工具服务，使 tool-use agent 能在 Toolathlon benchmark 上大规模训练。',
+        en: 'Adversarial synthetic-data QC: designed an Actor-Critic-Monitor loop for synthetic clinical cases, turning reviewer findings into remediation decisions and reusable bad-pattern detectors for derived-value drift, cross-file conflict, timeline incoherence, template contamination, and metadata leakage.',
+        zh: '合成数据对抗式 QC：为合成临床病例设计 Actor-Critic-Monitor 闭环，将审查 findings 转化为整改决策，并沉淀可复用坏样式检测器，覆盖派生值漂移、跨文件冲突、时间线不一致、模板污染与元数据泄漏。',
+      },
+      {
+        en: 'RL/tooling infrastructure: mocked credential-heavy MCP tool services for tool-using RL agents, targeting trajectory-level parity with live tools while avoiding account, key, and production-system exposure.',
+        zh: 'RL / 工具基础设施：为 tool-use RL agent mock 需要真实账号和密钥的 MCP 工具服务，以轨迹级一致性为目标，同时避免暴露账号、密钥与生产系统。',
+      },
+      {
+        en: 'Office and data-contract systems: built per-modality Excel/Word/PPT/PDF evaluation harnesses with multi-vendor judges and files-out reconstruction, and audited a multi-version jobdata schema into clearer ownership boundaries and cross-repo automation.',
+        zh: 'Office 与数据契约系统：构建 Excel/Word/PPT/PDF 按模态拆分的评测 harness，支持多厂商裁判与 files-out 重建；并审计多版本 jobdata schema，整理出更清晰的字段归属边界和跨仓库自动化。',
       },
     ],
-    tags: ['Agentic Infra', 'RL Environments', 'Agent Harnesses', 'LLM-as-judge', 'Synthetic / SFT Data', 'Open Source'],
+    tags: ['Agentic Eval', 'Verifier', 'Synthetic / RL Data', 'Agent Harnesses', 'Adversarial QC', 'Data Contracts'],
   },
   {
     company: 'Fintopia',
@@ -197,7 +205,8 @@ export const skills: SkillGroup[] = [
     items: [
       { en: 'LLM & agent evaluation (rule-based + LLM-as-a-judge)', zh: 'LLM & agent evaluation（rule-based + LLM-as-a-judge）' },
       { en: 'Agent systems, harnesses & MCP', zh: 'Agent 系统、harness 与 MCP' },
-      { en: 'RL environments · synthetic / SFT data', zh: 'RL environments · 合成 / SFT 数据' },
+      { en: 'RL environments · synthetic / SFT / eval data', zh: 'RL environments · 合成 / SFT / eval 数据' },
+      { en: 'Verifier systems · rubric metrics · reason guards', zh: 'Verifier 系统 · rubric metric · reason guard' },
       { en: 'RAG architecture & vector DBs', zh: 'RAG 架构与 vector DB' },
       { en: 'LLM fine-tuning & deployment', zh: 'LLM fine-tuning 与部署' },
     ],
@@ -206,6 +215,7 @@ export const skills: SkillGroup[] = [
     label: { en: 'Infrastructure', zh: 'Infrastructure' },
     items: [
       { en: 'Eval orchestration & cloud fan-out', zh: 'Eval orchestration 与云端 fan-out' },
+      { en: 'Office-document extraction, generation & files-out reconstruction', zh: 'Office 文档抽取、生成与 files-out 重建' },
       'OpenTelemetry · Kafka · ClickHouse',
       'Elasticsearch · Haystack',
       'Docker · Linux · Git',

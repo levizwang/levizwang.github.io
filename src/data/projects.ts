@@ -20,21 +20,21 @@ export interface Project {
 export const projects: Project[] = [
   {
     id: 'eval-platform',
-    name: { en: 'LLM Evaluation Platform & Agent-as-Judge', zh: '大模型评测平台与 Agent-as-Judge' },
+    name: { en: 'Verifier System & Agent-as-Judge Research', zh: 'Verifier 系统与 Agent-as-Judge 研究' },
     description: {
-      en: 'Company-wide eval platform with rule-based + LLM-as-a-judge metrics for regression, classification, RAG, and agents. Includes a controlled agent-as-judge vs. hand-written-metric study (precision / recall / agreement / cost / latency).',
-      zh: '公司级评测平台，规则 + LLM-as-a-judge 指标覆盖回归、分类、RAG 与智能体；含一次受控的 agent-as-judge 与人写 metric 对照实验（准确率 / 召回 / 一致率 / 成本 / 时延）。',
+      en: 'Rubric-based grading infrastructure for office-document agent tasks. Combined deterministic metrics, visual evidence collection, and LLM/agent judges; ran a controlled judge-vs-metric study on precision, recall, agreement, cost, and latency before product delivery.',
+      zh: '面向 Office 文档智能体任务的 rubric 评分基础设施，结合确定性 metric、视觉证据采集与 LLM/agent judge；在产品交付前做了 judge-vs-metric 对照实验，比较准确率、召回率、一致率、成本与时延。',
     },
     image: agentImage,
     link: '/Agentkit.html',
-    tag: { en: 'Evaluation', zh: '评测' },
+    tag: { en: 'Verifier · Evaluation', zh: 'Verifier · 评测' },
   },
   {
     id: 'syndata-pipeline',
     name: { en: 'Synthetic Eval-Data Pipeline', zh: '合成评测数据流水线' },
     description: {
-      en: 'Multi-agent pipeline that turns expert workspaces into hard, evidence-grounded agentic exam items (finance / consulting / law). Cross-vendor model independence, evidence ledgers, and anti-leakage / anti-guessing validity safeguards.',
-      zh: '多智能体流水线，将专家工作区转化为高难度、以证据为依据的智能体考题（金融 / 咨询 / 法律）。跨厂商模型独立、证据账本、防泄漏 / 防蒙的有效性保障。',
+      en: 'Multi-agent synthesis pipeline that converts expert workspaces into hard, evidence-grounded agentic exam items across finance, consulting, and legal domains. Public version highlights evidence ledgers, cross-model separation, anti-leakage review, and delivery gates while omitting internal node recipes.',
+      zh: '多智能体合成流水线，将专家 workspace 转化为金融、咨询、法律领域的高难度、以证据为依据的 agentic 考题。公开版本强调证据账本、跨模型隔离、防泄漏审查与交付门控，不暴露内部节点配方。',
     },
     image: pipelineImage,
     tag: { en: 'Synthetic Data', zh: '合成数据' },
@@ -43,12 +43,42 @@ export const projects: Project[] = [
     id: 'harbor-eval',
     name: { en: 'Harbor — Eval Execution Framework', zh: 'Harbor — 评测执行框架' },
     description: {
-      en: 'Operated and extended a containerized eval framework across 6 model families × 5 agent harnesses (Claude Code, OpenHands, Codex, Stirrup, OpenRouter). Built a production-grade, upstream-ready Stirrup-agent integration (50 unit tests) on a clean fork.',
-      zh: '操作并扩展容器化评测框架，覆盖 6 个模型族 × 5 种 agent harness（Claude Code、OpenHands、Codex、Stirrup、OpenRouter）。在干净的 fork 上做了一个生产级、可直接上游的 Stirrup agent 集成（50 个单测）。',
+      en: 'Operated and extended a containerized eval framework across six model families and five agent harnesses, with cloud fan-out, smoke-test gates, rerun-in-place handling, cost/latency accounting, and a reusable agent-harness adapter isolated on a clean public fork.',
+      zh: '操作并扩展容器化评测框架，覆盖六个模型族与五种 agent harness，包含云端 fan-out、冒烟门控、失败原地重跑、成本/时延核算，以及在干净公开 fork 上隔离出的可复用 agent-harness adapter。',
     },
     image: harborImage,
     link: 'https://github.com/levizwang/harbor',
     tag: { en: 'Open Source', zh: '开源' },
+  },
+  {
+    id: 'medical-acm',
+    name: { en: 'Adversarial QC for Synthetic Clinical Data', zh: '合成临床数据的对抗式质检' },
+    description: {
+      en: 'Designed an Actor-Critic-Monitor loop for synthetic medical-record cases: generator, adversarial reviewer, and arbiter. The public framing focuses on defect taxonomy: derived-value drift, cross-file conflict, timeline impossibility, template contamination, metadata leakage, and rubric answerability.',
+      zh: '为合成病历病例设计 Actor-Critic-Monitor 闭环：生成、对抗式审查、仲裁。公开表述聚焦缺陷分类学：派生值漂移、跨文件冲突、不可能时间线、模板污染、元数据泄漏与 rubric 可回答性。',
+    },
+    image: nvwaImage,
+    tag: { en: 'Adversarial QC', zh: '对抗式质检' },
+  },
+  {
+    id: 'office-harnesses',
+    name: { en: 'Multi-modal Office Evaluation Harnesses', zh: '多模态 Office 评测 Harness' },
+    description: {
+      en: 'Built per-modality evaluation paths for Excel, Word, PPT, and PDF tasks with multi-vendor judge backends, screenshot/evidence collection, output reconstruction for models without native files-out, and reason guards for missing or unreadable evidence.',
+      zh: '为 Excel、Word、PPT、PDF 任务搭建按模态拆分的评测路径，支持多厂商裁判后端、截图/证据采集、无原生 files-out 模型的输出重建，以及证据缺失/不可读时的 reason guard。',
+    },
+    image: agentImage,
+    tag: { en: 'Office Agents', zh: 'Office 智能体' },
+  },
+  {
+    id: 'toolathlon-mcp',
+    name: { en: 'MCP Tool Mocking for RL Agents', zh: '面向 RL Agent 的 MCP 工具 Mock' },
+    description: {
+      en: 'Adapted a tool-use benchmark for large-scale RL by replacing credential-heavy live MCP services with realistic mocks. The design goal was trajectory-level parity: enough behavioral fidelity for training and evaluation without exposing accounts or live systems.',
+      zh: '将一个 tool-use benchmark 改造成适合大规模 RL 的版本：用逼真的 mock 替代需要真实账号与密钥的在线 MCP 服务。设计目标是轨迹级一致性，既支撑训练/评测，又不暴露账号或线上系统。',
+    },
+    image: pipelineImage,
+    tag: { en: 'RL Infrastructure', zh: 'RL 基础设施' },
   },
   {
     id: 'rag-eval',
@@ -65,11 +95,21 @@ export const projects: Project[] = [
     id: 'nvwa',
     name: { en: 'nvwa — Synthesis Framework', zh: 'nvwa（女娲）— 合成框架' },
     description: {
-      en: 'A layered “1 seed → N tasks” office-document synthesis framework with ~21 automated checkers plus LLM QC/repair and seed-provenance tracing — built to beat the low-diversity failure mode of single-shot generation.',
-      zh: '分层的“1 种子 → N 题”办公文档合成框架，含 ~21 个自动 checker、LLM 质检/修复与种子溯源——专为克服单轮生成的“低多样性”失效而建。',
+      en: 'A layered “1 seed → N tasks” office-document synthesis framework with automated checkers, LLM QC/repair, and seed-provenance tracing, built to beat the low-diversity failure mode of single-shot generation.',
+      zh: '分层的“1 种子 → N 题”办公文档合成框架，含自动 checker、LLM 质检/修复与种子溯源，专为克服单轮生成的“低多样性”失效而建。',
     },
     image: nvwaImage,
     tag: { en: 'Synthetic Data', zh: '合成数据' },
+  },
+  {
+    id: 'data-contracts',
+    name: { en: 'Evaluation Data Contracts & Automation', zh: '评测数据契约与自动化' },
+    description: {
+      en: 'Audited a messy multi-version jobdata schema, grouped root causes with concrete examples, and proposed cleaner ownership boundaries for nested rubric/model fields. Also wired cross-repo automation so downstream eval packages receive structured update signals.',
+      zh: '审计多版本混杂的 jobdata schema，用具体样例归类根因，并提出 rubric/model 字段的嵌套归属边界；同时接入跨仓库自动化，让下游评测包收到结构化更新信号。',
+    },
+    image: harborImage,
+    tag: { en: 'Data Contracts', zh: '数据契约' },
   },
   {
     id: 'solana-mev',

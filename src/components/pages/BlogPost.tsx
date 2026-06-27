@@ -83,7 +83,7 @@ export function BlogPost() {
   }
 
   return (
-    <PageLayout width="max-w-[1180px]">
+    <PageLayout width="max-w-[1600px]">
       <Link
         to="/posts"
         className="inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
@@ -91,7 +91,7 @@ export function BlogPost() {
         <span aria-hidden>←</span> {t(ui.writing)}
       </Link>
 
-      <div className="mt-8 grid gap-12 lg:grid-cols-[200px_minmax(0,46rem)] lg:justify-center">
+      <div className="mt-8 grid gap-12 lg:grid-cols-[220px_minmax(0,1fr)] xl:gap-16">
         <aside className="hidden lg:block">
           <div className="sticky top-28">
             <div className="eyebrow mb-4">{t(ui.toc)}</div>

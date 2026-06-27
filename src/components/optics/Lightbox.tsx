@@ -45,11 +45,11 @@ export function Lightbox({ photo, onClose }: LightboxProps) {
       }
     };
     window.addEventListener('keydown', handleKey);
-    document.body.style.overflow = 'hidden';
+    document.body.classList.add('scroll-locked');
 
     return () => {
       window.removeEventListener('keydown', handleKey);
-      document.body.style.overflow = 'unset';
+      document.body.classList.remove('scroll-locked');
       previouslyFocused?.focus?.();
     };
   }, [onClose]);

@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https:; font-src 'self' data: https://fonts.gstatic.com; connect-src 'self' https:;" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self' https://fonts.googleapis.com; img-src 'self' data: https:; font-src 'self' data: https://fonts.gstatic.com; connect-src 'self' https:;" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/src/images/IMG_4812.JPG" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -15,19 +15,7 @@
     <meta property="og:description" content="Infrastructure for measuring and training frontier AI — evaluation, agents, and synthetic data." />
     <meta property="og:url" content="https://levi.run" />
     <meta name="twitter:card" content="summary" />
-    <script>
-      (() => {
-        try {
-          const storedTheme = localStorage.getItem("theme");
-          const prefersDark =
-            window.matchMedia &&
-            window.matchMedia("(prefers-color-scheme: dark)").matches;
-          const isDark = storedTheme ? storedTheme === "dark" : prefersDark;
-          document.documentElement.classList.toggle("dark", isDark);
-          document.documentElement.style.colorScheme = isDark ? "dark" : "light";
-        } catch {}
-      })();
-    </script>
+    <script src="/theme-init.js"></script>
   </head>
   <body>
     <div id="root"></div>

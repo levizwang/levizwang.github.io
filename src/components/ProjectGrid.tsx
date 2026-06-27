@@ -17,8 +17,7 @@ function Thumb({ project, name }: { project: Project; name: string }) {
   }
   return (
     <span
-      className="flex aspect-[16/10] w-full items-center justify-center rounded-xl border border-hairline"
-      style={{ background: 'radial-gradient(120% 120% at 0% 0%, hsl(var(--brand) / 0.10), hsl(var(--secondary)) 60%)' }}
+      className="project-fallback-thumb flex aspect-[16/10] w-full items-center justify-center rounded-xl border border-hairline"
     >
       <span className="font-mono text-2xl tracking-tight text-muted-foreground">
         {name.split(' ')[0]}
@@ -27,7 +26,7 @@ function Thumb({ project, name }: { project: Project; name: string }) {
   );
 }
 
-function Card({ project }: { project: Project }) {
+function Card({ project, expanded = false }: { project: Project; expanded?: boolean }) {
   const t = useT();
   const name = t(project.name);
   const external = project.link?.startsWith('http');
@@ -45,7 +44,7 @@ function Card({ project }: { project: Project }) {
       {project.tag && (
         <span className="mt-1 block font-mono text-[11px] text-brand">{t(project.tag)}</span>
       )}
-      <p className="mt-2 line-clamp-4 text-sm leading-relaxed text-muted-foreground">
+      <p className={`mt-2 text-sm leading-relaxed text-muted-foreground ${expanded ? '' : 'line-clamp-4'}`}>
         {t(project.description)}
       </p>
     </>
@@ -78,7 +77,7 @@ export function ProjectGrid({ limit, showViewAll = true }: { limit?: number; sho
       <div className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {shown.map((project, i) => (
           <Reveal key={project.id} delay={(i % 3) * 70}>
-            <Card project={project} />
+            <Card project={project} expanded={!showViewAll} />
           </Reveal>
         ))}
       </div>

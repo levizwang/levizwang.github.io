@@ -1,7 +1,11 @@
 import { Photo } from '@/types/optics';
 import exifDataRaw from './optics-exif.json';
 
-const exifData = exifDataRaw as Record<string, any>;
+type PhotoExif = Pick<Photo, 'camera' | 'lens' | 'iso' | 'aperture' | 'shutter'> & {
+  focalLength?: string;
+};
+
+const exifData = exifDataRaw as Record<string, PhotoExif>;
 
 // Re-export imports
 import yuanbaoInBed from '@/images/optics/Yuanbao_In_Bed.webp';

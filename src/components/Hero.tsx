@@ -64,12 +64,11 @@ export function Hero() {
         </div>
 
         {/* Right: portrait */}
-        <div className="reveal is-visible order-first md:order-none" style={{ transitionDelay: '120ms' }}>
+        <div className="reveal reveal-delay-120 is-visible order-first md:order-none">
           <div className="relative mx-auto w-56 sm:w-72 md:w-full md:max-w-[320px]">
             <div
               aria-hidden
-              className="absolute -inset-6 -z-10 rounded-full opacity-70 blur-2xl"
-              style={{ background: 'radial-gradient(closest-side, hsl(var(--brand) / 0.22), transparent 72%)' }}
+              className="portrait-glow absolute -inset-6 -z-10 rounded-full opacity-70 blur-2xl"
             />
             <div className="overflow-hidden rounded-[1.75rem] border border-hairline bg-surface shadow-float">
               <ImageWithFallback

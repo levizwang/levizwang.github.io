@@ -15,36 +15,36 @@ export const pillars: Pillar[] = [
     icon: 'workflow',
     title: { en: 'Agentic infrastructure', zh: '智能体基础设施' },
     body: {
-      en: 'Scalable RL environments and agent harnesses for standardized tool-use execution and robust performance tracking across complex action spaces.',
-      zh: '可扩展的 RL environment 与 agent harness，支持标准化的 tool-use 执行，以及复杂动作空间下的稳定性能追踪。',
+      en: 'Agent harnesses, tool-use environments, and trajectory capture for comparing model behavior across complex, file-heavy tasks.',
+      zh: '构建 agent harness、tool-use environment 与轨迹采集层，用于在复杂、文件密集任务上横向比较模型行为。',
     },
-    tags: ['RL environments', 'Agent harnesses', 'MCP'],
+    tags: ['Agent harnesses', 'Trajectory capture', 'MCP parity'],
   },
   {
     icon: 'gauge',
     title: { en: 'Evaluation science', zh: '评测科学' },
     body: {
-      en: 'LLM-as-judge and validity engineering — anti-guessing probes, leakage control, rubric design — so a benchmark measures ability, not noise.',
-      zh: 'LLM-as-judge 与有效性工程——防蒙探针、泄漏控制、rubric 设计——让 benchmark 测的是能力，而不是噪声。',
+      en: 'LLM-as-judge, rubric metrics, reason guards, anti-guessing probes, and leakage control so a benchmark measures ability, not noise.',
+      zh: 'LLM-as-judge、rubric metric、reason guard、防蒙探针与泄漏控制，让 benchmark 测的是能力，而不是噪声。',
     },
-    tags: ['LLM-as-judge', 'Anti-guessing gates', 'Rubric DAGs'],
+    tags: ['Verifier systems', 'Anti-guessing gates', 'Rubric design'],
   },
   {
     icon: 'flask',
     title: { en: 'Synthetic data', zh: '合成数据' },
     body: {
-      en: 'Evidence-grounded generation with an adversarial Actor–Critic–Monitor QC loop, turning expert workspaces into hard, traceable training & eval data.',
-      zh: '以证据为依据的生成，配 Actor–Critic–Monitor 对抗式 QC 闭环，把专家 workspace 变成高难度、可溯源的训练与评测数据。',
+      en: 'Evidence-grounded generation with adversarial QC, turning expert files into traceable eval and training data without exposing private implementation recipes.',
+      zh: '以证据为依据的生成，配对抗式 QC，把专家文件变成可溯源的评测与训练数据，同时避免暴露内部实现配方。',
     },
-    tags: ['Evidence ledger', 'Adversarial QC', 'SFT data'],
+    tags: ['Evidence ledger', 'Adversarial QC', 'Synthetic/RL data'],
   },
   {
     icon: 'layers',
     title: { en: 'Multi-model harnessing', zh: '多模型驾驭' },
     body: {
-      en: 'Running six model families on one containerized framework with cloud fan-out, cost accounting, and an upstream open-source agent contribution.',
-      zh: '在一个容器化框架上驾驭六个模型族，配云端 fan-out、成本核算，以及一次上游开源 agent 贡献。',
+      en: 'Containerized eval execution across model families and harnesses, with cloud fan-out, cost/latency accounting, and delivery-grade packaging.',
+      zh: '跨模型族与 harness 的容器化评测执行，配云端 fan-out、成本/时延核算与交付级打包。',
     },
-    tags: ['6 model families', 'Daytona', 'Open source'],
+    tags: ['Model×harness matrices', 'Cloud fan-out', 'Open source'],
   },
 ];

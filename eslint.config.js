@@ -15,6 +15,28 @@ export default tseslint.config(
   js.configs.recommended,
   ...tseslint.configs.recommended,
   {
+    files: ["scripts/**/*.js"],
+    languageOptions: {
+      ecmaVersion: 2020,
+      sourceType: "module",
+      globals: {
+        ...globals.node,
+        ...globals.es2020,
+      },
+    },
+  },
+  {
+    files: ["public/**/*.js"],
+    languageOptions: {
+      ecmaVersion: 2020,
+      sourceType: "script",
+      globals: {
+        ...globals.browser,
+        ...globals.es2020,
+      },
+    },
+  },
+  {
     files: ["**/*.{ts,tsx}"],
     languageOptions: {
       ecmaVersion: 2020,
@@ -31,6 +53,12 @@ export default tseslint.config(
     rules: {
       ...reactHooks.configs.recommended.rules,
       "react-refresh/only-export-components": ["warn", { allowConstantExport: true }],
+    },
+  },
+  {
+    files: ["src/i18n/lang.tsx"],
+    rules: {
+      "react-refresh/only-export-components": "off",
     },
   },
 );

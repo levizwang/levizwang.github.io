@@ -18,12 +18,12 @@ export const siteConfig = {
     zh: "HUMANLAYA AI 创始期工程师",
   } as L,
   description: {
-    en: "I build where infrastructure meets algorithms — agent systems, LLM-evaluation infra, and the synthetic data that trains and grades frontier models.",
-    zh: "主要从事 infrastructure 与算法交叉方向的工作：agent 系统、LLM evaluation 基础设施，以及用于训练和评估前沿模型的合成数据。",
+    en: "I build the infrastructure that turns expert workspaces into hard agentic eval data, grades model behavior with evidence, and runs model×harness benchmarks at production scale.",
+    zh: "我构建把专家 workspace 转化为高难度 agentic eval 数据的基础设施，用证据约束模型判分，并在生产规模上运行 model×harness benchmark。",
   } as L,
   bio: {
-    en: "AI Infra Engineer. Agentic & evaluation infrastructure · RL environments · synthetic / SFT data. Founding-stage engineer @ HUMANLAYA AI (Sequoia / Capital Today / BAI-backed, in the mold of Surge & Mercor); previously @ Fintopia, ByteDance (Doubao VLM evals), and PwC.",
-    zh: "AI Infra Engineer。主要研究方向为 agent 与 evaluation 基础设施、RL environments，以及合成 / SFT 数据。现任 HUMANLAYA AI 创始期工程师（红杉、今日资本、BAI 投资，方向对标 Surge 与 Mercor）；此前任职于 Fintopia、字节跳动（豆包 VLM 评测）与普华永道。",
+    en: "AI Infra Engineer focused on agentic evaluation, synthetic/RL data infrastructure, verifier systems, and cloud eval execution. Founding-stage engineer @ HUMANLAYA AI; previously @ Fintopia, ByteDance (Doubao VLM evals), and PwC.",
+    zh: "AI Infra Engineer，方向为 agentic evaluation、合成/RL 数据基础设施、Verifier 系统与云端评测执行。现任 HUMANLAYA AI 创始期工程师；此前任职于 Fintopia、字节跳动（豆包 VLM 评测）与普华永道。",
   } as L,
   location: { en: "Beijing, China", zh: "中国 · 北京" } as L,
   resumeEmail: "wang.z.levi@gmail.com",

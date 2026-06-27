@@ -3,7 +3,12 @@ import { Reveal } from './Reveal';
 import { useT, ui, type L } from '../i18n/lang';
 import { type PostId } from '../data/posts';
 import { TagPill } from './ui/TagPill';
-import { evalPipeline as pipelineImage, agentAsJudge as judgeImage, harbor as harborImage } from '../images/projects';
+import {
+  evalPipeline as pipelineImage,
+  agentAsJudge as judgeImage,
+  harbor as harborImage,
+  nvwa as nvwaImage,
+} from '../images/projects';
 
 interface Spec {
   k: string;
@@ -22,63 +27,84 @@ interface Study {
 
 const STUDIES: Study[] = [
   {
-    eyebrow: { en: 'Flagship system', zh: '旗舰系统' },
+    eyebrow: { en: 'Evidence-grounded synthesis', zh: '证据约束合成' },
     title: {
-      en: 'A 19-stage architecture that proves each question is real.',
-      zh: '一套 19 节点的架构，证明每道题都是真的。',
+      en: 'Turning expert files into eval tasks that cannot be guessed.',
+      zh: '把专家文件变成无法靠猜完成的评测任务。',
     },
     body: {
-      en: 'The hard part of synthetic eval data isn’t writing questions — it’s proving each one genuinely measures what it claims, without the model that wrote it quietly grading its own homework. Every fact is extracted by two independent model families and bound to a source-file locator before a word of the prompt exists; the test-taker, reference author, rubric author and every checker are forced onto different families by a fail-closed validator; and each task must survive a three-way ablation — answer, files, files-removed — shipping only if removing the files makes the model fail.',
-      zh: '合成评测数据真正难的不是写题，而是证明每道题确实测到了它声称要测的东西——还不能让出题的模型悄悄给自己判分。每条事实都由两个独立模型族抽取、并在写下任何题面之前就绑定到源文件 locator；解题者、参考答案作者、rubric 作者和每个 checker 都被一个 fail-closed 校验器强制分配到不同模型族；每道题还必须通过三向消融——给答案、给文件、抽走文件——只有"抽走文件后模型答不出"才放行。',
+      en: 'I built a public-safe version of this story around the core idea: the generator is not trusted. Source files are first converted into locator-bound evidence, then independent roles draft, critique, verify, and package the task. Before delivery, the task is checked for answer leakage, unsupported claims, and guessability. The internal node layout and prompts are deliberately omitted; what matters publicly is the contract: every answerable claim must point back to source evidence, and removing the files should make the task fail.',
+      zh: '这条经历的公开版本围绕一个核心原则：不信任生成器。原始文件先被转化为带 locator 的证据，再由独立角色完成出题、挑刺、核验与打包。交付前会检查答案泄漏、无证据断言与可蒙性。内部节点结构和 prompt 配方刻意不公开；公开可讲的是契约：每个可回答断言必须能回到源证据，抽走文件后任务就应该失败。',
     },
     specs: [
-      { k: '19 / 11', v: { en: 'designed stages · live checkers', zh: '设计节点 · 已实现 checker' } },
-      { k: '6 + 4', v: { en: 'reviewer jury · QC lenses', zh: '人评审团 · QC 维度' } },
-      { k: '3-way', v: { en: 'anti-guessing ablation gate', zh: '防蒙消融门槛' } },
-      { k: '48', v: { en: 'adversarial-review findings', zh: '条对抗式评审 finding' } },
+      { k: 'Evidence first', v: { en: 'locator-bound facts before prompt drafting', zh: '先绑定证据，再写题面' } },
+      { k: 'Role separation', v: { en: 'author, verifier, judge, and QC kept independent', zh: '出题、核验、判分、质检角色隔离' } },
+      { k: 'Anti-guessing', v: { en: 'tasks must depend on reading the files', zh: '题目必须依赖真实读文件' } },
+      { k: 'Delivery gate', v: { en: 'leakage, unsupported-claim, and rubric checks', zh: '泄漏、无证据断言与 rubric 门控' } },
     ],
     image: pipelineImage,
     article: 'evidence-ledger',
-    tags: ['Cross-vendor independence', 'Evidence ledger', 'Resumable state machine'],
+    tags: ['Evidence ledger', 'Anti-leakage', 'Synthetic eval data'],
   },
   {
-    eyebrow: { en: 'Evaluation research', zh: '评测研究' },
+    eyebrow: { en: 'Verifier research', zh: 'Verifier 研究' },
     title: {
-      en: 'Proving how you grade beats which model grades.',
-      zh: '证明"怎么判"比"用哪个模型判"更重要。',
+      en: 'Choosing when an agent judge beats a metric.',
+      zh: '判断 agent judge 什么时候胜过 metric。',
     },
     body: {
-      en: 'A controlled pilot — 566 rubric judgments across 15 stratified tasks — showed an agent that opens the document and gathers its own evidence beats a hand-written metric by +0.118 to +0.166 agreement with human ground truth, while upgrading the metric’s own judge model moves the needle only ~0.04. Method dominates model. And the agent was both more accurate and cheaper: amortizing the prompt cache, it spent 69k tokens where the metric re-sent the whole document for 5.3M.',
-      zh: '一次受控的 pilot——15 道分层任务上的 566 次 rubric 判定——显示：一个会自己打开文档、自行收集证据的 agent，与人工 metric 相比，对齐人工 GT 的一致率高出 +0.118 到 +0.166；而升级 metric 自己的裁判模型只带来约 0.04 的提升。方法 > 模型。而且这个 agent 既更准也更便宜：靠 prompt cache 摊销，它只花 69k token，而 metric 为每条 rubric 重发整篇文档、花了 5.3M。',
+      en: 'I compared two grading routes for office-document agent tasks: deterministic rubric metrics and an agent judge that can inspect the artifact, gather evidence, and reason against the rubric. The publishable takeaway is qualitative, not vendor-specific: LLM judges are not automatically better, and metrics are not automatically safer. The right choice depends on evidence access, rubric granularity, expected variance, and the cost of false positives. I folded the result into a Verifier product with visual evidence paths and guardrails for missing or unreadable inputs.',
+      zh: '我对比过 Office 文档智能体任务的两条判分路线：确定性 rubric metric，以及能够打开产物、采集证据并按 rubric 推理的 agent judge。公开可讲的结论是定性的，而不是绑定某个厂商：LLM 裁判不天然更好，metric 也不天然更安全。选择取决于证据访问方式、rubric 粒度、可容忍方差与误判成本。实验结果最后进入 Verifier 产品，包含视觉证据路径，以及对输入缺失/不可读的防幻觉 guardrail。',
     },
     specs: [
-      { k: '+0.118 / +0.166', v: { en: 'agent vs metric agreement', zh: 'agent vs metric 一致率' } },
-      { k: '~0.04', v: { en: 'gain from upgrading the metric’s model', zh: '仅升级 metric 模型的提升' } },
-      { k: '566 / 15', v: { en: 'judgments · tasks (pilot)', zh: '次判定 · 任务（pilot）' } },
-      { k: '69k vs 5.3M', v: { en: 'tokens — more accurate, cheaper', zh: 'token —— 更准且更便宜' } },
+      { k: 'Metric route', v: { en: 'deterministic checks where structure is stable', zh: '结构稳定时使用确定性检查' } },
+      { k: 'Agent route', v: { en: 'evidence gathering where artifact semantics matter', zh: '语义和证据复杂时使用 agent 采证' } },
+      { k: 'Reason guard', v: { en: 'avoid hallucinated explanations on missing evidence', zh: '证据缺失时限制幻觉解释' } },
+      { k: 'Dashboard', v: { en: 'compare quality, cost, and latency before shipping', zh: '交付前比较质量、成本与时延' } },
     ],
     image: judgeImage,
     article: 'agent-as-judge',
-    tags: ['Agent-as-judge', 'Human-aligned', 'Cost-aware'],
+    tags: ['Agent-as-judge', 'Verifier', 'Cost-aware eval'],
   },
   {
-    eyebrow: { en: 'Open source', zh: '开源' },
+    eyebrow: { en: 'Eval execution', zh: '评测执行' },
     title: {
-      en: 'A new agent harness for an open-source framework.',
-      zh: '给一个开源框架写的新 agent harness。',
+      en: 'Running model families through the same harness surface.',
+      zh: '把多个模型族跑在同一套 harness 表面上。',
     },
     body: {
-      en: 'Built a production-grade, upstream-ready integration of a new agent harness (Stirrup) for the public Harbor evaluation framework — runner, provider routing, ATIF trajectory capture, and a per-model max-token ceiling table to dodge provider hard-limits — with 50 unit tests covering both POSIX and Windows paths. It lives on a clean fork, isolated from environment-specific glue: the real test of an integration is whether you can separate the part that helps everyone from the part that only helps you.',
-      zh: '为公开的 Harbor 评测框架做了一个生产级、可直接上游的新 agent harness（Stirrup）集成——runner、provider 路由、ATIF 轨迹捕获，以及一张按模型的 max-token 上限表来规避各家硬限——配 50 个覆盖 POSIX 与 Windows 路径的单测。它放在一个干净的 fork 上，与环境相关代码彻底剥离：检验一个集成好不好的真正标准，就是你能不能把"对所有人都有用的部分"从"只对你有用的部分"里分开。',
+      en: 'Evaluation infrastructure breaks in the gaps between model APIs, harnesses, sandboxes, and file outputs. I extended a containerized execution framework so model families could be compared on the same task surface, then separated a reusable harness adapter onto a clean public fork. The public version highlights the engineering surface: provider routing, trajectory capture, sandbox fan-out, smoke tests, retry discipline, and cost/latency accounting. Environment-specific glue and private deployment details stay out.',
+      zh: '评测基础设施最容易坏在模型 API、harness、沙箱与文件输出之间的缝隙里。我扩展了一套容器化执行框架，让多个模型族能在同一任务表面上比较，并把可复用 harness adapter 单独剥离到干净公开 fork。公开版本强调工程表面：provider 路由、轨迹采集、沙箱 fan-out、冒烟测试、失败重跑纪律与成本/时延核算。环境胶水与私有部署细节不公开。',
     },
     specs: [
-      { k: '+2,332 / 6', v: { en: 'lines added · files', zh: '行新增 · 文件' } },
-      { k: '50', v: { en: 'unit tests', zh: '个单元测试' } },
-      { k: 'harbor-framework/harbor', v: { en: 'public framework', zh: '公开框架' } },
+      { k: '6 families', v: { en: 'model comparison without changing task format', zh: '同一任务格式下横向比较模型' } },
+      { k: '5 harnesses', v: { en: 'normalize different agent execution styles', zh: '归一不同 agent 执行方式' } },
+      { k: 'Clean fork', v: { en: 'reusable integration separated from private glue', zh: '可复用集成与私有胶水隔离' } },
+      { k: 'Ops loop', v: { en: 'smoke, run, score, rerun, package', zh: '冒烟、运行、判分、重跑、打包' } },
     ],
     image: harborImage,
     link: { href: 'https://github.com/levizwang/harbor', label: { en: 'View the fork', zh: '查看 fork' } },
-    tags: ['Harbor', 'Agent adapter', 'Tested'],
+    tags: ['Cloud fan-out', 'Agent harnesses', 'Open source fork'],
+  },
+  {
+    eyebrow: { en: 'Adversarial QC', zh: '对抗式质检' },
+    title: {
+      en: 'Treating synthetic data as guilty until proven clean.',
+      zh: '默认合成数据有罪，直到证明它干净。',
+    },
+    body: {
+      en: 'For synthetic clinical and office-document data, I used an adversarial loop rather than trusting one generator pass. A generator creates the case, a critic turns defects into structured findings, and an arbiter decides whether to revise, rework, or pass. The durable part is not the medical content itself; it is the defect taxonomy and the feedback loop: derived-value drift, cross-file contradictions, impossible timelines, template contamination, metadata leakage, and rubrics that cannot be answered from the files.',
+      zh: '在合成临床与 Office 文档数据时，我没有信任单次生成，而是使用对抗式闭环：生成器产出病例/任务，critic 把缺陷转成结构化 findings，arbiter 决定修订、返工或放行。可复用的不是医疗内容本身，而是缺陷分类学和反馈闭环：派生值漂移、跨文件矛盾、不可能时间线、模板污染、元数据泄漏，以及无法从文件回答的 rubric。',
+    },
+    specs: [
+      { k: 'Actor', v: { en: 'generate realistic document cases', zh: '生成真实感文档案例' } },
+      { k: 'Critic', v: { en: 'convert defects into structured findings', zh: '将缺陷转成结构化 findings' } },
+      { k: 'Monitor', v: { en: 'decide revise, rework, or pass', zh: '裁定修订、返工或放行' } },
+      { k: 'Memory', v: { en: 'turn repeated failures into reusable detectors', zh: '把重复失败沉淀成可复用检测器' } },
+    ],
+    image: nvwaImage,
+    article: 'adversarial-qc',
+    tags: ['Actor-Critic-Monitor', 'Bad-pattern detectors', 'Synthetic data'],
   },
 ];
 
