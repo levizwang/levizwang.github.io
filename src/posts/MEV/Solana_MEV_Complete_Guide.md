@@ -1,5 +1,31 @@
 This is a consolidated, eight-part deep dive into building a **Solana MEV searcher** — from the "Dark Forest" laws of the chain down to a working architecture. It walks through the control plane, the network-wide inventory, sub-millisecond monitoring (scout), AMM pricing models, the cross-DEX arbitrage strategy, Jito bundles, and risk control. Each part below began as a standalone article; they're collected here as a single guide.
 
+## How to read this guide
+
+This is not meant to be read as a list of isolated tricks. A working searcher is a pipeline, and every layer constrains the next one:
+
+1. **Market structure.** Understand why Solana MEV is not Ethereum MEV with faster blocks. The absence of a classic public mempool, account-level parallelism, and leader scheduling change what is observable and what is executable.
+2. **State acquisition.** Decide how the system learns about pool changes quickly enough to matter. A slow or noisy feed turns every later optimization into theater.
+3. **Local pricing.** Reconstruct pool state locally and price routes without asking RPC for every decision.
+4. **Opportunity selection.** Filter theoretical spreads through fees, slippage, liquidity, transaction size, and inclusion probability.
+5. **Execution.** Build transactions or bundles that can land atomically, with realistic priority fees and failure handling.
+6. **Risk control.** Reject assets and routes that are profitable in simulation but unsafe in reality.
+
+The useful output of this guide is not "copy this bot." It is a mental model and a build checklist. If you can explain where your searcher gets state, how it prices a route, how it decides not to trade, and how it proves a landed trade was expected to be profitable before fees, you have the foundation of a real system.
+
+## Reference architecture at a glance
+
+Before the details, the whole system can be summarized as four loops:
+
+| Loop | Goal | Failure if missing |
+|------|------|--------------------|
+| Inventory loop | Maintain the list of pools, mints, and route candidates worth watching | The system wastes bandwidth on dead pools or misses real opportunities |
+| State loop | Keep an in-memory mirror of pool state fresh | Pricing uses stale reserves and creates false positives |
+| Strategy loop | Convert state changes into executable route candidates | The bot sees spreads but cannot decide size, fee, or direction |
+| Execution loop | Submit, confirm, and attribute bundles/transactions | Profitable simulations never land, or losses cannot be diagnosed |
+
+Most beginner searchers over-focus on the strategy loop because it looks like the "alpha." In practice, the inventory and state loops decide whether the strategy is even looking at reality, and the execution loop decides whether the alpha can be captured by you rather than by someone else.
+
 
 ---
 
@@ -864,3 +890,31 @@ if __name__ == "__main__":
     print(check_mint_risk(demo, strict=False))
     print(check_mint_risk(demo, strict=True))
 ```
+
+## Final build checklist
+
+If I were reviewing a Solana MEV searcher before letting it trade real capital, I would ask for these artifacts:
+
+- **Pool inventory snapshot.** Which pools are watched, why they were selected, when they were last refreshed, and which routes they support.
+- **State freshness metrics.** Median and tail delay from account update to local state update.
+- **Pricing parity tests.** Local CPMM/CLMM calculations compared against known swaps or simulation outputs.
+- **Route simulation record.** Expected in/out, slippage, fees, priority fee, Jito tip, and minimum acceptable profit.
+- **Execution attribution.** For every submitted transaction or bundle: landed/not landed, slot, error, realized PnL, and reason for failure.
+- **Risk report.** Mint authority, freeze authority, transfer restrictions, upgradeability, liquidity lock status, and any blacklist/tax behavior.
+- **Kill switches.** Max loss per trade, max notional per route, stale-state cutoff, RPC/feed degradation cutoff, and asset-level blocklist.
+- **Post-trade reconciliation.** Compare predicted vs. realized amounts. If the gap exceeds tolerance, stop the route until investigated.
+
+The difference between a toy searcher and a production searcher is not the arbitrage formula. It is the ability to prove that every trade was made with fresh state, valid pricing, bounded downside, and a clear reason for execution.
+
+## What to build first
+
+For a personal project, I would build in this order:
+
+1. **Read-only inventory and state mirror.** No trading, just maintain live pool state and measure freshness.
+2. **Pricing parity harness.** Feed historical or sampled pool states into local pricing functions and compare against simulation.
+3. **Paper-trading route detector.** Log opportunities with estimated fees and tips, but do not submit.
+4. **Risk gate.** Reject unsafe mints and routes before execution exists.
+5. **Tiny notional execution.** Only after the first four layers produce stable logs.
+6. **Bundle and priority-fee optimization.** Optimize landing only after the strategy is demonstrably sane.
+
+Skipping to execution first is how searchers lose money while feeling technically impressive. The safer path is to make the system explain itself before it is allowed to act.

@@ -88,6 +88,75 @@ Once you have E1/E2/E3 per item, the *shape* tells you more than any single scor
 | high | mid | low | Healthy: discriminating, file-grounded |
 | low | low | low | Too hard or mis-keyed — review the ledger |
 
+## Ship a validity report, not just an item
+
+The practical mistake is treating validity as an internal feeling. "This looks hard" is not an artifact. "The author thinks this is grounded" is not an artifact. A useful eval item should ship with a small validity report that explains why the item deserves to be in the benchmark.
+
+The report does not need to expose private prompts or internal stage names. It only needs to make the item auditable:
+
+```yaml
+item_id: office_reasoning_042
+claim: "Requires reconciling model assumptions against a memo and a spreadsheet."
+files_required:
+  - model.xlsx
+  - memo.pdf
+ability_target:
+  - locate relevant evidence
+  - reconcile conflicting values
+  - refuse unsupported inference
+validity_checks:
+  anti_guessing: pass
+  leakage_scan: pass
+  rubric_only_solver: fail_to_solve
+  judge_reason_guard: pass
+known_traps:
+  - "units differ across files"
+  - "one source gives a range, not a point estimate"
+review_decision: ship
+```
+
+That report changes the conversation. If a model later scores unexpectedly high, you know which assumption to attack first. If a reviewer says the item is unfair, you can inspect the exact evidence and trap design. If the item fails in production, you can decide whether the problem was the prompt, the rubric, the source files, or the judge.
+
+## A review workflow that actually catches problems
+
+The workflow I trust looks like this:
+
+1. **Author the item from evidence, not from intuition.** The writer should be constrained by a ledger or equivalent evidence artifact.
+2. **Run the three-condition probe.** Files + answer, files only, prompt only. Do not accept items whose file-removed score remains high.
+3. **Have a rubric-only reviewer attempt the task.** If the reviewer can solve without source files, the rubric or prompt leaks too much.
+4. **Run the judge on known bad responses.** Include empty outputs, off-task outputs, and plausible hallucinations. A judge that passes these is not ready.
+5. **Inspect disagreements manually.** The most valuable cases are where the metric, judge, or human reviewer diverge.
+6. **Write the diagnosis down.** If an item survives review, the reason should be durable enough that someone else can audit it next month.
+
+The important part is not that every step is automated. The important part is that every step creates evidence. A manual reviewer saying "looks fine" is less useful than a short note saying "rubric-only attempt failed because the evidence location is not disclosed in the prompt."
+
+## What to do with failed items
+
+Failed validity checks are not all the same. Treating every failure as "regenerate" wastes useful material. I use four buckets:
+
+| Failure | Usual action |
+|---------|--------------|
+| Guessable because the question is too generic | Rewrite the question around a more specific cross-file dependency |
+| Guessable because the prompt leaks the answer | Scrub prompt/rubric and rerun the probe |
+| Judge passes empty or off-task outputs | Fix judge guardrails before touching the item |
+| Source evidence is missing or contradictory | Convert into an insufficient-information item, or kill it |
+
+The fourth bucket is the most interesting. Sometimes a "bad" item is not bad because it is impossible; it is bad because the intended answer is impossible, while a boundary-recognition answer would be valid. Those are exactly the tasks that expose whether a model can say "not enough information" rather than inventing a number.
+
+## A reader's checklist for benchmark claims
+
+When someone shows me an agent benchmark result, I want answers to these questions before I trust it:
+
+- What happens when the files are removed?
+- Can a reviewer solve the task by reading only the rubric?
+- Are source locators recorded for every load-bearing fact?
+- Does the judge fail known-bad outputs?
+- Are generation, verification, and judging separated?
+- Are "insufficient information" cases represented, or does every task force a numeric answer?
+- Are failures rerun and diagnosed, or silently dropped?
+
+If those questions are hard to answer, the reported score may still be interesting, but it is not yet a measurement instrument.
+
 ## Takeaway
 
 In evaluation, the bug that hurts you isn't the crash. It's the question that looks hard. Most benchmarks fail silently, and the only way to catch it is to attack your own data: remove the answer, scrub the leakage, distrust the judge, and never let one model close the loop on itself.

@@ -113,6 +113,74 @@ The ledger also records the inverse — **uncertain boundaries**, the things the
 
 You can only write these *safely* if you've mapped the boundary first — and mapping the boundary is exactly what the ledger's caveats and uncertain-fields are for. Without a ledger, an "insufficient information" question is just a trap you might have set on yourself.
 
+## What a useful ledger produces
+
+The ledger is not only a guardrail for generation. If it is designed well, it becomes a review package that several different people can use for different jobs:
+
+| Consumer | What they need from the ledger |
+|----------|--------------------------------|
+| Question author | Which facts can be used, which facts conflict, and which boundaries must not be crossed |
+| Rubric author | The must-hit facts that define a complete answer |
+| Judge / verifier | The evidence locations needed to confirm or refute a model response |
+| Domain reviewer | A short path from disputed claim → source file → page/sheet/cell |
+| Dataset owner | A record of why the item is answerable, hard, and not leaking the answer |
+
+That last line matters. A benchmark item should not ship with only a prompt and an answer. It should ship with an *audit trail*. If an evaluator later asks why the answer is correct, why a near-miss should lose points, or why the task is not guessable, the evidence ledger should already contain the argument.
+
+The minimum useful artifact looks like this:
+
+```json
+{
+  "item_id": "public_item_042",
+  "source_files": ["deck.pdf", "model.xlsx", "memo.docx"],
+  "facts": [
+    {
+      "fact_id": "f_001",
+      "claim": "The margin used in the model is 18.4%.",
+      "locator": "model.xlsx::Summary!C27",
+      "verified_by": "independent_reader",
+      "status": "confirmed"
+    }
+  ],
+  "must_hit": ["f_001", "f_009", "f_014"],
+  "known_traps": [
+    "deck and model use different units",
+    "memo gives a range, not a point estimate"
+  ],
+  "undecidable_boundaries": [
+    "annual phasing is not disclosed"
+  ]
+}
+```
+
+Notice what is *not* in the artifact: vendor-specific prompts, private file paths, internal stage names, or implementation details that would let a future model fingerprint the data-generation pipeline. Publicly, the useful idea is the contract. Privately, the implementation can evolve.
+
+## Implementation checklist
+
+If I were adding an evidence ledger to a generation pipeline from scratch, I would start with this checklist:
+
+1. **Normalize the files before extraction.** Convert PDFs, spreadsheets, docs, and images into stable text/table views, but keep a pointer back to the original source. A normalized table without a way back to the source is not evidence.
+2. **Extract claims, not paragraphs.** A ledger row should be a claim that can be confirmed or refuted. "The deck discusses revenue growth" is too soft; "2025E revenue is shown as $42.1m on page 12" is useful.
+3. **Require locators at write time.** Do not let the author cite a number and find its evidence later. Evidence first, question second.
+4. **Separate extractor and verifier.** The verifier should have no incentive to agree with the extractor. If possible, use a different model family or at least a different prompt and role.
+5. **Track contradictions explicitly.** A conflict between two files is not noise; it is often the most interesting part of the task. Record it as a caveat rather than smoothing it away.
+6. **Make unsupported claims fail closed.** If a claim cannot be traced, the item should not ship. Do not downgrade this to a warning because the text "sounds right."
+7. **Preserve negative evidence.** The fact that a document *does not* disclose something is also evidence, especially for insufficient-information questions.
+
+The ledger is successful when an author can write a hard question without inventing, a reviewer can challenge it without guessing, and a grader can score it without doing a full forensic investigation every time.
+
+## Failure modes to watch
+
+The ledger can fail too. These are the ones I would audit first:
+
+- **Locator drift.** The extracted text points to the right sentence, but the locator points to the wrong page or cell after a file conversion step. The cure is rendering or opening the source during verification, not trusting the normalized copy.
+- **Fact granularity mismatch.** A single ledger row contains three claims, one of which is unsupported. Split rows until each can be independently judged.
+- **Alias leakage.** The ledger silently merges two entity names that the candidate should have had to reconcile. Make alias decisions visible.
+- **Over-cleaning.** The pipeline "fixes" conflicting source material into one neat value. That destroys exactly the ambiguity the task may be meant to test.
+- **Rubric drift.** The final rubric rewards facts that are not in `must_hit`. That means the item and the ledger have diverged.
+
+The review question is simple: if I delete the author model's prose and keep only the ledger, can a competent person reconstruct why the item is valid? If not, the ledger is not doing enough work.
+
 ## The unsexy artifact that makes everything else defensible
 
 None of this is flashy. The ledger is a JSON file full of values and locators that no one will ever see in the final benchmark. But it's the difference between *"a model wrote some questions"* and *"a benchmark where every number is traceable to a page and was verified by an independent model."* When a domain expert disputes an item, you don't argue — you open the locator. When a question's answer is challenged, the chain from answer to evidence is already written down.

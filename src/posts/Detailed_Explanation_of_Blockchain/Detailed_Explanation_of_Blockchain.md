@@ -1,6 +1,20 @@
 # Detailed Explanation of Blockchain
 
+This article is a broad, builder-oriented explanation of blockchain. It starts from the trust model, moves through accounts, wallets, smart contracts, stablecoins, lending, indexing, and finally the AI × blockchain narrative. The goal is not to memorize terminology. The goal is to understand which part of the stack is responsible for **ownership**, which part is responsible for **execution**, which part is responsible for **data access**, and which parts should remain off-chain.
 
+## Reader roadmap
+
+If you are new to Web3, read it in this order:
+
+1. **Trust and consensus.** Why a blockchain can replace institutional trust with public verification.
+2. **Accounts and wallets.** Why the private key is not a password but the source of authority.
+3. **Smart contracts.** How code becomes a shared execution environment.
+4. **Tokens and stablecoins.** How ownership and settlement become programmable.
+5. **DeFi application design.** How lending, collateral, liquidation, and oracle prices fit together.
+6. **Front-end and indexing.** Why a real dApp still needs off-chain infrastructure.
+7. **AI and blockchain.** Where the combination is useful, and where it is just narrative.
+
+By the end, you should be able to sketch a simple lending dApp and explain which data belongs on-chain, which data belongs in an indexer, and which data should stay in a traditional database.
 
 ## What is blockchain?
 
@@ -1457,3 +1471,37 @@ The metaverse is no longer dominated by any single tech giant (such as Meta or G
 
 Through AI, one can learn a person's behavioral habits and, in combination with blockchain, store their key life data (SBT/Soulbound Token). Even after the physical body disappears, the person's "digital avatar" can still continue to exist in the metaverse and participate in family decision-making based on the "will agreement" they left behind.
 
+## Practical architecture summary
+
+For a real Web3 product, the clean architecture is usually hybrid:
+
+| Layer | What belongs there | What should not be there |
+|-------|--------------------|--------------------------|
+| Smart contract | Asset custody, settlement, permissions, critical state transitions | Large files, private user preferences, high-frequency analytics |
+| Wallet | User identity, signatures, transaction authorization | Password recovery logic that assumes a centralized account model |
+| Indexer / Subgraph | Query-friendly views of on-chain events | Source of truth for balances or ownership |
+| IPFS / decentralized storage | Public static assets and metadata that should be content-addressed | Secrets, personal data, mutable operational configs |
+| Traditional backend | Notifications, personalization, risk dashboards, customer support workflows | Anything that must remain trustless and self-custodial |
+| AI service | Search, summarization, agent assistance, risk explanation | Final authority over ownership or irreversible settlement |
+
+The core design question is always: **what needs trustlessness, and what only needs convenience?** Put the first category on-chain. Put the second category where it is cheaper, faster, and easier to operate.
+
+## Builder checklist
+
+Before building or evaluating a blockchain application, I would check:
+
+- **Threat model.** Who can steal funds, freeze assets, censor transactions, or upgrade contracts?
+- **Key management.** What happens when a user loses a key? What happens when an admin key is compromised?
+- **Upgrade path.** Is the contract immutable, proxy-upgradable, or governed? Who controls upgrades?
+- **Oracle dependency.** If prices matter, what oracle is used, how often does it update, and how can it fail?
+- **Liquidity and liquidation.** Can positions be liquidated reliably during volatility?
+- **Event indexing.** Are events designed so the UI and analytics layer can reconstruct state efficiently?
+- **Gas and UX.** Which actions require signatures, which require gas, and which can be batched or abstracted?
+- **Data placement.** Which data is on-chain, in IPFS, in an indexer, or in a centralized database?
+- **Compliance and privacy.** Are personal data and regulated workflows kept out of public immutable storage?
+
+This checklist is less exciting than a token launch, but it is what separates a demo from a system people can use with real value.
+
+## Closing thought
+
+Blockchain is not "a database, but decentralized." It is a coordination machine for ownership and execution under adversarial conditions. AI can make that machine easier to use, and traditional infrastructure can make it faster to query, but neither replaces the core question: which parts of the product must be verifiable by everyone, and which parts merely need to work well?

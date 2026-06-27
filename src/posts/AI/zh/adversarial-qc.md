@@ -132,6 +132,65 @@ def rubric_is_healthy(rubric):
 
 一份 case 的上限，就是给它判分的那份 rubric；而 rubric 会朝着"容易通过"漂移，除非有东西在主动顶回去。
 
+## 实操 runbook
+
+ACM loop 只有在足够无聊、能反复跑时才有价值。我会把这份 runbook 交给另一个团队：
+
+1. **生成前先定义契约。** 必须有哪些文件？哪些字段必须跨文件一致？哪些 rubric 约束不可谈判？
+2. **用 locked facts 生成。** ID、日期、总额、姓名、派生量应该先声明一次，再被复用；不要让每个文件各自重新发明。
+3. **先跑廉价确定性检查。** 文件能否打开、表格尺寸、日期顺序、必填字段、一致性锁、简单算术，不该等 LLM 来看。
+4. **把 case 交给带具名失效模式的 Critic。** 不要问"这好不好"；要让它找派生值错误、时间线错误、rubric 泄漏、模板污染。
+5. **让 Monitor 决定路径。** 生成器不该有权辩称 critical finding 可以接受。Monitor 只能返回 revise、rework、resynthesize、pass。
+6. **只有局部缺陷才 patch。** 如果同一 case 有多个结构性冲突，重生成。局部编辑很容易制造二阶不一致。
+7. **归档 findings。** 这些缺陷是 QC 系统自己的训练数据。不存下来，loop 就不会学习。
+
+操作原则很简单：能算的交给代码，能看出来的交给便宜 reviewer，真正需要判断的裁决才交给最强模型。
+
+## 最终产物应该长什么样
+
+交付不应该只有文件和 rubric。一份可审查的合成 case，应该附带 QC record：
+
+```yaml
+case_id: public_case_118
+files:
+  - clinical_note.docx
+  - labs.xlsx
+  - scoring_rubric.json
+deterministic_checks:
+  file_integrity: pass
+  cross_file_locks: pass
+  derived_values: pass
+critic_findings:
+  critical: 0
+  major: 1
+  minor: 2
+monitor_decision: revise_then_pass
+rubric_checks:
+  answerable_from_files: pass
+  no_path_or_metadata_leakage: pass
+  penalties_capped: pass
+release_notes:
+  - "轻微日期格式不一致已归一"
+  - "rubric criterion 已拆成两个原子标准"
+```
+
+这不是官僚流程。它让你之后能 debug 数据集。如果某个模型在一道题上失败，你能区分"模型没读到证据"和"合成 case 内部本来就矛盾"。如果 reviewer 质疑 rubric，你能拿出通过/失败逻辑，而不是重新争论整份 case。
+
+## Definition of done
+
+对自生成数据来说，"完成"不能等于"文件看起来真实"。我的门槛更严格：
+
+- 每个文件都能被评测器实际使用的工具正常打开。
+- 共享事实在所有出现位置保持一致。
+- 派生量在领域允许误差内能对上。
+- 时间线物理上可能，且没有可疑的统一日期痕迹。
+- rubric 能从文件回答，且不泄漏答案。
+- 负向 criteria 被 cap 住，单个惩罚不能统治总分。
+- metadata、路径、生成指纹被清理。
+- Critic findings 要么被修复，要么被 Monitor 明确接受。
+
+缺少其中任何一项，case 可能仍然"像真的"，但还不是交付级。
+
 ## 这个教训会泛化
 
 如今生成很容易，已经被商品化了。**规模化的对抗式核验，才是护城河。** 而这个教训和医疗数据无关——它关于任何你自己生成的数据集。它会以"看起来很合理"的方式对你撒谎，再多小心翼翼的 prompt 也修不好，因为产生数据的东西和审查数据的东西共享同一套盲点。唯一持久的防御，是去造一个**整个工作就是怀疑**的东西——然后，把它抓到的一切都记下来。

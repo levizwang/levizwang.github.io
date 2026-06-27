@@ -88,6 +88,75 @@ assert author.vendor != verifier.vendor != judge.vendor
 | 高 | 中 | 低 | 健康：有区分度、依赖文件 |
 | 低 | 低 | 低 | 太难或 key 错了——回去查账本 |
 
+## 交付的应该是 validity report，而不只是题目
+
+最常见的错误，是把有效性当成一种内部感觉。"这题看着挺难"不是产物。"出题者觉得它有证据"也不是产物。一个可用的 eval item 应该随附一份小的 validity report，解释它为什么配进入 benchmark。
+
+这份 report 不需要暴露私有 prompt 或内部阶段名，只需要让题目可审计：
+
+```yaml
+item_id: office_reasoning_042
+claim: "需要把模型假设与 memo、spreadsheet 交叉核对。"
+files_required:
+  - model.xlsx
+  - memo.pdf
+ability_target:
+  - 定位相关证据
+  - 核对冲突数值
+  - 拒绝无证据推断
+validity_checks:
+  anti_guessing: pass
+  leakage_scan: pass
+  rubric_only_solver: fail_to_solve
+  judge_reason_guard: pass
+known_traps:
+  - "不同文件单位不同"
+  - "某个来源给的是范围，不是点估计"
+review_decision: ship
+```
+
+这份 report 会改变讨论方式。如果之后某个模型异常高分，你知道先攻击哪条假设。如果 reviewer 说题不公平，你可以直接检查证据和 trap 设计。如果线上失败，你能判断问题出在题面、rubric、源文件，还是 judge。
+
+## 真能抓问题的 review workflow
+
+我更信任这样的流程：
+
+1. **从证据写题，不从直觉写题。** 作者应该被 evidence ledger 或等价证据产物约束。
+2. **跑三条件探针。** 文件+答案、只给文件、只给题面。抽走文件还高分的题不该放行。
+3. **让 rubric-only reviewer 尝试作答。** 如果只读 rubric 就能答出来，题面或 rubric 泄漏太多。
+4. **用已知坏回答测试 judge。** 包括空输出、跑题输出、看似合理的幻觉输出。能放过这些的 judge 还不能上线。
+5. **人工看 disagreement。** metric、judge、人类 reviewer 不一致的地方，最有信息量。
+6. **把诊断写下来。** 一道题通过 review 的理由，应该 durable 到下个月别人还能审计。
+
+关键不在于每一步都自动化，而在于每一步都产出证据。一个 reviewer 说"看起来可以"不如一句短 note 有用："rubric-only 尝试失败，因为题面没有披露证据位置。"
+
+## 失效题目怎么处理
+
+validity check 失败不都等于重生成。把所有失败都当成 regenerate，会浪费很多有价值材料。我通常分四类：
+
+| 失效 | 常见处理 |
+|------|----------|
+| 题太泛，靠常识能蒙 | 围绕更具体的跨文件依赖重写问题 |
+| 题面泄漏答案 | 清洗题面/rubric 后重跑探针 |
+| judge 放过空输出或跑题输出 | 先修 judge guardrail，不动题目 |
+| 源证据缺失或冲突 | 改成资料不足题，或直接删除 |
+
+第四类最有意思。有时一道"坏题"不是因为它不可做，而是因为原计划的答案不可得；如果改成识别边界的题，它反而很有价值。这类题最能照出模型能不能说"信息不足"，而不是硬编一个数字。
+
+## 判断 benchmark claim 是否可信的清单
+
+别人给我看一个 agent benchmark 结果时，我会先问：
+
+- 抽走文件后模型表现怎样？
+- reviewer 只读 rubric 能不能做出来？
+- 每个 load-bearing fact 有没有源文件 locator？
+- judge 有没有在已知坏输出上失败？
+- 生成、核验、判分是否分离？
+- 有没有"资料不足"题，还是每题都强迫给数值答案？
+- 失败样本是被诊断和重跑，还是被静默丢掉？
+
+如果这些问题很难回答，分数也许仍然有参考价值，但它还不是一个可信的测量仪器。
+
 ## 结语
 
 在评测里，真正伤到你的 bug 不是崩溃，而是那道"看着难"的题。大多数 benchmark 都在静默失效，唯一的破解之道是去攻击你自己的数据：抽掉答案、洗掉泄漏、怀疑 judge，并且永远不要让一个模型把环闭合在自己身上。

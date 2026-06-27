@@ -132,6 +132,65 @@ def rubric_is_healthy(rubric):
 
 A case is only as good as the rubric that grades it, and rubrics drift toward "easy to pass" unless something actively pushes back.
 
+## The practical runbook
+
+An ACM loop becomes useful when it is boring enough to run repeatedly. The runbook I would hand to another team looks like this:
+
+1. **Define the contract before generation.** What files must exist? Which fields must be consistent across files? Which rubric constraints are non-negotiable?
+2. **Generate with explicit locked facts.** IDs, dates, totals, names, and derived quantities should be declared once and then reused, not re-invented per file.
+3. **Run cheap deterministic checks first.** File openability, table dimensions, date ordering, required fields, checksum-like consistency locks, and simple arithmetic should not wait for an LLM.
+4. **Send the case to a Critic with named failure modes.** Do not ask "is this good?" Ask it to find derived-value errors, timeline errors, rubric leakage, and template contamination.
+5. **Let the Monitor decide the route.** The generator should not get to argue that a critical finding is acceptable. The monitor returns revise, rework, resynthesize, or pass.
+6. **Patch only when the defect is local.** If the same case has multiple structural conflicts, regenerate. Local editing often creates a second-order inconsistency.
+7. **Archive the findings.** The defects are training data for your QC system. If you do not store them, the loop does not learn.
+
+The operational principle is simple: use code for things that can be calculated, use a cheap reviewer for things that can be spotted, and reserve the strongest model for calls that require judgment.
+
+## What the output should look like
+
+The final delivery should include more than files and a rubric. A reviewable synthetic case needs an accompanying QC record:
+
+```yaml
+case_id: public_case_118
+files:
+  - clinical_note.docx
+  - labs.xlsx
+  - scoring_rubric.json
+deterministic_checks:
+  file_integrity: pass
+  cross_file_locks: pass
+  derived_values: pass
+critic_findings:
+  critical: 0
+  major: 1
+  minor: 2
+monitor_decision: revise_then_pass
+rubric_checks:
+  answerable_from_files: pass
+  no_path_or_metadata_leakage: pass
+  penalties_capped: pass
+release_notes:
+  - "minor date-format inconsistency normalized"
+  - "rubric criterion split into two atomic criteria"
+```
+
+This record is not bureaucracy. It lets you debug the dataset later. If a model fails an item, you can distinguish "the model missed the evidence" from "the synthetic case was internally inconsistent." If a reviewer challenges a rubric, you can show the pass/fail logic instead of re-litigating the whole case.
+
+## Definition of done
+
+For self-generated data, "done" cannot mean "the files look realistic." My threshold is stricter:
+
+- Every file opens cleanly with the tools the evaluator will actually use.
+- Shared facts agree across all files where they appear.
+- Derived quantities reconcile within a domain-appropriate tolerance.
+- Timelines are physically possible and not suspiciously uniform.
+- The rubric is answerable from the files and does not leak the answer.
+- Negative criteria are capped so one penalty cannot dominate the score.
+- Metadata, paths, and generation fingerprints are scrubbed.
+- The Critic's findings are either fixed or explicitly accepted by the Monitor.
+
+If any of those are missing, the case may still be plausible, but it is not delivery-grade.
+
 ## The lesson generalizes
 
 Generation is easy now; it's commoditized. **Adversarial verification at scale is the moat.** And the lesson isn't about medical data — it's about any dataset you generated yourself. It will lie to you in plausible-looking ways, and no amount of careful prompting fixes that, because the thing producing the data and the thing reviewing it share the same blind spots. The only durable defense is to build something whose entire job is to disbelieve — and then to remember everything it catches.

@@ -83,6 +83,70 @@ def rerun_failed(batch):
         t.result = run_one(t)
 ```
 
+## 运维 runbook
+
+一个 eval harness 真正的工作，是把混乱的一次运行变成可重复的一次运行。我信任的 runbook 是：
+
+1. **把每个任务归一成同一个 job contract。** Prompt、文件、期望输出、timeout、评分配置、artifact 路径，在模型看到任务前就应该明确。
+2. **批量前每个 harness 先冒烟一题。** 一个完整 batch 不应该是某个 model/harness 第一次见到任务格式。
+3. **记录完整轨迹。** 只有最终答案不够。需要 tool calls、创建的文件、时间戳、token 用量、错误，以及能拿到的 stdout/stderr。
+4. **区分运行失败和得分失败。** "模型得了 0 分"和"runner 崩了"是两件事，绝不能共用一个字段。
+5. **窄范围重跑。** 失败任务应该能被复现，并且能在不碰通过任务的前提下重跑。
+6. **为 review 打包。** 下游 reviewer 打开一个文件夹，就应该能看到 prompt、response、files-out、logs、score 和 judge rationale。
+7. **让成本可见。** 成本不是财务附属项；它决定 benchmark 能不能被重复、debug 和信任。
+
+这套 runbook 的产出不只是一个 CSV 分数表，而是每个 model/harness pair 的证据包。
+
+## 好的 run artifact 应该长这样
+
+我希望每个完成任务都留下大致这样的目录：
+
+```text
+run/
+  task.json                 # 归一后的任务契约
+  input_files/
+  trajectory.json            # steps, tool calls, timestamps
+  response.md
+  files_out/
+  usage.json                 # input/output/cache tokens, wall time
+  score.json                 # rubric scores and aggregate
+  judge_evidence/
+  logs/
+  error.json                 # 只有运行失败时存在
+```
+
+这套结构第一次有人问"为什么这个模型输了"时就会回本。没有 trajectory 和 artifacts，你只能说"分数比较低"。有了它们，你可以说"模型找到了正确 sheet、写了正确公式，但没有保存 workbook"，或者"这个 harness 在 reasoning-only turn 后提前结束了任务"。这对应完全不同的产品决策。
+
+## 抽象边界
+
+adapter contract 应该向 benchmark 隐藏 provider 差异，但不应该向 operator 隐藏。benchmark 想要统一的 `Trajectory`；operator 需要原始失败原因。所以 adapter 应该返回归一字段，同时保留 raw diagnostics：
+
+```python
+@dataclass
+class RunResult:
+    status: Literal["passed", "scored_zero", "runner_error", "timeout"]
+    trajectory: Trajectory | None
+    normalized_error: str | None
+    raw_error: dict | None
+    artifacts: list[Path]
+```
+
+这个区分能避免一个常见反模式：把所有失败都拍平成 0 分。timeout、缺文件、provider API 失败、真正答错，对团队意味着完全不同的工作。
+
+## 内部报告应该发布什么
+
+一个有用的 benchmark report 不该只回答"谁赢了"。我会发布：
+
+- 按任务类型拆分的分数分布，而不只是均值。
+- 排除 runner error 后的通过率，以及单独的 runner-error rate。
+- 中位数与尾部时延。
+- 每个完成任务成本，以及每个通过任务成本。
+- 文件输出成功率。
+- judge disagreement 或人工复核率。
+- 最高频 failure modes 和样例。
+
+这会改变模型选型。最好的模型不一定是均分最高的模型；它可能是那个少过几道题，但文件输出有效、成本低一半、失败方式更容易 debug 的模型。
+
 ## 回馈社区
 
 在集成 **Stirrup** agent 时，我把它清理得足够干净，做成了**面向开源 Harbor 框架、可直接上游**的集成——把可复用的 agent 适配器从所有环境相关的胶水代码里剥离出来，放在一个干净的 fork 上。这恰恰是检验一个集成好不好的真正标准：你能不能把"对所有人都有用的部分"和"只对你有用的部分"分开？

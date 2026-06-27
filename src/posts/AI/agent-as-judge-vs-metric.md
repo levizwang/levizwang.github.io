@@ -39,6 +39,60 @@ Illustrative shape of what comes out (numbers depend entirely on task and rubric
 
 For tight, structured outputs (a spreadsheet cell is right or wrong) the metric is often better *and* cheaper. For open-ended outputs where format varies, the judge earns its cost.
 
+## A decision framework I actually use
+
+The choice is less "metric or judge" and more "which parts of the rubric belong to which grader." A single task often needs both:
+
+| Rubric criterion type | Better first choice | Why |
+|-----------------------|--------------------|-----|
+| Exact value, cell, field, filename | Metric | Deterministic, cheap, reproducible |
+| Formatting that can be rendered and inspected | Metric + visual check | Screenshots catch layout regressions better than prose |
+| Semantic explanation or business reasoning | Judge | Correct answers can be phrased many ways |
+| Multi-step evidence use | Agent judge | It can inspect files and gather support before scoring |
+| Safety / refusal / insufficient information | Judge with strict reason guard | Needs interpretation, but must not hallucinate evidence |
+| Fatal compliance failure | Metric or explicit gate | Should not depend on judge taste |
+
+This hybrid approach avoids two common mistakes. The first is replacing a good exact-match metric with a slower, noisier judge because "LLMs are smarter." The second is forcing a deterministic metric to judge semantics it cannot see. The right system routes each criterion to the cheapest reliable evaluator.
+
+## Designing the comparison
+
+A useful judge-vs-metric experiment has to be deliberately boring. If the two graders see different inputs, use different rubric wording, or aggregate scores differently, the comparison becomes meaningless. My minimum experiment design:
+
+```yaml
+cases:
+  sampling: stratified
+  include:
+    - easy structured outputs
+    - open-ended reasoning outputs
+    - empty / corrupt / off-task outputs
+rubric:
+  criteria: atomic
+  fatal_errors: explicit
+graders:
+  metric: same rubric, deterministic implementation
+  judge: same rubric, pinned model, fixed prompt contract
+ground_truth:
+  source: human labels or adjudicated gold labels
+metrics:
+  - precision
+  - recall
+  - agreement
+  - latency
+  - cost
+analysis:
+  compare_disagreements: true
+```
+
+The most useful table is not the leaderboard. It is the disagreement table:
+
+| Case | Metric | Judge | Human | Diagnosis |
+|------|--------|-------|-------|-----------|
+| A | pass | fail | fail | metric missed semantic contradiction |
+| B | fail | pass | fail | judge over-trusted fluent prose |
+| C | pass | pass | fail | rubric criterion is under-specified |
+
+That table tells you what to fix. Sometimes the judge is wrong. Sometimes the metric is blind. Sometimes both reveal that the rubric itself is ambiguous.
+
 ## Two things that quietly decide the outcome
 
 A couple of details mattered more than the headline method choice.
@@ -72,5 +126,38 @@ disagreements = [
 # triage these by hand; each one is either a metric blind spot
 # or a judge hallucination, and both are worth fixing.
 ```
+
+## Production guardrails
+
+If I were shipping an LLM judge in production, I would not treat it as a black box. I would require:
+
+- **Pinned model and prompt version.** A judge upgrade is a measurement change, not a harmless dependency bump.
+- **Atomic criteria.** One criterion should ask one thing. Multi-part criteria invite inconsistent partial credit.
+- **Evidence requirement.** The judge must cite or reference the evidence it used, even if that reference is internal and not shown to end users.
+- **Reason guard.** Empty, unreadable, unsupported, or off-task inputs should return "insufficient evidence" rather than a creative explanation.
+- **Calibration set.** Keep a small frozen set of human-labeled cases and run it before every judge release.
+- **Disagreement review.** Sample metric/judge/human disagreements routinely; that is where silent drift shows up first.
+- **Cost budget.** Track judge cost per accepted decision, not only cost per call. A cheap judge that triggers many manual reviews may be expensive.
+
+The operational posture is the same as any measurement instrument: version it, calibrate it, monitor it, and know where it fails.
+
+## The useful output
+
+The experiment should not end with "judge wins" or "metric wins." It should end with a routing policy:
+
+```python
+def choose_grader(criterion):
+    if criterion.is_fatal:
+        return "gate"
+    if criterion.exact_matchable:
+        return "metric"
+    if criterion.needs_artifact_inspection:
+        return "agent_judge"
+    if criterion.semantic:
+        return "llm_judge"
+    return "manual_review"
+```
+
+That policy is the product. It lets you add new tasks without re-litigating the philosophy every time. More importantly, it makes the grading system explainable to the people who will depend on its numbers.
 
 An LLM judge isn't free and isn't automatically better. It's a tool with a cost curve. Measure the curve before you commit to it.

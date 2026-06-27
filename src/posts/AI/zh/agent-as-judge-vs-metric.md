@@ -39,6 +39,60 @@ class JudgeGrader:       # Claude Code / Codex 驱动对齐过的裁判模型
 
 对于紧结构的输出（一个单元格非对即错），metric 往往**又好又便宜**；对于格式多变的开放式输出，裁判才配得上它的成本。
 
+## 我实际会用的决策框架
+
+真正的问题不是"metric 还是 judge"，而是"rubric 的哪一部分应该交给哪个 grader"。同一个任务往往需要两者共存：
+
+| Rubric criterion 类型 | 优先选择 | 原因 |
+|-----------------------|----------|------|
+| 精确值、单元格、字段、文件名 | Metric | 确定、便宜、可复现 |
+| 可渲染检查的格式 | Metric + visual check | 截图比文字更容易抓布局退化 |
+| 语义解释或商业推理 | Judge | 正确答案可能有很多表达方式 |
+| 多步证据使用 | Agent judge | 它能打开文件、采证后再判 |
+| 安全/拒答/资料不足 | 带严格 reason guard 的 judge | 需要解释，但不能幻觉证据 |
+| 致命合规错误 | Metric 或显式 gate | 不应该依赖 judge 品味 |
+
+这种混合路线避免两个常见错误。第一，不要因为"LLM 更聪明"就把一个好用的 exact-match metric 换成更慢、更有噪声的 judge。第二，也不要强迫确定性 metric 去判断它看不见的语义。正确系统会把每个 criterion 路由给最便宜且可靠的 evaluator。
+
+## 如何设计这个对比实验
+
+一个有用的 judge-vs-metric 实验，必须刻意无聊。如果两个 grader 看到的输入不同、rubric 表述不同、聚合方式不同，比较就失效了。我的最小实验设计是：
+
+```yaml
+cases:
+  sampling: stratified
+  include:
+    - 简单结构化输出
+    - 开放式推理输出
+    - 空 / 损坏 / 跑题输出
+rubric:
+  criteria: atomic
+  fatal_errors: explicit
+graders:
+  metric: 同一份 rubric，确定性实现
+  judge: 同一份 rubric，固定模型，固定 prompt contract
+ground_truth:
+  source: 人工标签或仲裁后的 gold labels
+metrics:
+  - precision
+  - recall
+  - agreement
+  - latency
+  - cost
+analysis:
+  compare_disagreements: true
+```
+
+最有用的表不是排行榜，而是 disagreement table：
+
+| Case | Metric | Judge | Human | Diagnosis |
+|------|--------|-------|-------|-----------|
+| A | pass | fail | fail | metric 漏掉了语义矛盾 |
+| B | fail | pass | fail | judge 过度信任流畅 prose |
+| C | pass | pass | fail | rubric criterion 写得不够明确 |
+
+这张表告诉你该修什么。有时 judge 错了，有时 metric 瞎了，有时两者一起暴露出 rubric 本身含糊。
+
 ## 两个悄悄决定结果的细节
 
 有几个细节，比"方法选哪个"这个大问题更关键。
@@ -72,5 +126,38 @@ disagreements = [
 # 手工分诊这些；每一条要么是 metric 的盲点，
 # 要么是裁判的幻觉，两者都值得修。
 ```
+
+## 生产环境 guardrails
+
+如果要把 LLM judge 真正上线，我不会把它当黑盒。我会要求：
+
+- **固定模型和 prompt 版本。** 升级 judge 是测量方式变化，不是普通依赖升级。
+- **原子化 criteria。** 一条 criterion 只问一件事。多部分 criteria 会制造不一致的 partial credit。
+- **证据要求。** judge 必须引用或记录它用到的证据，即使这些引用只在内部可见。
+- **Reason guard。** 空、不可读、无证据、跑题输入应该返回"证据不足"，而不是编一个解释。
+- **校准集。** 保留一小批冻结的人工标注样本，每次 judge release 前都跑。
+- **Disagreement review。** 定期抽查 metric/judge/human 不一致的样本；静默漂移通常先在那里出现。
+- **成本预算。** 关注每个 accepted decision 的成本，而不只是每次调用成本。一个便宜但触发大量人工复核的 judge 可能反而贵。
+
+姿态和任何测量仪器一样：版本化、校准、监控，并且知道它在哪里会失效。
+
+## 真正有用的产出
+
+实验不应该止步于"judge 赢了"或"metric 赢了"。它应该产出一条 routing policy：
+
+```python
+def choose_grader(criterion):
+    if criterion.is_fatal:
+        return "gate"
+    if criterion.exact_matchable:
+        return "metric"
+    if criterion.needs_artifact_inspection:
+        return "agent_judge"
+    if criterion.semantic:
+        return "llm_judge"
+    return "manual_review"
+```
+
+这条 policy 才是产品。它让你之后添加新任务时，不必每次重新争论哲学。更重要的是，它让评分系统能向依赖这些数字的人解释清楚。
 
 LLM 裁判既不免费，也不天然更好。它是一个带成本曲线的工具。先把曲线测出来，再决定要不要押上去。
