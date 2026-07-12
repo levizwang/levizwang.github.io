@@ -1,3 +1,11 @@
+import { html as aiDifficultyEn } from '../posts/AI/benchmark-difficulty.md';
+import { html as aiDifficultyZh } from '../posts/AI/zh/benchmark-difficulty.md';
+import { html as aiJudgeRelEn } from '../posts/AI/judge-reliability.md';
+import { html as aiJudgeRelZh } from '../posts/AI/zh/judge-reliability.md';
+import { html as aiReviewEn } from '../posts/AI/adversarial-code-review.md';
+import { html as aiReviewZh } from '../posts/AI/zh/adversarial-code-review.md';
+import { html as aiRubricEn } from '../posts/AI/rubric-dags.md';
+import { html as aiRubricZh } from '../posts/AI/zh/rubric-dags.md';
 import { html as aiLedgerEn } from '../posts/AI/evidence-ledger.md';
 import { html as aiLedgerZh } from '../posts/AI/zh/evidence-ledger.md';
 import { html as aiAdvqcEn } from '../posts/AI/adversarial-qc.md';
@@ -15,6 +23,7 @@ import {
   agentAsJudge as judgeImage,
   nvwa as nvwaImage,
   harbor as harborImage,
+  ragEval as ragImage,
   solanaMev as mevImage,
 } from '../images/projects';
 import blockchainImage from '../images/posts/web3/web3.webp';
@@ -32,6 +41,70 @@ export interface BlogPost {
 }
 
 export const blogPosts: BlogPost[] = [
+  {
+    id: 'benchmark-difficulty',
+    title: {
+      en: 'Benchmark Difficulty Is a Measurable Property',
+      zh: '基准难度是一个可测量的属性',
+    },
+    excerpt: {
+      en: 'How we calibrated a legal benchmark into a 0.5–0.7 acceptance band: an isolated leak-proof eval harness, control-group experiments that separate rework effects from solver-effort confounds, and the judge bugs found on the way.',
+      zh: '我们如何把一个法律基准校准进 0.5–0.7 验收带：隔离防泄漏的评测 harness、把返修效应与解题档位混淆因子分开的对照实验，以及途中发现的裁判缺陷。',
+    },
+    content: { en: aiDifficultyEn, zh: aiDifficultyZh },
+    date: 'Jul 10, 2026',
+    category: 'AI Evaluation',
+    tags: ['LLM Eval', 'Evaluation Science', 'Benchmarks'],
+    image: ragImage,
+  },
+  {
+    id: 'judge-reliability',
+    title: {
+      en: 'Your Judge Is Part of the System Under Test',
+      zh: '裁判也是被测系统的一部分',
+    },
+    excerpt: {
+      en: 'Four judge failures from production: fatal false-kills on legitimate citations, silently dropped rubric fields, scores citing evidence that does not exist, and a harness configuration that changed model behavior. Plus the checks we now run for each.',
+      zh: '生产中遇到的四类裁判失效：把合法引用误杀归零、静默丢弃 rubric 字段、引用不存在的证据打分，以及一处改变模型行为的 harness 配置。附上我们现在为每一类跑的检查。',
+    },
+    content: { en: aiJudgeRelEn, zh: aiJudgeRelZh },
+    date: 'Jul 06, 2026',
+    category: 'AI Evaluation',
+    tags: ['LLM-as-judge', 'LLM Eval', 'Reliability'],
+    image: judgeImage,
+  },
+  {
+    id: 'adversarial-code-review',
+    title: {
+      en: 'The 51-Agent Code Review',
+      zh: '51 个 Agent 的代码审查',
+    },
+    excerpt: {
+      en: 'How I reviewed a teammate\'s 17-commit series with a 51-agent workflow: six finders proposed 45 candidate defects, independent verifiers reproduced each one by execution, and 40 were confirmed with introducing-commit attribution.',
+      zh: '我如何用 51 个 agent 的工作流审查同事的 17 个 commit：6 个 finder 提出 45 个候选缺陷，独立 verifier 逐个用执行复现，最终确认 40 个并定位到引入 commit。',
+    },
+    content: { en: aiReviewEn, zh: aiReviewZh },
+    date: 'Jul 02, 2026',
+    category: 'AI Evaluation',
+    tags: ['Multi-Agent', 'Code Review', 'Verification'],
+    image: harborImage,
+  },
+  {
+    id: 'rubric-dags',
+    title: {
+      en: 'Rubrics as DAGs: Scoring Process, Not Just Outcomes',
+      zh: '把 Rubric 做成 DAG：给过程打分，而不只是结果',
+    },
+    excerpt: {
+      en: 'Flat rubrics give points to guessed numbers and hallucinated steps. A schema with process/outcome typing, dependency gating, hurdle rows, and code-enforced floors fixes most of that. This post walks through the design and the repair semantics.',
+      zh: '平铺的 rubric 会给蒙对的数字和幻觉出来的步骤发分。过程/结果分型、依赖门控、hurdle 行加上代码强制的下限能解决大部分问题。这篇文章讲这套 schema 的设计与修复语义。',
+    },
+    content: { en: aiRubricEn, zh: aiRubricZh },
+    date: 'Jun 30, 2026',
+    category: 'AI Evaluation',
+    tags: ['Rubric Design', 'LLM Eval', 'LLM-as-judge'],
+    image: nvwaImage,
+  },
   {
     id: 'evidence-ledger',
     title: {

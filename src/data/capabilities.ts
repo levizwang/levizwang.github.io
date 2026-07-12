@@ -12,39 +12,39 @@ export interface Pillar {
 /** The four problem areas surfaced on the home "What I build" section. */
 export const pillars: Pillar[] = [
   {
-    icon: 'workflow',
-    title: { en: 'Agentic infrastructure', zh: '智能体基础设施' },
-    body: {
-      en: 'Agent harnesses, tool-use environments, and trajectory capture for comparing model behavior across complex, file-heavy tasks.',
-      zh: '构建 agent harness、tool-use environment 与轨迹采集层，用于在复杂、文件密集任务上横向比较模型行为。',
-    },
-    tags: ['Agent harnesses', 'Trajectory capture', 'MCP parity'],
-  },
-  {
     icon: 'gauge',
     title: { en: 'Evaluation science', zh: '评测科学' },
     body: {
-      en: 'LLM-as-judge, rubric metrics, reason guards, anti-guessing probes, and leakage control so a benchmark measures ability, not noise.',
-      zh: 'LLM-as-judge、rubric metric、reason guard、防蒙探针与泄漏控制，让 benchmark 测的是能力，而不是噪声。',
+      en: 'Difficulty calibration with control-group experiments, anti-guessing probes, leakage control, and systematic testing of the LLM judge itself.',
+      zh: '带对照组的难度校准、防蒙探针、泄漏控制，以及对 LLM 裁判本身的系统性测试。',
     },
-    tags: ['Verifier systems', 'Anti-guessing gates', 'Rubric design'],
+    tags: ['Difficulty calibration', 'Judge reliability', 'Anti-guessing gates'],
   },
   {
     icon: 'flask',
-    title: { en: 'Synthetic data', zh: '合成数据' },
+    title: { en: 'Synthetic & RL data', zh: '合成与 RL 数据' },
     body: {
-      en: 'Evidence-grounded generation with adversarial QC, turning expert files into traceable eval and training data without exposing private implementation recipes.',
-      zh: '以证据为依据的生成，配对抗式 QC，把专家文件变成可溯源的评测与训练数据，同时避免暴露内部实现配方。',
+      en: 'Evidence-grounded task synthesis in expert domains: dual-model fact confirmation, adversarial QC, and DAG rubrics that score the reasoning process as well as the outcome.',
+      zh: '专家领域的证据约束任务合成：双模型事实互证、对抗式 QC，以及同时给推理过程和结果打分的 DAG rubric。',
     },
-    tags: ['Evidence ledger', 'Adversarial QC', 'Synthetic/RL data'],
+    tags: ['Evidence ledger', 'DAG rubrics', 'Adversarial QC'],
+  },
+  {
+    icon: 'workflow',
+    title: { en: 'Agentic systems', zh: '智能体系统' },
+    body: {
+      en: 'Multi-agent pipelines built and operated as production software: role-isolated model routing, blind-then-hinted solver protocols, and verification agents that reproduce findings by execution.',
+      zh: '按生产软件的标准构建和运维多智能体流水线：角色隔离的模型路由、先盲解后带提示的试做协议，以及靠执行复现来确认结论的验证 agent。',
+    },
+    tags: ['Multi-agent pipelines', 'Verification fleets', 'MCP'],
   },
   {
     icon: 'layers',
-    title: { en: 'Multi-model harnessing', zh: '多模型驾驭' },
+    title: { en: 'Full-stack execution', zh: '全栈执行力' },
     body: {
-      en: 'Containerized eval execution across model families and harnesses, with cloud fan-out, cost/latency accounting, and delivery-grade packaging.',
-      zh: '跨模型族与 harness 的容器化评测执行，配云端 fan-out、成本/时延核算与交付级打包。',
+      en: 'Containerized eval execution across model families and harnesses, with cloud fan-out, cost governance, and delivery-grade QA gates.',
+      zh: '跨模型族与 harness 的容器化评测执行，配云端 fan-out、成本治理与交付级 QA 门控。',
     },
-    tags: ['Model×harness matrices', 'Cloud fan-out', 'Open source'],
+    tags: ['Model×harness matrices', 'Cloud fan-out', 'Delivery QA'],
   },
 ];

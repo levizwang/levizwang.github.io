@@ -13,40 +13,44 @@ export interface ExperienceItem {
 export const experience: ExperienceItem[] = [
   {
     company: 'HUMANLAYA AI',
-    role: { en: 'AI Infra Engineer · Founding Engineer & Strategic Projects Lead', zh: 'AI Infra Engineer · 创始期工程师 & 战略项目负责人' },
+    role: { en: 'AI Algorithm Engineer (Evaluation & Data) · Founding Engineer', zh: 'AI 算法工程师（评测与数据）· 创始期工程师' },
     location: { en: 'Beijing, China', zh: '中国 · 北京' },
     period: 'Apr 2026 – Present',
     summary: {
-      en: 'Founding-stage engineer building agentic-evaluation datasets and the infrastructure to synthesize, grade, benchmark, and deliver them to frontier-model teams. Public-facing descriptions intentionally abstract away client names, internal repositories, and exact implementation recipes.',
-      zh: '创始期工程师，构建 agentic-evaluation 数据集，以及合成、评分、benchmark 与交付这些数据的基础设施。公开表述刻意抽象客户名、内部仓库名与具体实现配方。',
+      en: 'Founding-stage engineer owning the algorithm side of agentic evaluation and synthetic data for frontier-model teams — benchmark design and difficulty calibration, judge reliability, rubric systems — plus the multi-agent pipelines and eval infrastructure that run them. Public-facing descriptions intentionally abstract away client names, internal repositories, and exact implementation recipes.',
+      zh: '创始期工程师，负责面向前沿模型团队的 agentic 评测与合成数据的算法侧——基准设计与难度校准、裁判可靠性、rubric 体系——以及运行它们的多智能体流水线与评测基础设施。公开表述刻意抽象客户名、内部仓库名与具体实现配方。',
     },
     highlights: [
       {
-        en: 'Agentic eval execution: operated and extended a containerized framework across six model families and five agent harnesses, with cloud fan-out, smoke-test gates, retry/rerun workflows, cost/latency accounting, and a reusable harness adapter isolated on a clean public fork.',
-        zh: 'Agentic eval 执行：操作并扩展一套容器化框架，覆盖六个模型族与五种 agent harness，包含云端 fan-out、冒烟门控、失败重跑、成本/时延核算，以及在干净公开 fork 上隔离出的可复用 harness adapter。',
+        en: 'Benchmark-synthesis pipeline (flagship): solo-architected a greenfield 18-stage system — dual-model evidence extraction with intersection confirmation and a deterministic quote gate, an embedding-routed 76-pack/5-domain skill corpus, DAG rubrics, a blind-then-hinted trial-solver stage, human review windows, and QA-gated export — end-to-end closed ~27 hours after git init, with 362 passing unit tests.',
+        zh: '基准合成流水线（旗舰）：独立从零架构 18 阶段系统——双模型证据抽取取交集＋确定性引用门、按 embedding 路由的 76 包/5 领域技能语料、DAG 结构 rubric、"先盲解后带提示重解"试做节点、人工复核窗口与 QA 门控导出——git init 后约 27 小时端到端跑通，362 个单测全绿。',
       },
       {
-        en: 'Evidence-grounded synthesis: led 0→1 design of a multi-agent pipeline that turns expert workspaces into hard agentic exam items across finance, consulting, and legal domains, with locator-bound evidence, independent verification roles, leakage review, and anti-guessing gates.',
-        zh: '证据约束合成：主导 0→1 设计多智能体流水线，将金融、咨询、法律领域专家 workspace 转化为高难度 agentic 考题，包含 locator 绑定证据、独立核验角色、防泄漏审查与防蒙门控。',
+        en: 'Benchmark difficulty calibration: steered a 134-question legal benchmark from a mean of 0.821 into a 0.5–0.7 acceptance band (final 0.648) using a leak-proof isolated eval harness and controlled experiments, isolating a +0.159 solver-effort confound on a control group from a −0.139-per-round rework effect across two rework rounds.',
+        zh: '基准难度校准：用隔离防泄漏评测 harness 与对照实验，把 134 题法律基准的均分从 0.821 校准进 0.5–0.7 验收带（终值 0.648）；在对照组上把 +0.159 的解题档位混淆因子与每轮 −0.139 的返修净效应分离开，共两轮返修。',
       },
       {
-        en: 'Verifier product and evaluation research: shipped a rubric-based Verifier for office-document agent tasks, including visual evidence paths and reason guards; ran a controlled agent-as-judge vs. deterministic-metric comparison on precision, recall, agreement, cost, and latency.',
-        zh: 'Verifier 产品与评测研究：交付面向 Office 文档智能体任务的 rubric Verifier，包含视觉证据路径与 reason guard；并围绕准确率、召回率、一致率、成本与时延做 agent-as-judge vs 确定性 metric 对照实验。',
+        en: 'Judge reliability: debugged the LLM judge itself — caught it fatal-zeroing items with 91–93% positive rubric hits (mistaking in-material citations for leakage) and silently dropping rubric DAG dependency fields, both fixed with regression tests; ran line-by-line judge-hallucination re-checks and enforced a "reference answers must score full marks" oracle invariant via a 207-worker minimal-change repair pipeline.',
+        zh: '裁判可靠性：直接调试裁判模型本身——抓到 judge 把正向命中 91–93% 的题误判为泄漏而一票归零、以及静默丢弃 rubric DAG 依赖字段两处缺陷，均修复并带回归测试；运行裁判幻觉逐行复核，并用 207-worker 最小改动修复流水线强制"参考答案必须拿满分"的 oracle 不变量。',
+      },
+      {
+        en: 'Adversarial verification at scale: ran a 51-agent code review of a teammate’s fork of my pipeline — 6 independent finders, 45 candidates, execution-backed verification (40 confirmed) — producing per-defect introducing-commit attribution and a tiered fix plan; the finder/verifier pattern became a reusable QC product.',
+        zh: '规模化对抗式验证：对同事 fork 的自研流水线跑 51-agent 代码审查——6 个独立 finder、45 个候选、可执行复现验证（40 个确认）——报告含每个缺陷的引入 commit 定位与分级修复计划；finder/verifier 模式沉淀为可复用的质检产品。',
+      },
+      {
+        en: 'Eval operations & delivery: delivered a 257-task × 3-model agentic benchmark evaluation to an enterprise client in 2 days (~70 concurrent cloud sandboxes, semantic-audit and judge-hallucination re-check fleets, 710 validity-guaranteed results with per-model capability findings); audited a 300-pack benchmark exhaustively before spending compute, finding 86 unrunnable packs and a global judge misconfiguration.',
+        zh: '评测运营与交付：2 天内向企业客户交付 257 题 × 3 模型的智能体基准评测（约 70 个云沙箱并发、语义质检与裁判幻觉复核舰队、710 个有效性有保证的结果并附分模型能力结论）；在消耗算力前对 300 包基准做穷举审计，发现 86 个不可运行的包与一处全局裁判错配。',
       },
       {
         en: 'Adversarial synthetic-data QC: designed an Actor-Critic-Monitor loop for synthetic clinical cases, turning reviewer findings into remediation decisions and reusable bad-pattern detectors for derived-value drift, cross-file conflict, timeline incoherence, template contamination, and metadata leakage.',
         zh: '合成数据对抗式 QC：为合成临床病例设计 Actor-Critic-Monitor 闭环，将审查 findings 转化为整改决策，并沉淀可复用坏样式检测器，覆盖派生值漂移、跨文件冲突、时间线不一致、模板污染与元数据泄漏。',
       },
       {
-        en: 'RL/tooling infrastructure: mocked credential-heavy MCP tool services for tool-using RL agents, targeting trajectory-level parity with live tools while avoiding account, key, and production-system exposure.',
-        zh: 'RL / 工具基础设施：为 tool-use RL agent mock 需要真实账号和密钥的 MCP 工具服务，以轨迹级一致性为目标，同时避免暴露账号、密钥与生产系统。',
-      },
-      {
-        en: 'Office and data-contract systems: built per-modality Excel/Word/PPT/PDF evaluation harnesses with multi-vendor judges and files-out reconstruction, and audited a multi-version jobdata schema into clearer ownership boundaries and cross-repo automation.',
-        zh: 'Office 与数据契约系统：构建 Excel/Word/PPT/PDF 按模态拆分的评测 harness，支持多厂商裁判与 files-out 重建；并审计多版本 jobdata schema，整理出更清晰的字段归属边界和跨仓库自动化。',
+        en: 'Infrastructure depth (supporting): containerized eval across six model families and five agent harnesses with cloud fan-out and cost governance; an open-source agent integration re-landed cleanly on upstream v0.17.0 (766 insertions, 12 tests, 2 registry lines); MCP tool mocking for RL at trajectory-level parity; per-modality Office evaluation harnesses with multi-vendor judges.',
+        zh: '基础设施纵深（支撑）：跨六个模型族与五种 agent harness 的容器化评测，配云端 fan-out 与成本治理；开源 agent 集成干净重落上游 v0.17.0（766 行插入、12 个单测、仅碰 2 行注册代码）；面向 RL 的 MCP 工具 mock（轨迹级一致）；按模态拆分、多厂商裁判的 Office 评测 harness。',
       },
     ],
-    tags: ['Agentic Eval', 'Verifier', 'Synthetic / RL Data', 'Agent Harnesses', 'Adversarial QC', 'Data Contracts'],
+    tags: ['Evaluation Science', 'Difficulty Calibration', 'Judge Reliability', 'DAG Rubrics', 'Synthetic / RL Data', 'Multi-Agent Systems'],
   },
   {
     company: 'Fintopia',
@@ -79,7 +83,7 @@ export const experience: ExperienceItem[] = [
   },
   {
     company: 'ByteDance',
-    role: { en: 'AI Infra Engineer · Doubao (VLM) Evaluation', zh: 'AI Infra Engineer · 豆包（VLM）Evaluation' },
+    role: { en: 'Algorithm Engineer · Doubao (VLM) Evaluation', zh: '算法工程师 · 豆包（VLM）Evaluation' },
     location: { en: 'Beijing, China', zh: '中国 · 北京' },
     period: 'Mar 2025 – Nov 2025',
     summary: {
@@ -203,12 +207,12 @@ export const skills: SkillGroup[] = [
   {
     label: { en: 'AI / ML', zh: 'AI / ML' },
     items: [
-      { en: 'LLM & agent evaluation (rule-based + LLM-as-a-judge)', zh: 'LLM & agent evaluation（rule-based + LLM-as-a-judge）' },
+      { en: 'Benchmark design · difficulty calibration · validity probes', zh: 'Benchmark 设计 · 难度校准 · 有效性探针' },
+      { en: 'LLM-as-judge / agent-as-judge · judge reliability', zh: 'LLM-as-judge / agent-as-judge · 裁判可靠性' },
+      { en: 'Rubric systems (DAG dependencies, process vs outcome, hurdle gating)', zh: 'Rubric 体系（DAG 依赖、过程 vs 结果、hurdle 门控）' },
+      { en: 'Synthetic / RL / SFT data generation & adversarial QC', zh: '合成 / RL / SFT 数据生成与对抗式 QC' },
       { en: 'Agent systems, harnesses & MCP', zh: 'Agent 系统、harness 与 MCP' },
-      { en: 'RL environments · synthetic / SFT / eval data', zh: 'RL environments · 合成 / SFT / eval 数据' },
-      { en: 'Verifier systems · rubric metrics · reason guards', zh: 'Verifier 系统 · rubric metric · reason guard' },
-      { en: 'RAG architecture & vector DBs', zh: 'RAG 架构与 vector DB' },
-      { en: 'LLM fine-tuning & deployment', zh: 'LLM fine-tuning 与部署' },
+      { en: 'RAG architecture · LLM fine-tuning & deployment', zh: 'RAG 架构 · LLM fine-tuning 与部署' },
     ],
   },
   {

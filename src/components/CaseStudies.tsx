@@ -8,6 +8,7 @@ import {
   agentAsJudge as judgeImage,
   harbor as harborImage,
   nvwa as nvwaImage,
+  ragEval as ragImage,
 } from '../images/projects';
 
 interface Spec {
@@ -26,6 +27,46 @@ interface Study {
 }
 
 const STUDIES: Study[] = [
+  {
+    eyebrow: { en: 'Evaluation science', zh: '评测科学' },
+    title: {
+      en: 'Calibrating benchmark difficulty with controlled experiments.',
+      zh: '用对照实验校准基准难度。',
+    },
+    body: {
+      en: 'Every synthesis team gets told its output is too easy and too templated, and reworking on feel rarely converges. I set a quantitative acceptance band (solver mean 0.5–0.7), built an isolated eval harness that keeps rubrics and reference answers out of the sandbox by construction, and used a control group of untouched packs to separate real difficulty changes from measurement drift: the solver effort setting alone moved scores by +0.159, while one rework round contributed −0.139. After two rounds, a 134-question legal benchmark finished at a mean of 0.648, inside the band. The judge bugs found during the campaign were fixed with regression tests.',
+      zh: '每个做合成的团队都会被反馈"太简单、太模板化"，而凭感觉返修很难收敛。我定了一个量化验收带（解题均分 0.5–0.7），搭了一个从构造上就不让 rubric 和参考答案进沙箱的隔离评测 harness，并用一组不做返修的对照题包把真实的难度变化和测量漂移分开：仅解题档位一项就让分数变化 +0.159，而一轮返修的净效应是 −0.139。两轮之后，134 题法律基准的均分停在 0.648，进入验收带。校准过程中发现的裁判缺陷也都修复并加了回归测试。',
+    },
+    specs: [
+      { k: '0.5–0.7', v: { en: 'the acceptance band difficulty must land in', zh: '难度必须落入的验收带' } },
+      { k: '+0.159', v: { en: 'solver-effort confound measured on a control group', zh: '对照组测得的解题档位混淆因子' } },
+      { k: '−0.139', v: { en: 'isolated net effect of one rework round', zh: '单轮返修的隔离净效应' } },
+      { k: '0.648', v: { en: 'final mean of the 134-question benchmark', zh: '134 题基准的最终均分' } },
+    ],
+    image: ragImage,
+    article: 'benchmark-difficulty',
+    tags: ['Difficulty calibration', 'Controlled experiments', 'Leak-proof harness'],
+  },
+  {
+    eyebrow: { en: 'Judge reliability', zh: '裁判可靠性' },
+    title: {
+      en: 'Testing the judge before trusting its scores.',
+      zh: '先测试裁判，再相信它给的分。',
+    },
+    body: {
+      en: 'In an LLM-judged eval, a judge defect looks exactly like a model defect in the score data. Two cases from production: the judge zeroed items whose rubrics were 91–93% satisfied because it read legitimate in-material citations as answer leakage, and for a stretch it silently dropped rubric dependency fields without anything crashing. The standing defenses now include false-kill arbitration, schema round-trip tests, line-by-line re-checks of scores against the actual artifact, and an oracle check that reference answers score full marks against their own rubrics.',
+      zh: '在 LLM 判分的评测里，裁判的缺陷在分数数据上和被测模型的缺陷长得一模一样。生产里遇到的两个例子：裁判把 rubric 正向命中 91–93% 的题归零，原因是它把材料内的合法引用当成了答案泄漏；还有一段时间它静默丢弃 rubric 依赖字段，任何地方都没有报错。现在的常设防御包括：防误杀仲裁、schema 往返测试、对照真实产物逐行复核判分，以及"参考答案必须在自己的 rubric 上拿满分"的 oracle 检查。',
+    },
+    specs: [
+      { k: 'False-kill', v: { en: 'audit fatal zeroes before trusting them', zh: '相信一票归零之前先审计它' } },
+      { k: 'Round-trip', v: { en: 'test that the judge sees every rubric field', zh: '测试裁判是否读到每个 rubric 字段' } },
+      { k: 'Re-check', v: { en: 're-verify scored rows against the artifact', zh: '对照产物逐行复核判分' } },
+      { k: 'Oracle', v: { en: 'reference answers must score full marks', zh: '参考答案必须拿满分' } },
+    ],
+    image: judgeImage,
+    article: 'judge-reliability',
+    tags: ['Judge debugging', 'Hallucination re-check', 'Oracle validation'],
+  },
   {
     eyebrow: { en: 'Evidence-grounded synthesis', zh: '证据约束合成' },
     title: {
@@ -47,50 +88,30 @@ const STUDIES: Study[] = [
     tags: ['Evidence ledger', 'Anti-leakage', 'Synthetic eval data'],
   },
   {
-    eyebrow: { en: 'Verifier research', zh: 'Verifier 研究' },
+    eyebrow: { en: 'Multi-agent verification', zh: '多智能体验证' },
     title: {
-      en: 'Choosing when an agent judge beats a metric.',
-      zh: '判断 agent judge 什么时候胜过 metric。',
+      en: 'Reviewing 17 commits with 51 agents.',
+      zh: '用 51 个 agent 审查 17 个 commit。',
     },
     body: {
-      en: 'I compared two grading routes for office-document agent tasks: deterministic rubric metrics and an agent judge that can inspect the artifact, gather evidence, and reason against the rubric. The publishable takeaway is qualitative, not vendor-specific: LLM judges are not automatically better, and metrics are not automatically safer. The right choice depends on evidence access, rubric granularity, expected variance, and the cost of false positives. I folded the result into a Verifier product with visual evidence paths and guardrails for missing or unreadable inputs.',
-      zh: '我对比过 Office 文档智能体任务的两条判分路线：确定性 rubric metric，以及能够打开产物、采集证据并按 rubric 推理的 agent judge。公开可讲的结论是定性的，而不是绑定某个厂商：LLM 裁判不天然更好，metric 也不天然更安全。选择取决于证据访问方式、rubric 粒度、可容忍方差与误判成本。实验结果最后进入 Verifier 产品，包含视觉证据路径，以及对输入缺失/不可读的防幻觉 guardrail。',
+      en: 'A teammate landed a 17-commit hardening series on a fork of my pipeline. Instead of reading the 216-file diff by hand, I ran a review workflow: six finders with different focuses proposed 45 candidate defects, and each candidate went to an independent verifier that had to reproduce it by execution (a failing test or a real exception) before it counted. 40 were confirmed, and each was attributed to its introducing commit with git log -S. The most useful finding was that the hardening commits themselves had introduced fail-open regressions and answer leakage, the defect classes they were meant to remove.',
+      zh: '同事在我流水线的 fork 上提交了 17 个以加固为主题的 commit。我没有人工读完 216 个文件的 diff，而是跑了一个审查工作流：6 个关注点不同的 finder 提出 45 个候选缺陷，每个候选交给独立的 verifier，必须用执行复现（失败的测试或真实的异常）才算数。最终确认 40 个，并用 git log -S 把每个缺陷定位到引入它的 commit。最有价值的发现是：这批加固提交本身引入了 fail-open 回归和答案泄漏，正是它们本来要消除的缺陷类别。',
     },
     specs: [
-      { k: 'Metric route', v: { en: 'deterministic checks where structure is stable', zh: '结构稳定时使用确定性检查' } },
-      { k: 'Agent route', v: { en: 'evidence gathering where artifact semantics matter', zh: '语义和证据复杂时使用 agent 采证' } },
-      { k: 'Reason guard', v: { en: 'avoid hallucinated explanations on missing evidence', zh: '证据缺失时限制幻觉解释' } },
-      { k: 'Dashboard', v: { en: 'compare quality, cost, and latency before shipping', zh: '交付前比较质量、成本与时延' } },
-    ],
-    image: judgeImage,
-    article: 'agent-as-judge',
-    tags: ['Agent-as-judge', 'Verifier', 'Cost-aware eval'],
-  },
-  {
-    eyebrow: { en: 'Eval execution', zh: '评测执行' },
-    title: {
-      en: 'Running model families through the same harness surface.',
-      zh: '把多个模型族跑在同一套 harness 表面上。',
-    },
-    body: {
-      en: 'Evaluation infrastructure breaks in the gaps between model APIs, harnesses, sandboxes, and file outputs. I extended a containerized execution framework so model families could be compared on the same task surface, then separated a reusable harness adapter onto a clean public fork. The public version highlights the engineering surface: provider routing, trajectory capture, sandbox fan-out, smoke tests, retry discipline, and cost/latency accounting. Environment-specific glue and private deployment details stay out.',
-      zh: '评测基础设施最容易坏在模型 API、harness、沙箱与文件输出之间的缝隙里。我扩展了一套容器化执行框架，让多个模型族能在同一任务表面上比较，并把可复用 harness adapter 单独剥离到干净公开 fork。公开版本强调工程表面：provider 路由、轨迹采集、沙箱 fan-out、冒烟测试、失败重跑纪律与成本/时延核算。环境胶水与私有部署细节不公开。',
-    },
-    specs: [
-      { k: '6 families', v: { en: 'model comparison without changing task format', zh: '同一任务格式下横向比较模型' } },
-      { k: '5 harnesses', v: { en: 'normalize different agent execution styles', zh: '归一不同 agent 执行方式' } },
-      { k: 'Clean fork', v: { en: 'reusable integration separated from private glue', zh: '可复用集成与私有胶水隔离' } },
-      { k: 'Ops loop', v: { en: 'smoke, run, score, rerun, package', zh: '冒烟、运行、判分、重跑、打包' } },
+      { k: '6 finders', v: { en: 'independent lenses over the same diff', zh: '对同一 diff 的独立审查视角' } },
+      { k: '45 → 40', v: { en: 'candidates confirmed by execution, not plausibility', zh: '候选经执行复现确认，而非"看着像"' } },
+      { k: 'git log -S', v: { en: 'every defect attributed to its introducing commit', zh: '每个缺陷定位到引入 commit' } },
+      { k: '~59 min', v: { en: 'wall-clock for the full review', zh: '整个审查的墙钟时间' } },
     ],
     image: harborImage,
-    link: { href: 'https://github.com/levizwang/harbor', label: { en: 'View the fork', zh: '查看 fork' } },
-    tags: ['Cloud fan-out', 'Agent harnesses', 'Open source fork'],
+    article: 'adversarial-code-review',
+    tags: ['Finder/verifier split', 'Execution-backed repro', 'Adversarial review'],
   },
   {
     eyebrow: { en: 'Adversarial QC', zh: '对抗式质检' },
     title: {
-      en: 'Treating synthetic data as guilty until proven clean.',
-      zh: '默认合成数据有罪，直到证明它干净。',
+      en: 'Adversarial QC for self-generated data.',
+      zh: '自生成数据的对抗式质检。',
     },
     body: {
       en: 'For synthetic clinical and office-document data, I used an adversarial loop rather than trusting one generator pass. A generator creates the case, a critic turns defects into structured findings, and an arbiter decides whether to revise, rework, or pass. The durable part is not the medical content itself; it is the defect taxonomy and the feedback loop: derived-value drift, cross-file contradictions, impossible timelines, template contamination, metadata leakage, and rubrics that cannot be answered from the files.',

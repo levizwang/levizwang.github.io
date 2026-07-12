@@ -25,14 +25,17 @@ function useCountUp(target: number, run: boolean, ms = 1100) {
   return n;
 }
 
-function StatCard({ stat, active }: { stat: Stat; active: boolean }) {
+function StatCard({ stat, active, index }: { stat: Stat; active: boolean; index: number }) {
   const t = useT();
   const n = useCountUp(stat.value, active);
   return (
     <div>
-      <div className="text-5xl font-semibold tracking-tight tabular-nums sm:text-6xl">
+      <div className="font-mono text-[11px] tracking-[0.18em] text-muted-foreground/60">
+        {String(index + 1).padStart(2, '0')}
+      </div>
+      <div className="mt-1.5 font-mono text-5xl font-semibold tracking-tight tabular-nums sm:text-6xl">
         {n}
-        {stat.suffix ?? ''}
+        {stat.suffix ? <span className="text-brand">{stat.suffix}</span> : null}
       </div>
       <div className="mt-2 text-sm text-muted-foreground">{t(stat.label)}</div>
     </div>
@@ -73,7 +76,7 @@ export function Highlights() {
           className="mt-12 grid grid-cols-2 gap-x-6 gap-y-12 border-t border-hairline pt-12 md:grid-cols-4"
         >
           {stats.map((s, i) => (
-            <StatCard key={i} stat={s} active={active} />
+            <StatCard key={i} stat={s} active={active} index={i} />
           ))}
         </div>
       </Reveal>

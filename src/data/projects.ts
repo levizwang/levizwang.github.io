@@ -19,6 +19,26 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    id: 'benchmark-synthesis',
+    name: { en: 'Benchmark-Synthesis Pipeline (18 Stages)', zh: '基准合成流水线（18 阶段）' },
+    description: {
+      en: 'Solo-architected, greenfield 18-stage pipeline that turns expert workspaces into hard agentic benchmark items: dual-model evidence extraction with intersection confirmation and a deterministic quote gate, an embedding-routed 76-pack/5-domain skill corpus, DAG rubrics, a blind-then-hinted trial-solver stage, human review windows, and QA-gated export — end-to-end closed ~27 hours after git init, 362 passing unit tests.',
+      zh: '独立从零架构的 18 阶段流水线，把专家 workspace 变成高难度 agentic 基准题：双模型证据抽取取交集＋确定性引用门、按 embedding 路由的 76 包/5 领域技能语料、DAG 结构 rubric、"先盲解后带提示重解"试做节点、人工复核窗口与 QA 门控导出——git init 后约 27 小时端到端跑通，362 个单测全绿。',
+    },
+    image: pipelineImage,
+    tag: { en: 'Flagship · Synthesis', zh: '旗舰 · 合成' },
+  },
+  {
+    id: 'difficulty-calibration',
+    name: { en: 'Benchmark Difficulty Calibration', zh: '基准难度校准' },
+    description: {
+      en: 'A closed calibration loop for benchmark difficulty: a leak-proof isolated eval harness, a 0.5–0.7 acceptance band, and controlled experiments (solver-effort confound +0.159 on a control group; rework effect −0.139 per round) steered a 134-question legal benchmark from a mean of 0.821 to 0.648. Two judge bugs were found and fixed during the campaign.',
+      zh: '一条难度校准闭环：隔离防泄漏评测 harness、0.5–0.7 验收带、对照实验（对照组上解题档位混淆因子 +0.159、每轮返修净效应 −0.139），把 134 题法律基准的均分从 0.821 校准到 0.648。校准过程中还发现并修复了两个裁判缺陷。',
+    },
+    image: ragImage,
+    tag: { en: 'Evaluation Science', zh: '评测科学' },
+  },
+  {
     id: 'eval-platform',
     name: { en: 'Verifier System & Agent-as-Judge Research', zh: 'Verifier 系统与 Agent-as-Judge 研究' },
     description: {
@@ -30,11 +50,21 @@ export const projects: Project[] = [
     tag: { en: 'Verifier · Evaluation', zh: 'Verifier · 评测' },
   },
   {
-    id: 'syndata-pipeline',
-    name: { en: 'Synthetic Eval-Data Pipeline', zh: '合成评测数据流水线' },
+    id: 'adversarial-verification',
+    name: { en: 'Adversarial Verification at Scale', zh: '规模化对抗式验证' },
     description: {
-      en: 'Multi-agent synthesis pipeline that converts expert workspaces into hard, evidence-grounded agentic exam items across finance, consulting, and legal domains. Public version highlights evidence ledgers, cross-model separation, anti-leakage review, and delivery gates while omitting internal node recipes.',
-      zh: '多智能体合成流水线，将专家 workspace 转化为金融、咨询、法律领域的高难度、以证据为依据的 agentic 考题。公开版本强调证据账本、跨模型隔离、防泄漏审查与交付门控，不暴露内部节点配方。',
+      en: 'Reusable multi-agent verification workflows: a 51-agent code review (6 independent finders, 45 candidates, execution-backed verification, 40 confirmed defects with introducing-commit attribution), and a 207-worker repair pipeline that checks reference answers score full marks against their own rubrics.',
+      zh: '可复用的多智能体验证工作流：51-agent 代码审查（6 个独立 finder、45 个候选、可执行复现验证、40 个确认缺陷并定位引入 commit），以及检查"参考答案必须在自己的 rubric 上拿满分"的 207-worker 修复流水线。',
+    },
+    image: agentImage,
+    tag: { en: 'Multi-Agent Systems', zh: '多智能体系统' },
+  },
+  {
+    id: 'syndata-pipeline',
+    name: { en: 'Synthetic Eval-Data Pipeline (Gen 1)', zh: '合成评测数据流水线（第一代）' },
+    description: {
+      en: 'The first-generation multi-agent synthesis system that converts expert workspaces into hard, evidence-grounded agentic exam items across finance, consulting, and legal domains — evidence ledgers, cross-model separation, anti-leakage review, and delivery gates. Later superseded by the 18-stage rewrite above.',
+      zh: '第一代多智能体合成系统，将专家 workspace 转化为金融、咨询、法律领域的高难度、以证据为依据的 agentic 考题——证据账本、跨模型隔离、防泄漏审查与交付门控。后被上面的 18 阶段重写版取代。',
     },
     image: pipelineImage,
     tag: { en: 'Synthetic Data', zh: '合成数据' },
@@ -43,8 +73,8 @@ export const projects: Project[] = [
     id: 'harbor-eval',
     name: { en: 'Harbor — Eval Execution Framework', zh: 'Harbor — 评测执行框架' },
     description: {
-      en: 'Operated and extended a containerized eval framework across six model families and five agent harnesses, with cloud fan-out, smoke-test gates, rerun-in-place handling, cost/latency accounting, and a reusable agent-harness adapter isolated on a clean public fork.',
-      zh: '操作并扩展容器化评测框架，覆盖六个模型族与五种 agent harness，包含云端 fan-out、冒烟门控、失败原地重跑、成本/时延核算，以及在干净公开 fork 上隔离出的可复用 agent-harness adapter。',
+      en: 'Operated and extended a containerized eval framework across six model families and five agent harnesses, with cloud fan-out, smoke-test gates, rerun-in-place handling, and cost/latency accounting. A reusable agent integration was re-landed cleanly on upstream v0.17.0 — one 766-insertion commit, 12 unit tests, touching upstream code in exactly 2 registry lines.',
+      zh: '操作并扩展容器化评测框架，覆盖六个模型族与五种 agent harness，包含云端 fan-out、冒烟门控、失败原地重跑与成本/时延核算。可复用的 agent 集成干净地重落在上游 v0.17.0 上——单个 766 行插入的 commit、12 个单测、只碰上游 2 行注册代码。',
     },
     image: harborImage,
     link: 'https://github.com/levizwang/harbor',
@@ -100,16 +130,6 @@ export const projects: Project[] = [
     },
     image: nvwaImage,
     tag: { en: 'Synthetic Data', zh: '合成数据' },
-  },
-  {
-    id: 'data-contracts',
-    name: { en: 'Evaluation Data Contracts & Automation', zh: '评测数据契约与自动化' },
-    description: {
-      en: 'Audited a messy multi-version jobdata schema, grouped root causes with concrete examples, and proposed cleaner ownership boundaries for nested rubric/model fields. Also wired cross-repo automation so downstream eval packages receive structured update signals.',
-      zh: '审计多版本混杂的 jobdata schema，用具体样例归类根因，并提出 rubric/model 字段的嵌套归属边界；同时接入跨仓库自动化，让下游评测包收到结构化更新信号。',
-    },
-    image: harborImage,
-    tag: { en: 'Data Contracts', zh: '数据契约' },
   },
   {
     id: 'solana-mev',

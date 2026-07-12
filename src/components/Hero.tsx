@@ -18,7 +18,7 @@ export function Hero() {
             href="https://www.linkedin.com/in/levizwang"
             target="_blank"
             rel="noopener noreferrer"
-            className="group inline-flex items-center gap-2 rounded-full border border-hairline bg-surface/60 py-1.5 pl-2 pr-3.5 text-[13px] font-medium text-muted-foreground shadow-soft backdrop-blur transition-colors hover:text-foreground"
+            className="group inline-flex items-center gap-2 rounded-full border border-hairline bg-surface/60 py-1.5 pl-2 pr-3.5 font-mono text-xs text-muted-foreground shadow-soft backdrop-blur transition-colors hover:text-foreground"
           >
             <span className="relative flex h-2 w-2">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand opacity-60" />
