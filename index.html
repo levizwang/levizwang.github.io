@@ -2,25 +2,22 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https:; font-src 'self' data: https://fonts.gstatic.com; connect-src 'self' https:;" />
-    <link rel="icon" type="image/jpeg" href="/assets/IMG_4812-Bs7bq71p.JPG" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self' https://fonts.googleapis.com; img-src 'self' data: https:; font-src 'self' data: https://fonts.gstatic.com; connect-src 'self' https:;" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/assets/IMG_4812-Bs7bq71p.JPG" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Personal Blog</title>
-    <script>
-      (() => {
-        try {
-          const storedTheme = localStorage.getItem("theme");
-          const prefersDark =
-            window.matchMedia &&
-            window.matchMedia("(prefers-color-scheme: dark)").matches;
-          const isDark = storedTheme ? storedTheme === "dark" : prefersDark;
-          document.documentElement.classList.toggle("dark", isDark);
-          document.documentElement.style.colorScheme = isDark ? "dark" : "light";
-        } catch {}
-      })();
-    </script>
-    <script type="module" crossorigin src="/assets/index-DAMg9ydK.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-BR-ONOJx.css">
+    <title>Levi Wang — Evaluation science & agentic systems for frontier AI</title>
+    <meta name="description" content="Levi Wang — AI algorithm engineer working on evaluation science, synthetic / RL data, and agentic systems: benchmark difficulty calibration, judge reliability, and the infrastructure to run it at scale. Founding-stage @ HUMANLAYA AI; previously Fintopia, ByteDance (Doubao VLM evals), and PwC." />
+    <meta name="theme-color" content="#dbe4d8" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#111a14" media="(prefers-color-scheme: dark)" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Levi Wang — AI Algorithm Engineer" />
+    <meta property="og:description" content="Evaluation science, synthetic / RL data, and agentic systems for frontier AI: difficulty calibration, judge reliability, adversarial verification." />
+    <meta property="og:url" content="https://levi.run" />
+    <meta name="twitter:card" content="summary" />
+    <script src="/theme-init.js"></script>
+    <script type="module" crossorigin src="/assets/index-xJ2cyNXW.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-DVp8pb-Q.css">
   </head>
   <body>
     <div id="root"></div>
