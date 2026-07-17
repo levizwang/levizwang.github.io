@@ -42,7 +42,7 @@ export function Gallery({ filter, onPhotoClick }: GalleryProps) {
           <div className="flex justify-center mt-12">
             <button
               onClick={() => setVisibleCount(prev => prev + 6)}
-              className="rounded-full border border-hairline px-6 py-2.5 text-sm font-semibold text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
+              className="border border-line px-6 py-2.5 font-mono text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
             >
               {t(ui.loadMore)}
             </button>

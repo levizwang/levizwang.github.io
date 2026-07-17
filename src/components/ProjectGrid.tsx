@@ -1,28 +1,15 @@
-import { ImageWithFallback } from './figma/ImageWithFallback';
 import { Reveal } from './Reveal';
 import { SectionHeader } from './ui/SectionHeader';
 import { PillLink } from './ui/PillLink';
+import { ProjectFigure } from './ui/figures';
 import { projects, type Project } from '../data/projects';
 import { useT, ui } from '../i18n/lang';
 
-function Thumb({ project, name }: { project: Project; name: string }) {
-  if (project.image) {
-    return (
-      <ImageWithFallback
-        src={project.image}
-        alt={name}
-        className="aspect-[16/10] w-full rounded-xl object-cover"
-      />
-    );
-  }
+function Thumb({ project }: { project: Project }) {
   return (
-    <span
-      className="project-fallback-thumb flex aspect-[16/10] w-full items-center justify-center rounded-xl border border-hairline"
-    >
-      <span className="font-mono text-2xl tracking-tight text-muted-foreground">
-        {name.split(' ')[0]}
-      </span>
-    </span>
+    <div className="aspect-[16/10] w-full overflow-hidden rounded-[2px] border border-line bg-surface">
+      <ProjectFigure id={project.id} className="h-full w-full" />
+    </div>
   );
 }
 
@@ -32,7 +19,7 @@ function Card({ project, expanded = false }: { project: Project; expanded?: bool
   const external = project.link?.startsWith('http');
   const inner = (
     <>
-      <Thumb project={project} name={name} />
+      <Thumb project={project} />
       <div className="mt-5 flex items-baseline justify-between gap-3">
         <h3 className="text-lg font-semibold tracking-tight">{name}</h3>
         {project.link && (

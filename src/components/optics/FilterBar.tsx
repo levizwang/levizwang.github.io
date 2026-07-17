@@ -16,10 +16,10 @@ export function FilterBar({ selectedFilter, onFilterChange }: FilterBarProps) {
           <button
             key={filter}
             onClick={() => onFilterChange(filter)}
-            className={`rounded-full border px-4 py-1.5 text-sm transition-colors ${
+            className={`border px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.1em] transition-colors ${
               selectedFilter === filter
                 ? 'border-foreground bg-foreground text-background'
-                : 'border-hairline text-muted-foreground hover:text-foreground'
+                : 'border-line text-muted-foreground hover:text-foreground'
             }`}
           >
             {t(labelFor(filterLabels, filter))}

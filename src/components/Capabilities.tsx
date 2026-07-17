@@ -26,9 +26,14 @@ export function Capabilities() {
           return (
           <Reveal key={i} delay={i * 70}>
             <article className="surface lift group h-full p-7 md:p-8">
-              <span className="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-hairline bg-background text-foreground transition-colors group-hover:border-brand/50">
-                <Icon className="h-5 w-5" strokeWidth={1.6} />
-              </span>
+              <div className="flex items-start justify-between">
+                <span className="inline-flex h-11 w-11 items-center justify-center border border-line bg-background text-foreground transition-colors group-hover:border-brand/60">
+                  <Icon className="h-5 w-5" strokeWidth={1.6} />
+                </span>
+                <span className="font-mono text-[11px] tracking-[0.18em] text-muted-foreground/70">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+              </div>
               <h3 className="mt-5 text-xl font-semibold tracking-tight">{t(p.title)}</h3>
               <p className="mt-2.5 leading-relaxed text-muted-foreground">{t(p.body)}</p>
               <div className="mt-5 flex flex-wrap gap-2">

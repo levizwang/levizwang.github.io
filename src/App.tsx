@@ -20,13 +20,13 @@ function Home() {
   return (
     <>
       <Hero />
-      <Highlights />
-      <Capabilities />
-      <CaseStudies />
       <Experience />
+      <Resume />
+      <Highlights />
+      <CaseStudies />
+      <Capabilities />
       <ProjectGrid limit={6} showViewAll />
       <BlogList limit={4} showViewAll />
-      <Resume />
     </>
   );
 }

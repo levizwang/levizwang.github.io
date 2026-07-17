@@ -1,7 +1,7 @@
 import { useEffect, useMemo } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { blogPosts } from '../../data/posts';
-import { ImageWithFallback } from '../figma/ImageWithFallback';
+import { ProjectFigure } from '../ui/figures';
 import { PageLayout } from '../PageLayout';
 import { PillLink } from '../ui/PillLink';
 import { useT, ui, categoryLabels, labelFor } from '../../i18n/lang';
@@ -129,18 +129,16 @@ export function BlogPost() {
             <p className="mt-5 text-lg leading-relaxed text-muted-foreground">{t(post.excerpt)}</p>
           </header>
 
-          {post.image && (
-            <div className="mx-auto mb-10 max-w-[46rem] overflow-hidden rounded-2xl border border-hairline bg-surface">
-              <ImageWithFallback src={post.image} alt={t(post.title)} className="h-auto w-full object-contain" />
-            </div>
-          )}
+          <div className="mx-auto mb-10 max-w-[46rem] overflow-hidden rounded-[2px] border border-line bg-surface">
+            <ProjectFigure id={post.id} className="h-auto w-full" />
+          </div>
 
           <article
             className="prose prose-neutral dark:prose-invert lg:prose-lg mb-16 max-w-none
               prose-headings:tracking-tight prose-headings:font-semibold
               prose-a:text-foreground prose-a:underline prose-a:decoration-brand prose-a:underline-offset-4
-              prose-code:font-mono prose-code:text-[0.85em] prose-pre:rounded-2xl prose-pre:border prose-pre:border-hairline
-              prose-img:rounded-2xl prose-th:text-left"
+              prose-code:font-mono prose-code:text-[0.85em] prose-pre:rounded prose-pre:border prose-pre:border-line
+              prose-img:rounded prose-th:text-left"
           >
             {contentHtml ? (
               <div dangerouslySetInnerHTML={{ __html: contentHtml }} />

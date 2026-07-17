@@ -1,9 +1,9 @@
 import { useState, useMemo } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { ImageWithFallback } from './figma/ImageWithFallback';
 import { Reveal } from './Reveal';
 import { SectionHeader } from './ui/SectionHeader';
 import { PillLink } from './ui/PillLink';
+import { ProjectFigure } from './ui/figures';
 import { blogPosts } from '../data/posts';
 import { useT, ui, categoryLabels, labelFor } from '../i18n/lang';
 
@@ -40,8 +40,8 @@ export function BlogList({ limit, showViewAll = true }: { limit?: number; showVi
             <div className="flex flex-wrap gap-2">
               <button
                 onClick={() => setCategory(null)}
-                className={`rounded-full border px-3.5 py-1.5 text-sm transition-colors ${
-                  category === null ? 'border-foreground bg-foreground text-background' : 'border-hairline text-muted-foreground hover:text-foreground'
+                className={`border px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.1em] transition-colors ${
+                  category === null ? 'border-foreground bg-foreground text-background' : 'border-line text-muted-foreground hover:text-foreground'
                 }`}
               >
                 {t({ en: 'All', zh: '全部' })}
@@ -50,8 +50,8 @@ export function BlogList({ limit, showViewAll = true }: { limit?: number; showVi
                 <button
                   key={c}
                   onClick={() => setCategory((prev) => (prev === c ? null : c))}
-                  className={`rounded-full border px-3.5 py-1.5 text-sm transition-colors ${
-                    category === c ? 'border-foreground bg-foreground text-background' : 'border-hairline text-muted-foreground hover:text-foreground'
+                  className={`border px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.1em] transition-colors ${
+                    category === c ? 'border-foreground bg-foreground text-background' : 'border-line text-muted-foreground hover:text-foreground'
                   }`}
                 >
                   {catLabel(c)} <span className="opacity-50">{n}</span>
@@ -84,11 +84,9 @@ export function BlogList({ limit, showViewAll = true }: { limit?: number; showVi
                   {t(post.excerpt)}
                 </p>
               </div>
-              {post.image && (
-                <div className="hidden size-24 shrink-0 overflow-hidden rounded-xl md:block">
-                  <ImageWithFallback src={post.image} alt={t(post.title)} className="h-full w-full object-cover" />
-                </div>
-              )}
+              <div className="hidden size-24 shrink-0 items-center justify-center overflow-hidden rounded-[2px] border border-line bg-surface md:flex">
+                <ProjectFigure id={post.id} className="h-full w-auto max-w-none" />
+              </div>
               <span className="hidden shrink-0 text-muted-foreground transition-transform duration-300 group-hover:translate-x-1 sm:block">
                 →
               </span>

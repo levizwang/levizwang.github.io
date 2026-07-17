@@ -17,7 +17,7 @@ export function PhotoCard({ photo, onClick }: PhotoCardProps) {
 
   return (
     <div
-      className="lift group relative aspect-[4/3] cursor-pointer overflow-hidden rounded-2xl border border-hairline"
+      className="lift group relative aspect-[4/3] cursor-pointer overflow-hidden rounded-[2px] border border-line"
       onClick={onClick}
     >
       {/* Loading placeholder */}

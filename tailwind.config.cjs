@@ -72,9 +72,9 @@ module.exports = {
         prose: "720px",
       },
       boxShadow: {
-        soft: "0 1px 2px hsl(220 9% 10% / 0.04), 0 8px 24px -12px hsl(220 9% 10% / 0.10)",
-        float: "0 30px 60px -24px hsl(220 9% 10% / 0.22)",
-        glow: "0 0 0 1px hsl(var(--brand) / 0.4), 0 0 40px -8px hsl(var(--brand) / 0.4)",
+        soft: "0 1px 0 hsl(var(--foreground) / 0.05)",
+        float: "0 2px 0 hsl(var(--foreground) / 0.07)",
+        glow: "none",
       },
       letterSpacing: {
         tightest: "-0.03em",
@@ -82,17 +82,11 @@ module.exports = {
       keyframes: {
         "accordion-down": { from: { height: 0 }, to: { height: "var(--radix-accordion-content-height)" } },
         "accordion-up": { from: { height: "var(--radix-accordion-content-height)" }, to: { height: 0 } },
-        aurora: {
-          "0%": { transform: "translate3d(-6%, -4%, 0) scale(1)" },
-          "50%": { transform: "translate3d(6%, 4%, 0) scale(1.15)" },
-          "100%": { transform: "translate3d(-6%, -4%, 0) scale(1)" },
-        },
         marquee: { from: { transform: "translateX(0)" }, to: { transform: "translateX(-50%)" } },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        aurora: "auroraDrift 22s ease-in-out infinite",
         marquee: "marquee 38s linear infinite",
       },
     },

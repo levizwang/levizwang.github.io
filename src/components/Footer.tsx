@@ -23,7 +23,7 @@ export function Footer() {
         <SocialLinks />
       </div>
 
-      <div className="mt-10 flex flex-col gap-1 font-mono text-xs text-muted-foreground sm:flex-row sm:items-center sm:gap-4">
+      <div className="mt-10 flex flex-col gap-1 font-mono text-[11px] uppercase tracking-[0.14em] text-muted-foreground sm:flex-row sm:items-center sm:gap-4">
         <span>© {year} Levi Wang</span>
         <span className="hidden sm:inline opacity-40">·</span>
         <span>{t(ui.runningFor)} {days} {t(ui.days)}</span>

@@ -27,6 +27,8 @@ const LanguageContext = createContext<LanguageContextValue>({
 
 function initialLang(): Lang {
   try {
+    const urlLang = new URLSearchParams(window.location.search).get('lang');
+    if (urlLang === 'en' || urlLang === 'zh') return urlLang;
     const stored = localStorage.getItem('lang');
     if (stored === 'en' || stored === 'zh') return stored;
   } catch {
@@ -82,10 +84,10 @@ export const ui = {
   atScale: { en: 'At scale', zh: '规模' },
   atScaleTitle: {
     en: 'Evaluation science and synthetic-data algorithms, run at production scale.',
-    zh: '在生产规模上运行的评测科学与合成数据算法。',
+    zh: '评测与合成数据，都是在生产规模上做的。',
   },
   buildEyebrow: { en: 'What I build', zh: '我做什么' },
-  buildTitle: { en: 'Four problems I keep coming back to.', zh: '我反复回到的四类问题。' },
+  buildTitle: { en: 'Four problems I keep coming back to.', zh: '我一直在解决的四类问题。' },
   expEyebrow: { en: 'Career', zh: '履历' },
   workEyebrow: { en: 'Work', zh: '项目' },
   writingEyebrow: { en: 'Writing', zh: '文章' },
