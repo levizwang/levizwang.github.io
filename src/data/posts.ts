@@ -40,7 +40,7 @@ export const blogPosts: BlogPost[] = [
     },
     excerpt: {
       en: 'How we calibrated a legal benchmark into a 0.5–0.7 acceptance band: an isolated leak-proof eval harness, control-group experiments that separate rework effects from solver-effort confounds, and the judge bugs found on the way.',
-      zh: '把一个 134 题的法律基准校准进 0.5–0.7 的验收带，靠的是隔离防泄漏的评测 harness 和对照实验：把返修效应和解题档位混淆分开算。路上还抓到了两个 judge bug。',
+      zh: '将 134 题法律基准校准进 0.5–0.7 验收带的全过程：隔离防泄漏评测 Harness、对照实验分离返修效应与解题档位混淆，以及途中发现的两个 Judge 缺陷。',
     },
     content: { en: aiDifficultyEn, zh: aiDifficultyZh },
     date: 'Jul 10, 2026',
@@ -55,7 +55,7 @@ export const blogPosts: BlogPost[] = [
     },
     excerpt: {
       en: 'Four judge failures from production: fatal false-kills on legitimate citations, silently dropped rubric fields, scores citing evidence that does not exist, and a harness configuration that changed model behavior. Plus the checks we now run for each.',
-      zh: '线上真实踩过的四类 judge 失效：合法引用被误杀成零分、rubric 字段被悄悄丢掉、打分引用的证据根本不存在、一处 harness 配置改了模型行为。每一类我们现在都有对应的检查。',
+      zh: '生产中的四类 Judge 失效：合法引用被误杀归零、Rubric 字段被静默丢弃、引用不存在的证据判分、一处改变模型行为的 Harness 配置；以及对应的常驻检查。',
     },
     content: { en: aiJudgeRelEn, zh: aiJudgeRelZh },
     date: 'Jul 06, 2026',
@@ -70,7 +70,7 @@ export const blogPosts: BlogPost[] = [
     },
     excerpt: {
       en: 'How I reviewed a teammate\'s 17-commit series with a 51-agent workflow: six finders proposed 45 candidate defects, independent verifiers reproduced each one by execution, and 40 were confirmed with introducing-commit attribution.',
-      zh: '用 51 个 agent 审同事的 17 个 commit：6 个 finder 提出 45 个候选缺陷，独立 verifier 一个个执行复现，最后坐实 40 个，每个都能指到引入它的那个 commit。',
+      zh: '用 51 个 Agent 审查同事的 17 个 commit：6 个 finder 提出 45 个候选缺陷，独立 verifier 逐个执行复现，确认 40 个并定位引入 commit。',
     },
     content: { en: aiReviewEn, zh: aiReviewZh },
     date: 'Jul 02, 2026',
@@ -85,7 +85,7 @@ export const blogPosts: BlogPost[] = [
     },
     excerpt: {
       en: 'Flat rubrics give points to guessed numbers and hallucinated steps. A schema with process/outcome typing, dependency gating, hurdle rows, and code-enforced floors fixes most of that. This post walks through the design and the repair semantics.',
-      zh: '平铺的 rubric 会给蒙对的数字发分，也会给幻觉出来的步骤发分。过程分和结果分分开、加依赖门、加 hurdle 行、再用代码强制下限，大部分问题就没了。这篇讲这套 schema 怎么设计、怎么修。',
+      zh: '平铺 Rubric 会给蒙对的数字和幻觉步骤发分。过程/结果分型、依赖门控、Hurdle 行与代码强制下限能解决大部分问题；本文讲这套 Schema 的设计与修复语义。',
     },
     content: { en: aiRubricEn, zh: aiRubricZh },
     date: 'Jun 30, 2026',
@@ -100,7 +100,7 @@ export const blogPosts: BlogPost[] = [
     },
     excerpt: {
       en: 'Hallucinating answers is bad; hallucinating questions silently rots your benchmark. How a locator-bound, cross-vendor-verified evidence ledger makes anti-hallucination structural instead of hopeful.',
-      zh: '答案编错了能查出来，题目编错了 benchmark 就悄悄烂掉了。证据账本把每条证据绑死在 locator 上，再跨厂商核验，把防幻觉从「希望如此」变成结构上的保证。',
+      zh: '答案编错能查出来，题目编错会让 Benchmark 悄悄失效。证据账本将每条证据绑定 Locator 并跨厂商核验，把防幻觉变成结构保证。',
     },
     content: { en: aiLedgerEn, zh: aiLedgerZh },
     date: 'Jun 13, 2026',
@@ -115,7 +115,7 @@ export const blogPosts: BlogPost[] = [
     },
     excerpt: {
       en: 'Generation is easy; validity is hard. The three quiet failure modes — guessability, prompt↔rubric leakage, judge noise — and how to defend against each.',
-      zh: '生成数据容易，保证有效难。三种不声不响的失效模式：能蒙对、题面和 rubric 互相泄漏、judge 噪声。每一种怎么防。',
+      zh: '生成容易，有效难。三种静默失效模式：可蒙对、题面与 Rubric 互相泄漏、Judge 噪声，以及各自的防法。',
     },
     content: { en: aiValidityEn, zh: aiValidityZh },
     date: 'Jun 12, 2026',
@@ -130,7 +130,7 @@ export const blogPosts: BlogPost[] = [
     },
     excerpt: {
       en: 'Synthetic data is plausible by construction — which is exactly the failure. The Actor-Critic-Monitor loop, and the concrete taxonomy of lies self-generated data tells: derived-value drift, cross-file conflicts, impossible timelines, template contamination, provenance leakage.',
-      zh: '合成数据的问题在于它看起来总是很合理。这篇讲 Actor-Critic-Monitor 闭环，以及自己生成的数据会撒哪些谎：派生值漂移、跨文件冲突、不可能的时间线、模板污染、来源泄漏。',
+      zh: '合成数据的问题在于看起来总是合理。本文讲 Actor-Critic-Monitor 闭环，以及自生成数据的缺陷分类：派生值漂移、跨文件冲突、时间线不可能、模板污染、来源泄漏。',
     },
     content: { en: aiAdvqcEn, zh: aiAdvqcZh },
     date: 'Jun 09, 2026',
@@ -145,7 +145,7 @@ export const blogPosts: BlogPost[] = [
     },
     excerpt: {
       en: 'An honest, measured comparison: LLM judge vs. a deterministic metric on precision, recall, agreement, cost, and latency — and how to choose per task.',
-      zh: '一次摆数据的对比：LLM judge 对手写的确定性 metric，比准确率、召回、一致率、成本和时延。结论是按任务选型，不是非此即彼。',
+      zh: 'LLM Judge 对比手写确定性 Metric：准确率、召回、一致率、成本、时延的实测对比，以及按任务选型的结论。',
     },
     content: { en: aiJudgeEn, zh: aiJudgeZh },
     date: 'Jun 06, 2026',
@@ -160,7 +160,7 @@ export const blogPosts: BlogPost[] = [
     },
     excerpt: {
       en: 'Eval is infrastructure, not a script. File-output gaps, reasoning-only turns, judge hallucination, harness diversity, cost accounting — and an upstream OSS contribution.',
-      zh: '评测是基础设施，不是一次性脚本。文件输出对不上、只有推理没有输出的回合、judge 幻觉、harness 五花八门、成本核算，外加一次上游开源贡献。',
+      zh: '评测是基础设施，不是一次性脚本：文件输出缺口、纯推理回合、Judge 幻觉、Harness 多样性、成本核算，以及一次上游开源贡献。',
     },
     content: { en: aiPlumbingEn, zh: aiPlumbingZh },
     date: 'May 28, 2026',
@@ -172,7 +172,7 @@ export const blogPosts: BlogPost[] = [
     title: { en: 'Detailed Explanation of Blockchain', zh: '区块链详解' },
     excerpt: {
       en: 'Detailed explanation of blockchain, including its concepts, technology, and applications',
-      zh: '区块链的概念、技术和应用，一篇讲透。',
+      zh: '区块链的概念、技术与应用，一篇讲透。',
     },
     content: post9Content,
     date: 'Feb 04, 2026',
@@ -187,7 +187,7 @@ export const blogPosts: BlogPost[] = [
     },
     excerpt: {
       en: 'An eight-part deep dive — Dark Forest rules, searcher architecture, the control plane, network-wide inventory, sub-millisecond scout, AMM pricing models, cross-DEX arbitrage, Jito bundles, and risk control.',
-      zh: '一共八篇，拆得很细：暗黑森林的生存法则、searcher 架构、control plane、全网 inventory、亚毫秒级 scout、AMM 定价模型、跨 DEX 套利、Jito bundle 和风控。',
+      zh: '共八篇：暗黑森林生存法则、Searcher 架构、Control Plane、全网 Inventory、亚毫秒 Scout、AMM 定价模型、跨 DEX 套利、Jito Bundle 与风控。',
     },
     content: mevGuide,
     date: 'Jan 20, 2026',

@@ -19,11 +19,11 @@ export const siteConfig = {
   } as L,
   description: {
     en: "I work on the algorithm side of frontier-model evaluation and data: calibrating benchmark difficulty with controlled experiments, debugging LLM judges, designing rubrics that score reasoning process, and building the multi-agent systems and infrastructure that run all of this at production scale.",
-    zh: "我在前沿模型团队做评测和数据的算法工作：用对照实验校准基准难度、给 LLM 裁判 debug、写给推理过程打分的 rubric，也搭让这些跑起来的多智能体系统和基础设施。",
+    zh: "前沿模型团队的评测与数据算法工程师：用对照实验校准 Benchmark 难度、Debug LLM Judge、设计给推理过程打分的 Rubric，并搭建承载这些工作的 Multi-Agent 系统与评测 Infra。",
   } as L,
   bio: {
     en: "AI algorithm engineer working on evaluation science, synthetic/RL data, and agentic systems, with the infrastructure background to run them at scale. Founding-stage engineer @ HUMANLAYA AI; previously @ Fintopia, ByteDance (Doubao VLM evals), and PwC.",
-    zh: "AI 算法工程师，做评测科学、合成/RL 数据和智能体系统，也有把它们规模化跑起来的基础设施功底。现在在 HUMANLAYA AI（创始期）；之前在 Fintopia、字节跳动（豆包 VLM 评测）和普华永道。",
+    zh: "AI 算法工程师，方向为评测科学、合成/RL 数据与智能体系统，具备将其规模化落地的基础设施能力。现任 HUMANLAYA AI 创始工程师；此前在 Fintopia、字节跳动（豆包 VLM 评测）与普华永道。",
   } as L,
   location: { en: "Beijing, China", zh: "中国 · 北京" } as L,
   resumeEmail: "wang.z.levi@gmail.com",
