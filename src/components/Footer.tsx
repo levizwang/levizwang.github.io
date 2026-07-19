@@ -17,7 +17,7 @@ export function Footer() {
           <Link to="/" className="text-lg font-semibold tracking-tight">
             Levi Wang
           </Link>
-          <p className="mt-2 max-w-xs text-sm text-muted-foreground">{t(siteConfig.bio)}</p>
+          <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted-foreground">{t(siteConfig.bio)}</p>
         </div>
 
         <SocialLinks />
@@ -27,8 +27,6 @@ export function Footer() {
         <span>© {year} Levi Wang</span>
         <span className="hidden sm:inline opacity-40">·</span>
         <span>{t(ui.runningFor)} {days} {t(ui.days)}</span>
-        <span className="hidden sm:inline opacity-40">·</span>
-        <span>{t(ui.inspiredBy)} <a className="hover:text-foreground" href="https://diygod.me" target="_blank" rel="noopener noreferrer">DIYgod</a></span>
       </div>
     </footer>
   );

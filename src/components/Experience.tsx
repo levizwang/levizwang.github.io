@@ -42,7 +42,23 @@ export function Experience() {
                       key={i}
                       className="relative mb-2.5 max-w-3xl pl-5 text-[0.95rem] leading-relaxed text-foreground/85 before:absolute before:left-0 before:top-[0.62em] before:h-1.5 before:w-1.5 before:bg-brand/80 md:break-inside-avoid"
                     >
-                      {t(h)}
+                      {typeof h === 'object' && 'title' in h ? (
+                        <>
+                          <span className="font-semibold text-foreground">{t(h.title)}</span>
+                          <ul className="mt-1.5 space-y-1.5">
+                            {h.items.map((item, itemIndex) => (
+                              <li
+                                key={itemIndex}
+                                className="relative pl-4 text-foreground/80 before:absolute before:left-0 before:top-[0.68em] before:h-1 before:w-1 before:rounded-full before:bg-foreground/45"
+                              >
+                                {t(item)}
+                              </li>
+                            ))}
+                          </ul>
+                        </>
+                      ) : (
+                        t(h)
+                      )}
                     </li>
                   ))}
                 </ul>

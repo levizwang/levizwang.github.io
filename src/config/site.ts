@@ -3,23 +3,23 @@ import { Mail, Linkedin } from 'lucide-react';
 import { FaXTwitter } from 'react-icons/fa6';
 import { FaGithub } from 'react-icons/fa';
 import { AiOutlineZhihu } from 'react-icons/ai';
-import avatarImage from '../images/IMG_4812.JPG';
+import avatarImage from '../images/avatar-edinburgh.jpg';
 import type { L } from '../i18n/lang';
 
 export const siteConfig = {
   name: "Levi Wang",
   title: "Levi Wang",
   headline: {
-    en: "Evaluation science & agentic\nsystems for frontier AI.",
-    zh: "Evaluation science & agentic\nsystems for frontier AI.",
+    en: "Levi Wang",
+    zh: "Levi Wang",
   } as L,
   status: {
     en: "Founding engineer @ HUMANLAYA AI",
     zh: "HUMANLAYA AI 创始期工程师",
   } as L,
   description: {
-    en: "I work on the algorithm side of frontier-model evaluation and data: calibrating benchmark difficulty with controlled experiments, debugging LLM judges, designing rubrics that score reasoning process, and building the multi-agent systems and infrastructure that run all of this at production scale.",
-    zh: "前沿模型团队的评测与数据算法工程师：用对照实验校准 Benchmark 难度、Debug LLM Judge、设计给推理过程打分的 Rubric，并搭建承载这些工作的 Multi-Agent 系统与评测 Infra。",
+    en: "AI algorithm & infra engineer and project manager: focused on building high-quality training and evaluation data, designing data-synthesis algorithms around an Expert-in-the-Loop philosophy, and building enterprise AI infrastructure — evaluation, data-processing, and data-delivery platforms. Off the clock: photography, cycling, and trekking.",
+    zh: "AI 算法 & Infra 工程师 & 项目经理：主攻高质量训练与评测数据构建，以 Expert-in-Loop 为理念设计数据合成算法，同时负责企业 AI Infra 设施搭建，包括评测平台、数据加工平台、数据交付平台等；闲暇时间热爱摄影、骑行与徒步。",
   } as L,
   bio: {
     en: "AI algorithm engineer working on evaluation science, synthetic/RL data, and agentic systems, with the infrastructure background to run them at scale. Founding-stage engineer @ HUMANLAYA AI; previously @ Fintopia, ByteDance (Doubao VLM evals), and PwC.",

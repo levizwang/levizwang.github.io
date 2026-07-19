@@ -24,16 +24,23 @@ export function Resume() {
               <div className="p-7 md:p-9">
                 <h3 className="text-xl font-semibold tracking-tight">{t(edu.school)}</h3>
                 <p className="mt-1.5 text-muted-foreground">{t(edu.degree)}</p>
-                <ul className="mt-4 space-y-2.5">
-                  {edu.details.map((d, i) => (
-                    <li
-                      key={i}
-                      className="relative max-w-3xl pl-5 text-[0.95rem] leading-relaxed text-foreground/80 before:absolute before:left-0 before:top-[0.62em] before:h-1.5 before:w-1.5 before:bg-brand/80"
-                    >
-                      {t(d)}
-                    </li>
+                <div className="mt-4 grid gap-x-10 gap-y-2.5 md:grid-cols-2">
+                  {[
+                    edu.details.slice(0, Math.ceil(edu.details.length / 2)),
+                    edu.details.slice(Math.ceil(edu.details.length / 2)),
+                  ].map((col, ci) => (
+                    <ul key={ci} className="space-y-2.5">
+                      {col.map((d, i) => (
+                        <li
+                          key={i}
+                          className="relative pl-5 text-[0.95rem] leading-relaxed text-foreground/80 before:absolute before:left-0 before:top-[0.62em] before:h-1.5 before:w-1.5 before:bg-brand/80"
+                        >
+                          {t(d)}
+                        </li>
+                      ))}
+                    </ul>
                   ))}
-                </ul>
+                </div>
               </div>
             </article>
           </Reveal>
@@ -53,7 +60,13 @@ export function Resume() {
               <h3 className="font-mono text-xs uppercase tracking-[0.18em] text-brand">
                 {String(gi + 1).padStart(2, '0')} · {t(group.label)}
               </h3>
-              <ul className="mt-4 space-y-2">
+              <ul
+                className={
+                  group.columns === 2
+                    ? 'mt-4 grid gap-x-8 gap-y-2 sm:grid-cols-2'
+                    : 'mt-4 space-y-2'
+                }
+              >
                 {group.items.map((item, ii) => (
                   <li key={ii} className="text-[0.95rem] text-foreground/85">
                     {t(item)}
@@ -63,20 +76,21 @@ export function Resume() {
             </div>
           </Reveal>
         ))}
-      </div>
-
-      <Reveal>
-        <div className="surface mt-5 p-7">
-          <h3 className="font-mono text-xs uppercase tracking-[0.18em] text-brand">{t(ui.beyondWork)}</h3>
-          <div className="mt-4 flex flex-wrap gap-2">
-            {interests.map((interest, i) => (
-              <span key={i} className="chip">
-                {t(interest)}
-              </span>
-            ))}
+        <Reveal delay={(skills.length % 2) * 60}>
+          <div className="surface h-full p-7">
+            <h3 className="font-mono text-xs uppercase tracking-[0.18em] text-brand">
+              {String(skills.length + 1).padStart(2, '0')} · {t(ui.beyondWork)}
+            </h3>
+            <div className="mt-4 flex flex-wrap gap-2">
+              {interests.map((interest, i) => (
+                <span key={i} className="chip">
+                  {t(interest)}
+                </span>
+              ))}
+            </div>
           </div>
-        </div>
-      </Reveal>
+        </Reveal>
+      </div>
     </section>
   );
 }

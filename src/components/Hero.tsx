@@ -85,20 +85,15 @@ export function Hero() {
 
         {/* Right: subject plate */}
         <div className="reveal reveal-delay-120 is-visible order-first md:order-none">
-          <Plate className="mx-auto w-56 sm:w-72 md:w-full md:max-w-[320px]">
+          <Plate className="mx-auto w-48 sm:w-64 md:w-full md:max-w-[280px]">
             <PlateStrip left="Subject: Levi Wang" right="No. 001" />
             <div className="relative">
               <ImageWithFallback
                 src={siteConfig.avatar}
                 alt={siteConfig.name}
-                className="aspect-square h-full w-full object-cover grayscale-[0.25] brightness-[1.06] contrast-[1.02]"
+                className="h-auto w-full grayscale-[0.25] brightness-[1.06] contrast-[1.02]"
               />
               <div aria-hidden className="absolute inset-0 bg-brand/10 mix-blend-multiply dark:mix-blend-screen" />
-              {/* crosshair overlay */}
-              <svg aria-hidden viewBox="0 0 100 100" className="absolute inset-0 h-full w-full text-foreground/50">
-                <path d="M50 0V100M0 50H100" stroke="currentColor" strokeWidth="0.3" strokeDasharray="2 3" />
-                <circle cx="50" cy="50" r="28" fill="none" stroke="currentColor" strokeWidth="0.3" strokeDasharray="2 3" />
-              </svg>
             </div>
             <div className="strip border-b-0 border-t">
               <span className="truncate">{t(siteConfig.location)}</span>
