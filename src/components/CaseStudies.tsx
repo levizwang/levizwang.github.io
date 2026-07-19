@@ -14,6 +14,8 @@ interface Study {
   title: L;
   body: L;
   figure: string;
+  /** Right-hand label of the figure strip (units / sample size). */
+  figRight: string;
   specs: Spec[];
   link?: { href: string; label: L };
   article?: PostId;
@@ -38,6 +40,7 @@ const STUDIES: Study[] = [
       { k: '0.648', v: { en: 'final mean of the 134-question benchmark', zh: '134 题基准的最终均分' } },
     ],
     figure: 'difficulty-calibration',
+    figRight: 'n = 134 · units: score',
     article: 'benchmark-difficulty',
     tags: ['Difficulty calibration', 'Controlled experiments', 'Leak-proof harness'],
   },
@@ -58,6 +61,7 @@ const STUDIES: Study[] = [
       { k: 'Oracle', v: { en: 'reference answers must score full marks', zh: '参考答案必须满分' } },
     ],
     figure: 'judge-reliability',
+    figRight: 'Units: rubric hits',
     article: 'judge-reliability',
     tags: ['Judge debugging', 'Hallucination re-check', 'Oracle validation'],
   },
@@ -68,7 +72,7 @@ const STUDIES: Study[] = [
       zh: '基于证据约束生成无法蒙对的评测任务。',
     },
     body: {
-      en: 'I built a public-safe version of this story around the core idea: the generator is not trusted. Source files are first converted into locator-bound evidence, then independent roles draft, critique, verify, and package the task. Before delivery, the task is checked for answer leakage, unsupported claims, and guessability. The internal node layout and prompts are deliberately omitted; what matters publicly is the contract: every answerable claim must point back to source evidence, and removing the files should make the task fail.',
+      en: 'The core idea: the generator is not trusted. Source files are first converted into locator-bound evidence, then independent roles draft, critique, verify, and package the task. Before delivery, the task is checked for answer leakage, unsupported claims, and guessability. The contract is what matters: every answerable claim must point back to source evidence, and removing the files should make the task fail.',
       zh: '核心原则是不信任生成器：源文件先抽取为绑定 Locator 的证据，再由相互独立的角色分别出题、挑刺、核验与打包；交付前过答案泄漏、无证据断言、可蒙性三道检查。内部节点结构与 prompt 配方不公开，对外重要的是契约：每个可回答的断言必须能指回源证据，抽走文件则任务必然失败。',
     },
     specs: [
@@ -78,6 +82,7 @@ const STUDIES: Study[] = [
       { k: 'Delivery gate', v: { en: 'leakage, unsupported-claim, and rubric checks', zh: '泄漏、无证据断言与 Rubric 门控' } },
     ],
     figure: 'evidence-ledger',
+    figRight: 'Units: claims',
     article: 'evidence-ledger',
     tags: ['Evidence ledger', 'Anti-leakage', 'Synthetic eval data'],
   },
@@ -98,6 +103,7 @@ const STUDIES: Study[] = [
       { k: '~59 min', v: { en: 'wall-clock for the full review', zh: '整个审查的墙钟时间' } },
     ],
     figure: 'adversarial-code-review',
+    figRight: 'n = 51 agents',
     article: 'adversarial-code-review',
     tags: ['Finder/verifier split', 'Execution-backed repro', 'Adversarial review'],
   },
@@ -118,6 +124,7 @@ const STUDIES: Study[] = [
       { k: 'Memory', v: { en: 'turn repeated failures into reusable detectors', zh: '将高频缺陷固化为检测器' } },
     ],
     figure: 'adversarial-qc',
+    figRight: 'Loop: Actor · Critic · Monitor',
     article: 'adversarial-qc',
     tags: ['Actor-Critic-Monitor', 'Bad-pattern detectors', 'Synthetic data'],
   },
@@ -134,7 +141,7 @@ export function CaseStudies() {
               {/* figure */}
               <div className="strip">
                 <span className="truncate">Fig. {String(i + 3).padStart(2, '0')} — {t(s.eyebrow)}</span>
-                <span className="shrink-0">Scale 1:1</span>
+                <span className="shrink-0">{s.figRight}</span>
               </div>
               <div className="ref-grid flex justify-center border-b border-line px-6 py-7 md:py-9">
                 <ProjectFigure

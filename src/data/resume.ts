@@ -354,5 +354,6 @@ export const interests: L[] = [
   { en: 'ZK-ML research', zh: 'ZK-ML 研究' },
   { en: 'High-altitude trekking (5000 m+)', zh: '高海拔徒步（5000 米+）' },
   { en: 'Alpine skiing', zh: '高山滑雪' },
+  { en: 'Cycling', zh: '骑行' },
   { en: 'Landscape photography (see Optics)', zh: '风光摄影（见光影）' },
 ];

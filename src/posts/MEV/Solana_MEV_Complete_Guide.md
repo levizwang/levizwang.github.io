@@ -29,11 +29,9 @@ Most beginner searchers over-focus on the strategy loop because it looks like th
 
 ---
 
-## Deep Dive into Solana MEV: "Dark Forest" Laws and Architectural Implementation Under High-Concurrency Engines
+## Dark Forest Laws: Solana Market Structure for MEV
 
-In the world of cryptocurrency, MEV (Maximal Extractable Value) is often likened to the "Dark Forest" of blockchain. With the explosion of the Solana ecosystem, this forest has become increasingly deep and complex. Compared to Ethereum's mature PBS (Proposer-Builder Separation) model, Solana, with its unique parallel execution, extremely high throughput, and slot time of less than 400ms, provides a completely different set of game rules for MEV explorers (Searchers).
-
-As the opening piece of the **Solana MEV Deep Exploration Series**, this article will break down the underlying logic of Solana MEV from four dimensions: core concepts, transaction pipeline, technical architecture, and engineering implementation.
+Solana MEV is not Ethereum MEV with faster blocks. Parallel execution, sub-400ms slots, and the absence of a classic public mempool change what a searcher can observe and what it can execute. This part covers the ground rules: core concepts, the transaction pipeline, and what they imply for architecture.
 
 ---
 
@@ -161,13 +159,9 @@ Welcome to the Dark Forest of Solana, may your Bundles always be included.
 
 ---
 
-## The "Brain" of the Strategy Engine: Architectural Practice of Decoupling Control Plane and Execution Plane
+## Control Plane vs. Data Plane: Splitting the Strategy Engine
 
-When building a Solana MEV system, developers often face a classic trade-off: **Rust's Speed** vs. **Python's Flexibility**.
-
-To be able to burst like a cheetah (execution performance) while switching strategies flexibly like a fox (scheduling flexibility) in the "Dark Forest", we adopted a **Two-Tier Architecture Design**: a **Control Plane** built with Python responsible for strategy orchestration and configuration management, and a **Data Plane (Execution Plane)** built with Rust responsible for high-concurrency data processing.
-
-This article will break down the logic behind this architecture and how to implement an industrial-grade strategy scheduling engine using Python.
+Building a Solana MEV system forces a classic trade-off: **Rust's speed** vs. **Python's flexibility**. The resolution here is a two-tier design — a **Control Plane** in Python for strategy orchestration and configuration management, and a **Data Plane** in Rust for high-concurrency data processing.
 
 ---
 
@@ -308,8 +302,6 @@ On the Solana track, where thousands of transactions are generated every second,
 
 Efficient Searchers never "listen blindly". They use a strategy called **"Inventory-Driven Monitoring"**: first building a global index of network-wide liquidity pools offline, filtering out high-value "arbitrage candidate pools", and then subscribing precisely.
 
-This article will break down how to build this high-performance Inventory system.
-
 ---
 
 ### 1. Core Concept: Shrinking the Battlefield, Locking onto Winning Points
@@ -426,7 +418,7 @@ The Inventory module is the "filter" of the entire MEV system. It filters out ne
 
 If the Inventory module is the bot's "memory", then the Scout module is its "eyes". In the turbulence of Solana generating tens of thousands of state changes per second, Scout's task is to filter, filter again, and decode signals that are truly meaningful for arbitrage strategies at extreme speeds.
 
-In the world of MEV, **speed isn't everything, but without speed, there is nothing**. This article will delve into how to build a low-latency, high-concurrency transaction monitoring and parsing system.
+In MEV, **speed isn't everything, but without speed, there is nothing**. What follows is the design of a low-latency, high-concurrency transaction monitoring and parsing system.
 
 ---
 
@@ -729,11 +721,9 @@ if __name__ == "__main__":
 
 ---
 
-## The Final Step to Profit: Deep Dive into Jito and "MEV Yield Farming" on Solana
+## Landing the Trade: Jito Bundles and Solana's PBS
 
-In the previous articles of this series, we discussed how to discover opportunities (Scout) and calculate profits (AMM). But in Solana's "Dark Forest", finding an opportunity is only half the battle; the other half is ensuring your transaction gets **included in a block before your competitors**.
-
-This brings us to a pivotal infrastructure in the Solana ecosystem—**Jito**. It is not only a powerful tool for developers to capture MEV but also a "secret weapon" for ordinary users to obtain excess returns.
+Scout finds the opportunity and AMM prices it, but that is only half the battle — the other half is getting your transaction **included in a block before your competitors**. On Solana that runs through one piece of infrastructure: **Jito**.
 
 ---
 

@@ -47,7 +47,7 @@ export function Hero() {
             className={`mt-7 font-semibold text-balance ${
               headlineIsCjk
                 ? 'leading-[1.15] tracking-tightest text-[2.15rem] sm:text-5xl md:text-[3.8rem]'
-                : 'font-mono uppercase leading-[1.18] tracking-tight text-[1.65rem] sm:text-4xl md:text-[2.7rem]'
+                : 'font-mono leading-[1.18] tracking-tight text-[1.65rem] sm:text-4xl md:text-[2.7rem]'
             }`}
           >
             {headline.split('\n').map((line, i) => (
@@ -73,7 +73,7 @@ export function Hero() {
             </Link>
             <Link
               to="/posts"
-              className="inline-flex items-center gap-2 border border-line px-5 py-2.5 font-mono text-xs font-semibold uppercase tracking-[0.12em] text-foreground transition-colors hover:border-foreground/60"
+              className="inline-flex items-center gap-2 border border-line px-5 py-2.5 font-mono text-xs font-semibold uppercase tracking-[0.14em] text-foreground transition-colors hover:border-foreground/60"
             >
               {t(ui.readWriting)}
             </Link>
@@ -83,9 +83,9 @@ export function Hero() {
           <SocialLinks className="mt-9" />
         </div>
 
-        {/* Right: subject plate */}
+        {/* Right: subject plate — right-aligned so its edge lines up with the plate below */}
         <div className="reveal reveal-delay-120 is-visible order-first md:order-none">
-          <Plate className="mx-auto w-48 sm:w-64 md:w-full md:max-w-[280px]">
+          <Plate className="mx-auto w-48 sm:w-64 md:ml-auto md:mr-0 md:w-full md:max-w-[280px]">
             <PlateStrip left="Subject: Levi Wang" right="No. 001" />
             <div className="relative">
               <ImageWithFallback
@@ -100,7 +100,7 @@ export function Hero() {
               <span className="shrink-0">Scale 1:1</span>
             </div>
           </Plate>
-          <p className="mt-3 text-center font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
+          <p className="mt-3 text-center font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground md:text-right">
             {siteConfig.resumeEmail}
           </p>
         </div>

@@ -18,7 +18,7 @@ export const stats: Stat[] = [
 export const marquee = [
   'Difficulty Calibration', 'Judge Reliability', 'DAG Rubrics', 'Evidence Ledger',
   'Adversarial QC', 'Verifier', 'Agent-as-Judge', 'Anti-Guessing Probes',
-  'RL Data', 'Agent Harnesses', 'GDPval', 'WLE', 'Toolathlon', 'Apex',
+  'RL Data', 'Agent Harnesses', 'GDPval', 'Toolathlon',
   'MCP', 'RAGAS', 'Cloud Fan-out', 'OpenHands', 'Stirrup', 'Codex', 'OpenRouter',
   'Oracle Validation', 'Rubric Design',
 ];

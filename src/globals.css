@@ -99,14 +99,57 @@
   h1, h2, h3 {
     letter-spacing: -0.022em;
   }
-  ::-webkit-scrollbar { width: 10px; height: 10px; }
-  ::-webkit-scrollbar-thumb {
-    background: hsl(var(--line));
-    border-radius: 0;
-    border: 3px solid transparent;
-    background-clip: content-box;
+  /* Caliper scrollbar — the page ruler runs down the track, a slider block rides it */
+  /* Standard props are Firefox-only: in Chrome 121+ they would override the
+     ::-webkit-scrollbar design below, so gate them behind @supports. */
+  @supports not selector(::-webkit-scrollbar) {
+    html {
+      scrollbar-width: thin;
+      scrollbar-color: hsl(var(--line)) hsl(var(--background));
+    }
   }
-  ::-webkit-scrollbar-thumb:hover { background: hsl(var(--muted-foreground)); background-clip: content-box; }
+  ::-webkit-scrollbar { width: 14px; height: 14px; }
+  ::-webkit-scrollbar-corner { background: transparent; }
+  ::-webkit-scrollbar-track {
+    background-color: hsl(var(--background));
+    border-left: 1px solid hsl(var(--hairline));
+    background-image:
+      repeating-linear-gradient(to bottom, hsl(var(--foreground) / 0.45) 0 1px, transparent 1px 40px),
+      repeating-linear-gradient(to bottom, hsl(var(--foreground) / 0.22) 0 1px, transparent 1px 8px);
+    background-size: 7px 100%, 4px 100%;
+    background-position: top left, top left;
+    background-repeat: no-repeat;
+  }
+  ::-webkit-scrollbar-track:horizontal {
+    border-left: none;
+    border-top: 1px solid hsl(var(--hairline));
+    background-image:
+      repeating-linear-gradient(to right, hsl(var(--foreground) / 0.45) 0 1px, transparent 1px 40px),
+      repeating-linear-gradient(to right, hsl(var(--foreground) / 0.22) 0 1px, transparent 1px 8px);
+    background-size: 100% 7px, 100% 4px;
+    background-position: top left, top left;
+  }
+  ::-webkit-scrollbar-thumb {
+    border-radius: 0;
+    border: 1px solid hsl(var(--line));
+    background-color: hsl(var(--surface));
+    background-image: repeating-linear-gradient(to bottom, hsl(var(--muted-foreground) / 0.8) 0 1px, transparent 1px 4px);
+    background-size: 6px 13px;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+  ::-webkit-scrollbar-thumb:horizontal {
+    background-image: repeating-linear-gradient(to right, hsl(var(--muted-foreground) / 0.8) 0 1px, transparent 1px 4px);
+    background-size: 13px 6px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    border-color: hsl(var(--brand));
+    background-image: repeating-linear-gradient(to bottom, hsl(var(--brand) / 0.9) 0 1px, transparent 1px 4px);
+  }
+  ::-webkit-scrollbar-thumb:hover:horizontal {
+    background-image: repeating-linear-gradient(to right, hsl(var(--brand) / 0.9) 0 1px, transparent 1px 4px);
+  }
+  ::-webkit-scrollbar-thumb:active { background-color: hsl(var(--brand) / 0.15); }
 }
 
 @layer components {

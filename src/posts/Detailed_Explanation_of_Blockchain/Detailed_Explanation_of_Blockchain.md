@@ -1,10 +1,8 @@
 # Detailed Explanation of Blockchain
 
-This article is a broad, builder-oriented explanation of blockchain. It starts from the trust model, moves through accounts, wallets, smart contracts, stablecoins, lending, indexing, and finally the AI × blockchain narrative. The goal is not to memorize terminology. The goal is to understand which part of the stack is responsible for **ownership**, which part is responsible for **execution**, which part is responsible for **data access**, and which parts should remain off-chain.
+One question organizes this whole guide: in a Web3 stack, which layer owns **ownership**, which owns **execution**, which owns **data access** — and which parts should never be on-chain at all. Get that split right and the terminology takes care of itself.
 
-## Reader roadmap
-
-If you are new to Web3, read it in this order:
+## How to read this guide
 
 1. **Trust and consensus.** Why a blockchain can replace institutional trust with public verification.
 2. **Accounts and wallets.** Why the private key is not a password but the source of authority.
@@ -14,15 +12,15 @@ If you are new to Web3, read it in this order:
 6. **Front-end and indexing.** Why a real dApp still needs off-chain infrastructure.
 7. **AI and blockchain.** Where the combination is useful, and where it is just narrative.
 
-By the end, you should be able to sketch a simple lending dApp and explain which data belongs on-chain, which data belongs in an indexer, and which data should stay in a traditional database.
+The test at the end: sketch a lending dApp and say which data belongs on-chain, which belongs in an indexer, and which should stay in a traditional database. If you can do that, the stack has clicked.
 
 ## What is blockchain?
 
 ### Blockchain and Smart Contracts
 
-Before delving into code, we need to understand the core essence of Web3:**the shift from "trusting people/institutions" to "trusting code/math"**.
+Before delving into code, we need to understand the core essence of Web3: **the shift from "trusting people/institutions" to "trusting code/math"**.
 
-- **Blockchain:**A decentralized append-only database (ledger). Its core features are**immutability**and**transparency**, demo website https://blockchaindemo.io/. 
+- **Blockchain:** A decentralized append-only database (ledger). Its core features are **immutability** and **transparency**, demo website https://blockchaindemo.io/. 
 
 Sources of trust in blockchain networks: 
 
@@ -174,9 +172,11 @@ contract SimpleBank {
 }
 ```
 
-Details can be learned throughhttps://ethereum.org/zh/
+Details can be learned through https://ethereum.org/zh/
 
-### **Web3 Hierarchy and Track Classification**-**L1/L2 (Infrastructure):** Settlement layer (Ethereum, Arbitrum, Base).
+### Web3 Hierarchy and Track Classification
+
+- **L1/L2 (Infrastructure):** Settlement layer (Ethereum, Arbitrum, Base).
 
 - **RPC (Communication Layer):** Gateway for front-end to communicate with the chain (Alchemy, Infura).
 
@@ -572,9 +572,9 @@ Permanent Storage Protocol, one-time payment, data permanently stored on the blo
 
 ### DeFI and AI
 
-**DeFi**is an abbreviation for**Decentralized Finance** (decentralized finance). It refers to an ecosystem of financial services built on blockchain networks (primarily Ethereum). 
+**DeFi** is an abbreviation for **Decentralized Finance** (decentralized finance). It refers to an ecosystem of financial services built on blockchain networks (primarily Ethereum). 
 
-Simply put, the goal of DeFi is to replace traditional financial intermediaries such as banks and brokerages through **smart contracts**(Smart Contracts), enabling users to directly engage in activities such as lending, trading, and investing, with**decentralized, permissionless, transparent, and open-source** characteristics. 
+Simply put, the goal of DeFi is to replace traditional financial intermediaries such as banks and brokerages through **smart contracts** (Smart Contracts), enabling users to directly engage in activities such as lending, trading, and investing, with **decentralized, permissionless, transparent, and open-source** characteristics. 
 
 Currently, the most cutting-edge track is AI + DeFi, where AI addresses the issues of "decision-making efficiency" and "automation", and DeFi provides the systems of "decentralized clearing" and "value transfer".
 
@@ -765,11 +765,11 @@ In the world of Web3, "coins" are not only currency but also **shares of protoco
 
 ### What is "Crypto"? (What is Crypto?)
 
-From a technical perspective, a "coin" (cryptocurrency/token) is a **digital entry**on a blockchain ledger.
+From a technical perspective, a "coin" (cryptocurrency/token) is a **digital entry** on a blockchain ledger.
 
-- **Native Coins (Coins):**The essential "fuel" for the underlying operation of the blockchain. For example:**ETH** is the gas fee of the Ethereum network, without which the network cannot operate.
+- **Native Coins (Coins):** The essential "fuel" for the underlying operation of the blockchain. For example: **ETH** is the gas fee of the Ethereum network, without which the network cannot operate.
 
-- **Tokens:**Application assets built on existing chains. For example, a token issued by a lending protocol, holding which allows participation in voting (governance rights) or receiving dividends.**Essentially, cryptocurrency is the digitalization of "ownership".** Previously, ownership was stored in the company's database, but now it is stored in your private key.
+- **Tokens:** Application assets built on existing chains. For example, a token issued by a lending protocol, holding which allows participation in voting (governance rights) or receiving dividends.**Essentially, cryptocurrency is the digitalization of "ownership".** Previously, ownership was stored in the company's database, but now it is stored in your private key.
 
 ### What is "cryptocurrency trading"? (What is Trading?)
 
@@ -1199,7 +1199,7 @@ Social media sensitivity, luck
 > 
 > 2. **Attention is a scarce resource:** Meme coins rise quickly because they capture the attention of the entire network, and once the hype shifts, the decline is astonishingly rapid.
 > 
-> 3. **Technology vs. Emotion:**Web3 is both the frontier of technology and a laboratory of human nature. Before getting involved, figure out which part of the money you're making - is it the money from**industry growth**, or the money from**others' emotional fluctuations**?
+> 3. **Technology vs. Emotion:** Web3 is both the frontier of technology and a laboratory of human nature. Before getting involved, figure out which part of the money you're making - is it the money from **industry growth**, or the money from **others' emotional fluctuations**?
 > 
 > 
 
@@ -1211,7 +1211,7 @@ Social media sensitivity, luck
 
 Among traditional social media giants (such as X or Facebook), the platform's rules (such as traffic distribution, content moderation standards, profit-sharing) are determined by the company's senior management, and users are merely passive "data producers".
 
-In **decentralized social DAO (Decentralized autonomous organization)**, the platform is a set of**open-source protocols** running on the blockchain. All rules are written in smart contracts, and any major logical changes must be approved through community voting. 
+In **decentralized social DAO (Decentralized autonomous organization)**, the platform is a set of **open-source protocols** running on the blockchain. All rules are written in smart contracts, and any major logical changes must be approved through community voting. 
 
 ### Multi-Role Collaboration Model in DAO
 
@@ -1221,7 +1221,7 @@ In a social DAO, participants are assigned different governance weights based on
 
 - **Traditional Model:** Creators are subject to the platform's algorithms, facing the risk of demotion or account suspension at any time, and the platform takes the lion's share of the revenue.
 
-- **DAO Model:**Creators earn**governance tokens**rewards by publishing high-quality content.
+- **DAO Model:** Creators earn **governance tokens** rewards by publishing high-quality content.
 
     - **Rights:** They not only own the content (stored in IPFS in the form of NFTs), but also have voting rights. 
 
@@ -1243,7 +1243,7 @@ In a social DAO, participants are assigned different governance weights based on
 
 - **DAO Model:** Users are "sovereign individuals".
 
-    - **Data Sovereignty:**When users log in via wallets such as**MetaMask**, their follower lists and interaction data follow the user, not the platform.
+    - **Data Sovereignty:** When users log in via wallets such as **MetaMask**, their follower lists and interaction data follow the user, not the platform.
 
     - **Decision-making Power:** Users can vote on whether the platform should introduce advertisements, or decide whether advertising revenue should go into the public Treasury or be distributed to all active users.
 
@@ -1255,9 +1255,9 @@ When this social platform needs to be upgraded (for example: planning to introdu
 
 2. **Community Debate:** Members discuss the impact of the proposal on system Gas fees and storage costs (IPFS) in a decentralized forum.
 
-3. **On-chain Voting (Voting):**Members use tokens to vote. This process is transparent and immutable, with data recorded on **Base** and other blockchains.
+3. **On-chain Voting (Voting):** Members use tokens to vote. This process is transparent and immutable, with data recorded on **Base** and other blockchains.
 
-4. **Automatic Execution (Execution):**If the vote passes,**the smart contract (Smart Contract)**will automatically trigger code updates after a preset time, or allocate R&D funds from**the treasury**. The entire process does not require anyone's "signature approval". 
+4. **Automatic Execution (Execution):** If the vote passes, **the smart contract (Smart Contract)** will automatically trigger code updates after a preset time, or allocate R&D funds from **the treasury**. The entire process does not require anyone's "signature approval". 
 
 ---
 
@@ -1267,7 +1267,7 @@ The above has covered what blockchain is, what a cryptocurrency is, how to trade
 
 ### Backend and Contract Layer
 
-In Web3, the backend is split into **on-chain logic (smart contracts)**,**off-chain data (database) and middleware (indexer)**. 
+In Web3, the backend is split into **on-chain logic (smart contracts)**, **off-chain data (database) and middleware (indexer)**. 
 
 #### Step 1: Configure the environment
 
@@ -1311,7 +1311,7 @@ Here we will introduce the deployment of contracts, which is crucial for underst
 
     - **On-chain process:** When you click "Deploy", you are actually sending a special transaction, and the `data` field of the transaction packages these bytecodes.
 
-    - **Storage Status:**After successful deployment, the blockchain will allocate a**specific address**(e.g., `0x123... `) on the ledger for your contract. This address does not store the `.sol `source file, but only stores this **binary code**. 
+    - **Storage Status:** After successful deployment, the blockchain will allocate a **specific address** (e.g., `0x123... `) on the ledger for your contract. This address does not store the `.sol `source file, but only stores this **binary code**. 
 
 2. Why can it be called? (Execution logic of EVM)
 
@@ -1319,15 +1319,15 @@ Here we will introduce the deployment of contracts, which is crucial for underst
 
     - **Instruction Set:** Every two characters in the binary code (such as `60` representing PUSH1, `01` representing ADD) are instructions for the EVM.
 
-    - **Entry Identification:**Each function generates a unique**"Function Selector" (Selector)**(e.g., `deposit() `corresponds to `0xd0e30db0 `). 
+    - **Entry Identification:** Each function generates a unique **"Function Selector" (Selector)** (e.g., `deposit() `corresponds to `0xd0e30db0 `). 
 
 3. ABI: The "Translator" between the Frontend and the Blockchain
 
-    ABI (Application Binary Interface) is the**specification of the contract**. 
+    ABI (Application Binary Interface) is the **specification of the contract**. 
 
     - **Why do we need ABI?** Because the blockchain is full of `0xaf32...` machine code like this, and the front end has no idea which ByteDance corresponds to which function.
 
-    - **Interaction process:**1.**Explanation:** The front-end library (such as Viem) reads the ABI and knows that the `deposit` function requires a `uint256` parameter.
+    - **Interaction process:** 1.**Explanation:** The front-end library (such as Viem) reads the ABI and knows that the `deposit` function requires a `uint256` parameter.
 
         2. **Encoding:** It encodes `deposit(100)` into a hexadecimal `data` according to the standard format.
 
@@ -1382,7 +1382,7 @@ To fully decentralize the project, the project's icons, legal documents, and eve
 > 
 > If a file is extremely popular (such as the image of a popular NFT) and has been downloaded by 1 million people worldwide, and all 1 million people have this cache on their computers, then when the 1,000,001st person downloads it, they will download it in segments from the computers of these 1 million people. 
 > 
-> - **Cost:**These users pay for their own** electricity bills, internet fees, and hard drive wear and tear**. 
+> - **Cost:** These users pay for their own ** electricity bills, internet fees, and hard drive wear and tear**. 
 > 
 > 
 
@@ -1408,7 +1408,7 @@ export function handleBorrow(event: BorrowEvent): void {
 
 #### Step 8: Project Speed Optimization
 
-Not all data in the project needs to be put on the blockchain (it's too expensive and slow), so we can adopt**a hybrid on-chain strategy**: asset changes (money) are stored on the Base chain; while users' personalized settings (such as avatars, risk reminder switches) are stored in**Supabase**. 
+Not all data in the project needs to be put on the blockchain (it's too expensive and slow), so we can adopt **a hybrid on-chain strategy**: asset changes (money) are stored on the Base chain; while users' personalized settings (such as avatars, risk reminder switches) are stored in **Supabase**. 
 
 ```TypeScript
 await supabase.from('settings').update({ notify_on_liquidation: true }).eq('address', userAddr);
@@ -1417,7 +1417,7 @@ await supabase.from('settings').update({ notify_on_liquidation: true }).eq('addr
 
 ## Blockchain + AI's Ultimate Form: Metaverse
 
-If **AI**is the industrial revolution of productivity,**blockchain**is the social transformation of relations of production, then**the metaverse**is the**ultimate physical space (3D Internet)** resulting from the combination of the two. 
+If **AI** is the industrial revolution of productivity, **blockchain** is the social transformation of relations of production, then **the metaverse** is the **ultimate physical space (3D Internet)** resulting from the combination of the two. 
 
 ### Redefining the Metaverse: It's Not Just VR Glasses
 
@@ -1443,7 +1443,7 @@ The metaverse requires massive amounts of data and scenarios. If relying on manu
 
 Without blockchain, the metaverse is just a large-scale centralized game.
 
-- **Asset Ownership Confirmation (NFT):**The ownership of clothes, land, or artworks you purchase in the metaverse is recorded on**blockchains** such as Base, rather than in a company's database. Even if the platform shuts down, your assets will still exist.
+- **Asset Ownership Confirmation (NFT):** The ownership of clothes, land, or artworks you purchase in the metaverse is recorded on **blockchains** such as Base, rather than in a company's database. Even if the platform shuts down, your assets will still exist.
 
 - **Interoperability:** Relying on blockchain standards, the sword you purchased in Space A can be brought into Space B for use. This "cross-border transfer" is the key to the metaverse becoming "one world".
 

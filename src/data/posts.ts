@@ -144,7 +144,7 @@ export const blogPosts: BlogPost[] = [
       zh: 'Agent-as-Judge 还是手写的 Metric？一次摆数据的对比',
     },
     excerpt: {
-      en: 'An honest, measured comparison: LLM judge vs. a deterministic metric on precision, recall, agreement, cost, and latency — and how to choose per task.',
+      en: 'A measured comparison: LLM judge vs. a deterministic metric on precision, recall, agreement, cost, and latency — and how to choose per task.',
       zh: 'LLM Judge 对比手写确定性 Metric：准确率、召回、一致率、成本、时延的实测对比，以及按任务选型的结论。',
     },
     content: { en: aiJudgeEn, zh: aiJudgeZh },
@@ -171,8 +171,8 @@ export const blogPosts: BlogPost[] = [
     id: '9',
     title: { en: 'Detailed Explanation of Blockchain', zh: '区块链详解' },
     excerpt: {
-      en: 'Detailed explanation of blockchain, including its concepts, technology, and applications',
-      zh: '区块链的概念、技术与应用，一篇讲透。',
+      en: 'From the trust model to a working dApp: accounts, contracts, stablecoins, lending, indexing — and which parts of the stack belong off-chain.',
+      zh: '从信任模型到一个能跑的 dApp：账户、合约、稳定币、借贷、索引，以及哪些部分本就该留在链下。',
     },
     content: post9Content,
     date: 'Feb 04, 2026',

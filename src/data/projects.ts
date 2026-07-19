@@ -70,7 +70,7 @@ export const projects: Project[] = [
     id: 'medical-acm',
     name: { en: 'Adversarial QC for Synthetic Clinical Data', zh: '合成临床数据的对抗式质检' },
     description: {
-      en: 'Designed an Actor-Critic-Monitor loop for synthetic medical-record cases: generator, adversarial reviewer, and arbiter. The public framing focuses on defect taxonomy: derived-value drift, cross-file conflict, timeline impossibility, template contamination, metadata leakage, and rubric answerability.',
+      en: 'Designed an Actor-Critic-Monitor loop for synthetic medical-record cases: generator, adversarial reviewer, and arbiter. The durable output is the defect taxonomy: derived-value drift, cross-file conflict, timeline impossibility, template contamination, metadata leakage, and rubric answerability.',
       zh: '设计合成病历的 Actor-Critic-Monitor 闭环：生成、对抗审查、仲裁；沉淀缺陷分类体系——派生值漂移、跨文件冲突、时间线不可能、模板污染、元数据泄漏与 Rubric 可回答性。',
     },
     tag: { en: 'Adversarial QC', zh: '对抗式质检' },
@@ -97,7 +97,7 @@ export const projects: Project[] = [
     id: 'rag-eval',
     name: { en: 'RAG Evaluation (RAGAS)', zh: 'RAG 评测（RAGAS）' },
     description: {
-      en: 'Cross-border RAG systems with an automated RAGAS evaluation loop keeping faithfulness and retrieval precision honest in production. Visualization report of the evaluation project.',
+      en: 'Cross-border RAG systems with an automated RAGAS evaluation loop keeping faithfulness and retrieval precision honest in production; includes a visualization report of the evaluation run.',
       zh: '跨境业务 RAG 系统，配 RAGAS 自动评测闭环，监控线上忠实度与检索精度；附评测项目可视化报告。',
     },
     link: '/ragas.html',
@@ -105,7 +105,7 @@ export const projects: Project[] = [
   },
   {
     id: 'nvwa',
-    name: { en: 'nvwa — Synthesis Framework', zh: 'nvwa（女娲）— 合成框架' },
+    name: { en: 'Office-Document Synthesis Framework', zh: 'Office 文档合成框架' },
     description: {
       en: 'A layered “1 seed → N tasks” office-document synthesis framework with automated checkers, LLM QC/repair, and seed-provenance tracing, built to beat the low-diversity failure mode of single-shot generation.',
       zh: '分层「1 种子 → N 题」Office 文档合成框架：自动 Checker、LLM 质检/修复与种子溯源，解决单轮生成的低多样性失效。',

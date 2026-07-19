@@ -40,7 +40,7 @@ export const pillars: Pillar[] = [
   },
   {
     icon: 'layers',
-    title: { en: 'Full-stack execution', zh: '全栈执行力' },
+    title: { en: 'Eval infrastructure', zh: '评测基础设施' },
     body: {
       en: 'Containerized eval execution across model families and harnesses, with cloud fan-out, cost governance, and delivery-grade QA gates.',
       zh: '跨模型族、跨 Harness 的容器化评测执行，含云端 fan-out、成本治理与交付级 QA 门控。',
