@@ -2,8 +2,11 @@ import { Reveal } from './Reveal';
 import { SectionHeader } from './ui/SectionHeader';
 import { PlateStrip } from './ui/Plate';
 import { TagPill } from './ui/TagPill';
+import { DimensionChain } from './ui/DimensionChain';
 import { experience } from '../data/resume';
 import { useT, ui } from '../i18n/lang';
+
+const CHAIN_LABELS = ['HUMANLAYA', 'FINTOPIA', 'BYTEDANCE', 'PWC', 'PWC INT.', 'NUS'];
 
 export function Experience() {
   const t = useT();
@@ -13,7 +16,20 @@ export function Experience() {
         <SectionHeader eyebrow={ui.expEyebrow} title={ui.experience} sub={ui.experienceSub} />
       </Reveal>
 
-      <div className="mt-12 space-y-5">
+      <Reveal delay={60}>
+        <div className="mt-8">
+          <DimensionChain
+            items={experience
+              .map((job, i) => ({
+                label: CHAIN_LABELS[i] ?? job.company.toUpperCase(),
+                period: job.period,
+              }))
+              .reverse()}
+          />
+        </div>
+      </Reveal>
+
+      <div className="mt-10 space-y-5">
         {experience.map((job, idx) => (
           <Reveal key={`${job.company}-${job.period}`} delay={Math.min(idx, 3) * 60}>
             <article className="surface lift">
@@ -36,32 +52,34 @@ export function Experience() {
                   <p className="mt-4 leading-relaxed text-muted-foreground [text-wrap:pretty]">{t(job.summary)}</p>
                 )}
 
-                <ul className="mt-4 space-y-2.5 md:columns-2 md:gap-10 md:space-y-0">
-                  {job.highlights.map((h, i) => (
-                    <li
-                      key={i}
-                      className="relative mb-2.5 max-w-3xl pl-5 text-[0.95rem] leading-relaxed text-foreground/85 before:absolute before:left-0 before:top-[0.62em] before:h-1.5 before:w-1.5 before:bg-brand/80 md:break-inside-avoid"
-                    >
-                      {typeof h === 'object' && 'title' in h ? (
-                        <>
-                          <span className="font-semibold text-foreground">{t(h.title)}</span>
-                          <ul className="mt-1.5 space-y-1.5">
-                            {h.items.map((item, itemIndex) => (
-                              <li
-                                key={itemIndex}
-                                className="relative pl-4 text-foreground/80 before:absolute before:left-0 before:top-[0.68em] before:h-1 before:w-1 before:rounded-full before:bg-foreground/45"
-                              >
-                                {t(item)}
-                              </li>
-                            ))}
-                          </ul>
-                        </>
-                      ) : (
-                        t(h)
-                      )}
-                    </li>
-                  ))}
-                </ul>
+                <div className="mt-4 md:columns-2 md:gap-10">
+                  {job.highlights.map((h, i) =>
+                    typeof h === 'object' && 'items' in h ? (
+                      <section key={i} className="mb-5 break-inside-avoid">
+                        <h4 className="font-mono text-xs font-semibold tracking-[0.08em] text-brand">
+                          <span className="mr-1.5 opacity-60">//</span>{t(h.title)}
+                        </h4>
+                        <ul className="mt-2.5 space-y-2.5">
+                          {h.items.map((it, j) => (
+                            <li
+                              key={j}
+                              className="relative pl-5 text-[0.95rem] leading-relaxed text-foreground/85 before:absolute before:left-0 before:top-[0.62em] before:h-1.5 before:w-1.5 before:bg-brand/80"
+                            >
+                              {t(it)}
+                            </li>
+                          ))}
+                        </ul>
+                      </section>
+                    ) : (
+                      <div
+                        key={i}
+                        className="relative mb-2.5 max-w-3xl pl-5 text-[0.95rem] leading-relaxed text-foreground/85 before:absolute before:left-0 before:top-[0.62em] before:h-1.5 before:w-1.5 before:bg-brand/80"
+                      >
+                        {t(h)}
+                      </div>
+                    ),
+                  )}
+                </div>
 
                 <div className="mt-6 flex flex-wrap gap-2">
                   {job.tags.map((tag) => (

@@ -2,6 +2,7 @@ import { useEffect, useMemo } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { blogPosts } from '../../data/posts';
 import { ProjectFigure } from '../ui/figures';
+import { ScrollProgress } from '../ui/ScrollProgress';
 import { PageLayout } from '../PageLayout';
 import { PillLink } from '../ui/PillLink';
 import { useT, ui, categoryLabels, labelFor } from '../../i18n/lang';
@@ -84,6 +85,7 @@ export function BlogPost() {
 
   return (
     <PageLayout width="max-w-[1280px]">
+      <ScrollProgress />
       <Link
         to="/posts"
         className="inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
