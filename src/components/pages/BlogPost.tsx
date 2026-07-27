@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { blogPosts } from '../../data/posts';
 import { ProjectFigure } from '../ui/figures';
 import { ScrollProgress } from '../ui/ScrollProgress';
+import { Rosette } from '../ui/Rosette';
 import { PageLayout } from '../PageLayout';
 import { PillLink } from '../ui/PillLink';
 import { useT, ui, categoryLabels, labelFor } from '../../i18n/lang';
@@ -150,7 +151,9 @@ export function BlogPost() {
           </article>
 
           <div className="hr-line" />
-          <div className="mt-10 flex justify-center">
+          {/* end-of-sheet mark — the signing seal after the last line */}
+          <div className="mt-10 flex flex-col items-center gap-5">
+            <Rosette spin className="h-11 w-11 text-muted-foreground/50" />
             <PillLink to="/posts">
               {t(ui.viewAllArticles)} <span aria-hidden>→</span>
             </PillLink>

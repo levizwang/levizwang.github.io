@@ -3,11 +3,8 @@ import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { Highlights } from './components/Highlights';
 import { Capabilities } from './components/Capabilities';
-import { CaseStudies } from './components/CaseStudies';
 import { Experience } from './components/Experience';
 import { Resume } from './components/Resume';
-import { BlogList } from './components/BlogList';
-import { ProjectGrid } from './components/ProjectGrid';
 import { Footer } from './components/Footer';
 import { GridBackground } from './components/GridBackground';
 import { ScrollToTop } from './components/ScrollToTop';
@@ -20,13 +17,10 @@ function Home() {
   return (
     <>
       <Hero />
+      <Highlights />
       <Experience />
       <Resume />
-      <Highlights />
-      <CaseStudies />
       <Capabilities />
-      <ProjectGrid limit={6} showViewAll />
-      <BlogList limit={4} showViewAll />
     </>
   );
 }

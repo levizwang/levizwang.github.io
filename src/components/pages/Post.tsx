@@ -1,5 +1,11 @@
+import { CaseStudies } from '../CaseStudies';
 import { BlogList } from '../BlogList';
 
 export function Post() {
-  return <BlogList showViewAll={false} />;
+  return (
+    <>
+      <CaseStudies />
+      <BlogList showViewAll={false} />
+    </>
+  );
 }

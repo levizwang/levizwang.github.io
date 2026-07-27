@@ -1,8 +1,12 @@
 import { Languages, Menu, Moon, Sun, X } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { Rosette, type RosetteVariant } from './ui/Rosette';
 import { siteConfig } from '../config/site';
 import { useLang, useT } from '../i18n/lang';
+
+/** Nav marks — one floral construction per destination. */
+const NAV_MARKS: RosetteVariant[] = ['rosette', 'quad', 'ring', 'aperture'];
 
 export function Header() {
   const { lang, toggle: toggleLang } = useLang();
@@ -61,13 +65,13 @@ export function Header() {
               <Link
                 key={item.path}
                 to={item.path}
-                className={`px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.14em] transition-colors ${
+                className={`inline-flex items-center px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.14em] transition-colors ${
                   isActive(item.path)
                     ? 'text-foreground'
                     : 'text-muted-foreground hover:text-foreground'
                 }`}
               >
-                <span className="mr-1 text-brand">{String(i + 1).padStart(2, '0')}</span>
+                <Rosette variant={NAV_MARKS[i]} className="mr-1.5 h-4 w-4" />
                 {t(item.name)}
               </Link>
             ))}
@@ -110,11 +114,11 @@ export function Header() {
             <Link
               key={item.path}
               to={item.path}
-              className={`block px-4 py-3 font-mono text-[13px] uppercase tracking-[0.12em] ${
+              className={`flex items-center px-4 py-3 font-mono text-[13px] uppercase tracking-[0.12em] ${
                 isActive(item.path) ? 'bg-secondary text-foreground' : 'text-muted-foreground'
               }`}
             >
-              <span className="mr-2 text-brand">{String(i + 1).padStart(2, '0')}</span>
+              <Rosette variant={NAV_MARKS[i]} className="mr-2.5 h-4 w-4" />
               {t(item.name)}
             </Link>
           ))}

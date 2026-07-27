@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { SocialLinks } from './ui/SocialLinks';
+import { Rosette } from './ui/Rosette';
 import { siteConfig } from '../config/site';
 import { useT, ui } from '../i18n/lang';
 
@@ -23,10 +24,14 @@ export function Footer() {
         <SocialLinks />
       </div>
 
-      <div className="mt-10 flex flex-col gap-1 font-mono text-[11px] uppercase tracking-[0.14em] text-muted-foreground sm:flex-row sm:items-center sm:gap-4">
-        <span>© {year} Levi Wang</span>
-        <span className="hidden sm:inline opacity-40">·</span>
-        <span>{t(ui.runningFor)} {days} {t(ui.days)}</span>
+      <div className="mt-10 flex items-center justify-between gap-4">
+        <div className="flex flex-col gap-1 font-mono text-[11px] uppercase tracking-[0.14em] text-muted-foreground sm:flex-row sm:items-center sm:gap-4">
+          <span>© {year} Levi Wang</span>
+          <span className="hidden sm:inline opacity-40">·</span>
+          <span>{t(ui.runningFor)} {days} {t(ui.days)}</span>
+        </div>
+        {/* maker's seal, stamped at the bottom of the sheet */}
+        <Rosette spin className="h-10 w-10 shrink-0 text-brand/60" />
       </div>
     </footer>
   );

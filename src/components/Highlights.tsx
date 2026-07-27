@@ -68,7 +68,7 @@ export function Highlights() {
     <section className="mx-auto mt-28 max-w-content px-6 md:mt-36">
       <Reveal>
         <p className="eyebrow">{t(ui.atScale)}</p>
-        <h2 className={`mt-3 max-w-2xl font-semibold ${lang === 'en' ? 'font-mono uppercase tracking-wide text-xl sm:text-2xl' : 'tracking-tight text-3xl sm:text-4xl'}`}>
+        <h2 className={`mt-3 max-w-2xl font-semibold text-balance ${lang === 'en' ? 'font-mono uppercase tracking-wide text-xl sm:text-2xl' : 'tracking-tight text-3xl sm:text-4xl'}`}>
           {t(ui.atScaleTitle)}
         </h2>
       </Reveal>

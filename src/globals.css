@@ -246,6 +246,15 @@
     background: hsl(var(--line));
   }
 
+  /* Rosette — slow seal rotation, paused on hover and under reduced motion */
+  .rosette-spin {
+    animation: rosette-rotate 150s linear infinite;
+    transform-origin: 50% 50%;
+  }
+  .rosette-spin:hover {
+    animation-play-state: paused;
+  }
+
   /* Square annotation chip (replaces the rounded tag pill) */
   .chip {
     display: inline-flex;
@@ -308,7 +317,11 @@
   html { scroll-behavior: auto; }
   .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
   .lift { transition: none; }
-  .animate-marquee, .animate-ping, .animate-pulse { animation: none !important; }
+  .animate-marquee, .animate-ping, .animate-pulse, .rosette-spin { animation: none !important; }
+}
+
+@keyframes rosette-rotate {
+  to { transform: rotate(360deg); }
 }
 
 @keyframes fadeIn {
