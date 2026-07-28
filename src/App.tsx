@@ -9,6 +9,7 @@ import { Footer } from './components/Footer';
 import { GridBackground } from './components/GridBackground';
 import { ScrollToTop } from './components/ScrollToTop';
 import { MetaManager } from './components/MetaManager';
+import { CrosshairCursor } from './components/ui/CrosshairCursor';
 import { Projects } from './components/pages/Projects';
 import { Post } from './components/pages/Post';
 import { BlogPost } from './components/pages/BlogPost';
@@ -32,6 +33,7 @@ export default function App() {
     <Router>
       <ScrollToTop />
       <MetaManager />
+      <CrosshairCursor />
       <div className="relative min-h-screen bg-background text-foreground antialiased">
         <GridBackground />
         <Header />

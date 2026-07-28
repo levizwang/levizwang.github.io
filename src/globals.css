@@ -150,6 +150,12 @@
     background-image: repeating-linear-gradient(to right, hsl(var(--brand) / 0.9) 0 1px, transparent 1px 4px);
   }
   ::-webkit-scrollbar-thumb:active { background-color: hsl(var(--brand) / 0.15); }
+
+  /* The crosshair cursor owns pointing on fine-pointer devices; text fields
+     keep their native I-beam. */
+  @media (pointer: fine) {
+    html, body, a, button, [role="button"], select, label, summary { cursor: none; }
+  }
 }
 
 @layer components {

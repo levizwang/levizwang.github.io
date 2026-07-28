@@ -82,10 +82,6 @@ export const ui = {
   readWriting: { en: 'Read writing', zh: '阅读文章' },
   readDeepDive: { en: 'Read the deep dive', zh: '阅读深度文章' },
   atScale: { en: 'At scale', zh: '规模' },
-  atScaleTitle: {
-    en: 'Evaluation science and synthetic-data algorithms, run at production scale.',
-    zh: '评测科学与合成数据算法，跑在生产规模上。',
-  },
   buildEyebrow: { en: 'What I build', zh: '我做什么' },
   buildTitle: { en: 'Four problems I keep coming back to.', zh: '长期投入的四类问题。' },
   expEyebrow: { en: 'Career', zh: '履历' },

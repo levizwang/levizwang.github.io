@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Reveal } from './Reveal';
 import { Plate, PlateStrip } from './ui/Plate';
 import { FigDistribution } from './ui/figures';
-import { useT, useLang, ui } from '../i18n/lang';
+import { useT, ui } from '../i18n/lang';
 import { stats, marquee, type Stat } from '../data/highlights';
 
 function useCountUp(target: number, run: boolean, ms = 1100) {
@@ -46,7 +46,6 @@ function StatCard({ stat, active, index }: { stat: Stat; active: boolean; index:
 
 export function Highlights() {
   const t = useT();
-  const { lang } = useLang();
   const ref = useRef<HTMLDivElement | null>(null);
   const [active, setActive] = useState(false);
 
@@ -68,9 +67,6 @@ export function Highlights() {
     <section className="mx-auto mt-28 max-w-content px-6 md:mt-36">
       <Reveal>
         <p className="eyebrow">{t(ui.atScale)}</p>
-        <h2 className={`mt-3 max-w-2xl font-semibold text-balance ${lang === 'en' ? 'font-mono uppercase tracking-wide text-xl sm:text-2xl' : 'tracking-tight text-3xl sm:text-4xl'}`}>
-          {t(ui.atScaleTitle)}
-        </h2>
       </Reveal>
 
       <Reveal delay={80}>
