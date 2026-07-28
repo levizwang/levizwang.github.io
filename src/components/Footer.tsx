@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { SocialLinks } from './ui/SocialLinks';
 import { Rosette } from './ui/Rosette';
+import { Ornament } from './ui/ornaments';
 import { siteConfig } from '../config/site';
 import { useT, ui } from '../i18n/lang';
 
@@ -11,7 +12,8 @@ export function Footer() {
   const days = Math.floor((Date.now() - start.getTime()) / 86_400_000);
 
   return (
-    <footer className="mx-auto mt-32 max-w-content px-6 pb-16 md:mt-40">
+    <footer className="relative mx-auto mt-32 max-w-content px-6 pb-16 md:mt-40">
+      <Ornament kind="compass" className="absolute -left-40 bottom-8 hidden w-24 text-foreground/30 min-[1450px]:block" />
       <div className="hr-line" />
       <div className="flex flex-col items-start gap-8 pt-12 sm:flex-row sm:items-center sm:justify-between">
         <div>

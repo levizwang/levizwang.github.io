@@ -462,11 +462,18 @@ function BottomRuler() {
 
 /* ------------------------------------------------------------------ */
 
-export function FieldFigure({ className = '' }: { className?: string }) {
+export function FieldFigure({
+  className = '',
+  viewBox = '0 0 1200 560',
+}: {
+  className?: string;
+  /** Crop the drawing — used to show only the main scatter on small screens. */
+  viewBox?: string;
+}) {
   return (
     <svg
       aria-hidden
-      viewBox="0 0 1200 560"
+      viewBox={viewBox}
       className={`block h-auto w-full text-foreground ${className}`}
       preserveAspectRatio="xMidYMid meet"
     >

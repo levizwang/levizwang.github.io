@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { blogPosts } from '../../data/posts';
 import { ProjectFigure } from '../ui/figures';
@@ -76,6 +76,30 @@ export function BlogPost() {
     element.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
+  /* highlight the TOC entry for the section currently being read */
+  const [activeId, setActiveId] = useState('');
+  useEffect(() => {
+    if (tocItems.length === 0) return;
+    let raf = 0;
+    const onScroll = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        let current = '';
+        for (const item of tocItems) {
+          const el = document.getElementById(item.id);
+          if (el && el.getBoundingClientRect().top <= 120) current = item.id;
+        }
+        setActiveId(current);
+      });
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener('scroll', onScroll);
+    };
+  }, [tocItems]);
+
   if (!post) {
     return (
       <PageLayout>
@@ -103,18 +127,27 @@ export function BlogPost() {
             <div className="eyebrow mb-4">{t(ui.toc)}</div>
             <nav className="space-y-2.5 text-sm">
               {tocItems.length > 0 ? (
-                tocItems.map((item) => (
-                  <button
-                    key={item.id}
-                    type="button"
-                    onClick={() => handleTocClick(item.id)}
-                    className={`block w-full text-left leading-snug text-muted-foreground transition-colors hover:text-foreground ${
-                      item.level === 3 ? 'pl-3.5 text-[0.8rem]' : ''
-                    }`}
-                  >
-                    {item.text}
-                  </button>
-                ))
+                tocItems.map((item) => {
+                  const active = item.id === activeId;
+                  return (
+                    <button
+                      key={item.id}
+                      type="button"
+                      onClick={() => handleTocClick(item.id)}
+                      className={`relative block w-full pl-3.5 text-left leading-snug transition-colors hover:text-foreground ${
+                        active ? 'text-foreground' : 'text-muted-foreground'
+                      } ${item.level === 3 ? 'pl-6 text-[0.8rem]' : ''}`}
+                    >
+                      <span
+                        aria-hidden
+                        className={`absolute left-0 top-[0.5em] h-1.5 w-1.5 transition-opacity ${
+                          active ? 'bg-brand opacity-100' : 'opacity-0'
+                        }`}
+                      />
+                      {item.text}
+                    </button>
+                  );
+                })
               ) : (
                 <div className="text-muted-foreground">{t(ui.tocEmpty)}</div>
               )}

@@ -3,6 +3,7 @@ import { SectionHeader } from './ui/SectionHeader';
 import { PlateStrip } from './ui/Plate';
 import { TagPill } from './ui/TagPill';
 import { DimensionChain } from './ui/DimensionChain';
+import { Ornament } from './ui/ornaments';
 import { experience } from '../data/resume';
 import { useT, ui } from '../i18n/lang';
 
@@ -11,7 +12,8 @@ const CHAIN_LABELS = ['HUMANLAYA', 'FINTOPIA', 'BYTEDANCE', 'PWC', 'PWC INT.', '
 export function Experience() {
   const t = useT();
   return (
-    <section id="experience" className="mx-auto mt-28 max-w-content px-6 md:mt-36">
+    <section id="experience" className="relative mx-auto mt-12 max-w-content px-6 md:mt-16">
+      <Ornament kind="staircase" className="absolute -left-40 top-12 hidden w-32 text-foreground/30 min-[1450px]:block" />
       <Reveal>
         <SectionHeader eyebrow={ui.expEyebrow} title={ui.experience} sub={ui.experienceSub} />
       </Reveal>

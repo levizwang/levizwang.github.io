@@ -2,6 +2,7 @@ import { Workflow, Gauge, FlaskConical, Layers, type LucideIcon } from 'lucide-r
 import { Reveal } from './Reveal';
 import { SectionHeader } from './ui/SectionHeader';
 import { TagPill } from './ui/TagPill';
+import { Ornament } from './ui/ornaments';
 import { useT, ui } from '../i18n/lang';
 import { pillars, type PillarIcon } from '../data/capabilities';
 
@@ -15,7 +16,8 @@ const ICONS: Record<PillarIcon, LucideIcon> = {
 export function Capabilities() {
   const t = useT();
   return (
-    <section className="mx-auto mt-28 max-w-content px-6 md:mt-36">
+    <section className="relative mx-auto mt-12 max-w-content px-6 md:mt-16">
+      <Ornament kind="gears" className="absolute -left-44 top-2 hidden w-36 text-foreground/30 min-[1450px]:block" />
       <Reveal>
         <SectionHeader eyebrow={ui.buildEyebrow} title={ui.buildTitle} narrow />
       </Reveal>

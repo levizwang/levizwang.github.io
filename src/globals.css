@@ -84,6 +84,7 @@
   body {
     background-color: hsl(var(--background));
     color: hsl(var(--foreground));
+    overflow-x: clip;
     font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display",
       "Helvetica Neue", Inter, "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
     font-feature-settings: "kern", "liga", "calt";
@@ -252,6 +253,18 @@
     background: hsl(var(--line));
   }
 
+  /* Ornament motion — slow counter-rotation for rings and gear trains */
+  .spin-cw,
+  .spin-ccw {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation-duration: var(--dur, 60s);
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+  }
+  .spin-cw { animation-name: orn-spin; }
+  .spin-ccw { animation-name: orn-spin-rev; }
+
   /* Rosette — slow seal rotation, paused on hover and under reduced motion */
   .rosette-spin {
     animation: rosette-rotate 150s linear infinite;
@@ -259,6 +272,21 @@
   }
   .rosette-spin:hover {
     animation-play-state: paused;
+  }
+
+  /* Interactive plate — hover darkens the frame and inverts the title strip */
+  .plate-interactive .surface {
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+  }
+  .plate-interactive:hover .surface {
+    border-color: hsl(var(--foreground) / 0.55);
+  }
+  .plate-interactive .strip {
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  .plate-interactive:hover .strip {
+    background-color: hsl(var(--foreground));
+    color: hsl(var(--background));
   }
 
   /* Square annotation chip (replaces the rounded tag pill) */
@@ -323,7 +351,7 @@
   html { scroll-behavior: auto; }
   .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
   .lift { transition: none; }
-  .animate-marquee, .animate-ping, .animate-pulse, .rosette-spin { animation: none !important; }
+  .animate-marquee, .animate-ping, .animate-pulse, .rosette-spin, .spin-cw, .spin-ccw { animation: none !important; }
 }
 
 @media print {
@@ -351,6 +379,13 @@
 
 @keyframes rosette-rotate {
   to { transform: rotate(360deg); }
+}
+
+@keyframes orn-spin {
+  to { transform: rotate(360deg); }
+}
+@keyframes orn-spin-rev {
+  to { transform: rotate(-360deg); }
 }
 
 @keyframes fadeIn {

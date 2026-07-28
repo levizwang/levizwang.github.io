@@ -7,6 +7,7 @@ import { Experience } from './components/Experience';
 import { Resume } from './components/Resume';
 import { Footer } from './components/Footer';
 import { GridBackground } from './components/GridBackground';
+import { SheetBreak } from './components/ui/SheetBreak';
 import { ScrollToTop } from './components/ScrollToTop';
 import { MetaManager } from './components/MetaManager';
 import { CrosshairCursor } from './components/ui/CrosshairCursor';
@@ -20,9 +21,13 @@ function Home() {
   return (
     <>
       <Hero />
+      <SheetBreak n="02" />
       <Highlights />
+      <SheetBreak n="03" />
       <Experience />
+      <SheetBreak n="04" />
       <Resume />
+      <SheetBreak n="05" />
       <Capabilities />
     </>
   );

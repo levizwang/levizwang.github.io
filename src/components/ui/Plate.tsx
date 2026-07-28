@@ -17,14 +17,17 @@ function Cross({ className }: { className: string }) {
 export function Plate({
   className = '',
   marks = true,
+  interactive = false,
   children,
 }: {
   className?: string;
   marks?: boolean;
+  /** Hover darkens the frame and inverts the title strip (for figure plates). */
+  interactive?: boolean;
   children: ReactNode;
 }) {
   return (
-    <div className={`relative ${className}`}>
+    <div className={`relative ${interactive ? 'plate-interactive ' : ''}${className}`}>
       {marks && (
         <>
           <Cross className="-left-2 -top-2" />

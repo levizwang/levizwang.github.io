@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Reveal } from './Reveal';
 import { Plate, PlateStrip } from './ui/Plate';
 import { FigDistribution } from './ui/figures';
+import { Ornament } from './ui/ornaments';
 import { useT, ui } from '../i18n/lang';
 import { stats, marquee, type Stat } from '../data/highlights';
 
@@ -64,7 +65,8 @@ export function Highlights() {
   }, []);
 
   return (
-    <section className="mx-auto mt-28 max-w-content px-6 md:mt-36">
+    <section className="relative mx-auto mt-12 max-w-content px-6 md:mt-16">
+      <Ornament kind="armillary" className="absolute -right-44 top-0 hidden w-40 text-foreground/30 min-[1450px]:block" />
       <Reveal>
         <p className="eyebrow">{t(ui.atScale)}</p>
       </Reveal>
@@ -86,17 +88,27 @@ export function Highlights() {
       <div className="mt-6 grid gap-6 md:grid-cols-2">
         {/* FIG. 02 — difficulty distribution of the 134-item benchmark */}
         <Reveal delay={120}>
-          <Plate className="h-full">
+          <Plate interactive className="h-full">
             <PlateStrip left="Fig. 02 — Difficulty distribution" right="134 items" />
             <FigDistribution className="w-full p-4" />
           </Plate>
         </Reveal>
 
-        {/* Marquee of the real tech / benchmark surface */}
+        {/* Marquee of the real tech / benchmark surface — two counter-flowing rows */}
         <Reveal delay={160}>
-          <div className="relative flex h-full items-center overflow-hidden py-8 [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
+          <div className="relative flex h-full flex-col justify-center gap-3 overflow-hidden py-8 [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
             <div className="flex w-max animate-marquee gap-3 hover:[animation-play-state:paused]">
               {[...marquee, ...marquee].map((term, i) => (
+                <span key={i} className="chip whitespace-nowrap">
+                  {term}
+                </span>
+              ))}
+            </div>
+            <div
+              className="flex w-max animate-marquee gap-3 hover:[animation-play-state:paused]"
+              style={{ animationDirection: 'reverse', animationDuration: '44s' }}
+            >
+              {[...marquee].reverse().concat(marquee.slice().reverse()).map((term, i) => (
                 <span key={i} className="chip whitespace-nowrap">
                   {term}
                 </span>

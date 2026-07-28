@@ -8,7 +8,7 @@ export function Resume() {
   const t = useT();
   const { lang } = useLang();
   return (
-    <section id="education" className="mx-auto mt-28 max-w-content px-6 md:mt-36">
+    <section id="education" className="mx-auto mt-12 max-w-content px-6 md:mt-16">
       <Reveal>
         <SectionHeader eyebrow={ui.eduEyebrow} title={ui.education} />
       </Reveal>

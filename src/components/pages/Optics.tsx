@@ -10,7 +10,7 @@ export function Optics() {
   const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null);
 
   return (
-    <div className="min-h-screen bg-background text-foreground transition-colors duration-300">
+    <div className="relative min-h-screen bg-background text-foreground transition-colors duration-300">
       <Hero />
       <FilterBar 
         selectedFilter={selectedFilter} 

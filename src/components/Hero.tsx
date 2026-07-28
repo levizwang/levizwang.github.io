@@ -114,9 +114,11 @@ export function Hero() {
 
       {/* FIG. 01 — generated evaluation-science plate */}
       <div className="reveal is-visible mt-14">
-        <Plate>
+        <Plate interactive>
           <PlateStrip left="Fig. 01 — Evaluation Science" right="Units: score" />
-          <FieldFigure />
+          <FieldFigure className="hidden md:block" />
+          {/* small screens get the main scatter only, cropped out of the sheet */}
+          <FieldFigure className="md:hidden" viewBox="270 80 580 470" />
         </Plate>
       </div>
     </section>
