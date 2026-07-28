@@ -87,16 +87,18 @@ export function Highlights() {
 
       <div className="mt-6 grid gap-6 md:grid-cols-2">
         {/* FIG. 02 — difficulty distribution of the 134-item benchmark */}
-        <Reveal delay={120}>
+        <Reveal delay={120} className="min-w-0">
           <Plate interactive className="h-full">
             <PlateStrip left="Fig. 02 — Difficulty distribution" right="134 items" />
-            <FigDistribution className="w-full p-4" />
+            <FigDistribution className="hidden w-full p-4 md:block" />
+            {/* small screens show only the acceptance band + cluster region */}
+            <FigDistribution className="w-full p-4 md:hidden" viewBox="300 40 400 245" />
           </Plate>
         </Reveal>
 
         {/* Marquee of the real tech / benchmark surface — two counter-flowing rows */}
-        <Reveal delay={160}>
-          <div className="relative flex h-full flex-col justify-center gap-3 overflow-hidden py-8 [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
+        <Reveal delay={160} className="min-w-0">
+          <div className="relative flex h-full min-w-0 flex-col justify-center gap-3 overflow-hidden py-8 [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
             <div className="flex w-max animate-marquee gap-3 hover:[animation-play-state:paused]">
               {[...marquee, ...marquee].map((term, i) => (
                 <span key={i} className="chip whitespace-nowrap">

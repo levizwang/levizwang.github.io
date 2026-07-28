@@ -39,7 +39,7 @@ export function Cv() {
         <button
           type="button"
           onClick={() => window.print()}
-          className="inline-flex items-center gap-2 border border-foreground bg-foreground px-4 py-2 font-mono text-xs font-semibold uppercase tracking-[0.14em] text-background transition-colors hover:bg-background hover:text-foreground"
+          className="inline-flex shrink-0 items-center gap-2 whitespace-nowrap border border-foreground bg-foreground px-4 py-2 font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-background transition-colors hover:bg-background hover:text-foreground sm:text-xs"
         >
           {t({ en: 'Print / Save PDF', zh: '打印 / 存为 PDF' })} <span aria-hidden>↓</span>
         </button>
@@ -48,7 +48,7 @@ export function Cv() {
       {/* the sheet */}
       <article
         id="cv-sheet"
-        className="border border-line bg-white px-[14mm] py-[12mm] font-serif text-[9.6pt] leading-[1.42] text-neutral-900 shadow-soft"
+        className="border border-line bg-white px-[6mm] py-[8mm] font-serif text-[9.6pt] leading-[1.42] text-neutral-900 shadow-soft sm:px-[14mm] sm:py-[12mm]"
       >
         {/* header */}
         <header className="text-center">

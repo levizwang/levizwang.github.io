@@ -185,11 +185,18 @@ function DistDots() {
   );
 }
 
-export function FigDistribution({ className = '' }: { className?: string }) {
+export function FigDistribution({
+  className = '',
+  viewBox = '0 0 800 300',
+}: {
+  className?: string;
+  /** Crop the drawing — small screens show only the band + cluster region. */
+  viewBox?: string;
+}) {
   return (
     <svg
       aria-hidden
-      viewBox="0 0 800 300"
+      viewBox={viewBox}
       className={`block h-auto w-full text-foreground ${className}`}
       preserveAspectRatio="xMidYMid meet"
     >
