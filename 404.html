@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Levi Wang</title>
+    <script>
+      // SPA fallback for GitHub Pages: stash the requested URL and bounce to
+      // the app shell; route-restore.js (loaded by index.html) puts it back.
+      try {
+        sessionStorage.setItem('spa:redirect', location.href);
+      } catch (e) { /* private mode etc. */ }
+      location.replace('/');
+    </script>
+  </head>
+  <body></body>
+</html>
