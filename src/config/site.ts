@@ -27,6 +27,7 @@ export const siteConfig = {
   } as L,
   location: { en: "Beijing, China", zh: "中国 · 北京" } as L,
   resumeEmail: "wang.z.levi@gmail.com",
+  phone: "+86 156 6648 4812",
   startDate: "2026-01-01",
   avatar: avatarImage,
 

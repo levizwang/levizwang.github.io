@@ -77,6 +77,12 @@ export function Hero() {
             >
               {t(ui.readWriting)}
             </Link>
+            <Link
+              to="/cv"
+              className="inline-flex items-center gap-2 px-1 py-2.5 font-mono text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground transition-colors hover:text-foreground"
+            >
+              {t({ en: 'Export CV', zh: '导出简历' })} <span aria-hidden>↓</span>
+            </Link>
           </div>
 
           {/* Socials */}

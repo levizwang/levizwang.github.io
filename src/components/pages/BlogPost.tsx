@@ -24,6 +24,9 @@ export function BlogPost() {
   const catLabel = (c: string) => t(labelFor(categoryLabels, c));
   const { id } = useParams<{ id: string }>();
   const post = blogPosts.find((p) => p.id === id);
+  const postIdx = blogPosts.findIndex((p) => p.id === id);
+  const newer = postIdx > 0 ? blogPosts[postIdx - 1] : undefined;
+  const older = postIdx >= 0 && postIdx < blogPosts.length - 1 ? blogPosts[postIdx + 1] : undefined;
   const rawContent = post?.content ? t(post.content) : '';
 
   const { contentHtml, tocItems } = useMemo(() => {
@@ -149,6 +152,35 @@ export function BlogPost() {
               <p className="text-muted-foreground">…</p>
             )}
           </article>
+
+          {(newer || older) && (
+            <nav className="mb-14 grid gap-px overflow-hidden rounded-[2px] border border-line bg-line sm:grid-cols-2">
+              {newer ? (
+                <Link to={`/post/${newer.id}`} className="group bg-background p-5 transition-colors hover:bg-surface">
+                  <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
+                    ← {t({ en: 'Newer', zh: '更新一篇' })}
+                  </span>
+                  <span className="mt-1.5 block font-semibold leading-snug tracking-tight transition-colors group-hover:text-foreground">
+                    {t(newer.title)}
+                  </span>
+                </Link>
+              ) : (
+                <div className="bg-background" />
+              )}
+              {older ? (
+                <Link to={`/post/${older.id}`} className="group bg-background p-5 text-right transition-colors hover:bg-surface">
+                  <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-muted-foreground">
+                    {t({ en: 'Older', zh: '更早一篇' })} →
+                  </span>
+                  <span className="mt-1.5 block font-semibold leading-snug tracking-tight transition-colors group-hover:text-foreground">
+                    {t(older.title)}
+                  </span>
+                </Link>
+              ) : (
+                <div className="bg-background" />
+              )}
+            </nav>
+          )}
 
           <div className="hr-line" />
           {/* end-of-sheet mark — the signing seal after the last line */}

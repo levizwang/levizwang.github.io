@@ -1,4 +1,4 @@
-import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { Highlights } from './components/Highlights';
@@ -8,10 +8,12 @@ import { Resume } from './components/Resume';
 import { Footer } from './components/Footer';
 import { GridBackground } from './components/GridBackground';
 import { ScrollToTop } from './components/ScrollToTop';
+import { MetaManager } from './components/MetaManager';
 import { Projects } from './components/pages/Projects';
 import { Post } from './components/pages/Post';
 import { BlogPost } from './components/pages/BlogPost';
 import { Optics } from './components/pages/Optics';
+import { Cv } from './components/pages/Cv';
 
 function Home() {
   return (
@@ -29,6 +31,7 @@ export default function App() {
   return (
     <Router>
       <ScrollToTop />
+      <MetaManager />
       <div className="relative min-h-screen bg-background text-foreground antialiased">
         <GridBackground />
         <Header />
@@ -39,6 +42,7 @@ export default function App() {
           <Route path="/posts" element={<Post />} />
           <Route path="/post/:id" element={<BlogPost />} />
           <Route path="/optics" element={<Optics />} />
+          <Route path="/cv" element={<Cv />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
         <Footer />
