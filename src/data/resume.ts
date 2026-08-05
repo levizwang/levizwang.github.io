@@ -46,8 +46,8 @@ export const experience: ExperienceItem[] = [
             zh: '专业 Post-train / SFT 数据构造：针对评测暴露的能力缺口，构造金融、法律、医疗、工业等专家领域的高质量 Post-train 与 SFT 数据，精确补强各家模型的短板能力；在 GDPval 类生产力任务与 Long-Horizon Agentic 训练/ eval 数据方向做到国内第一。',
           },
           {
-            en: 'Data commercialization: datasets procured as high-quality SFT data by Tencent, Alibaba, Ant Group, ByteDance, MiniMax, GLM (Zhipu), DeepSeek, Meituan, and Xiaohongshu, supporting stronger next-generation model releases across these vendors.',
-            zh: '数据商业化：数据被腾讯、阿里、蚂蚁、字节、MiniMax、GLM、DeepSeek、美团、小红书等厂商采购为高质量 SFT 数据，助力各家发布更优的新一代模型。',
+            en: 'Data commercialization: datasets procured and accepted as high-quality SFT data by multiple top AI labs, supporting stronger next-generation model development.',
+            zh: '数据商业化：数据被多家 Top AI Labs 采购并验收为高质量 SFT 数据，助力新一代模型的能力提升与迭代。',
           },
         ],
       },
@@ -153,8 +153,8 @@ export const experience: ExperienceItem[] = [
     },
     highlights: [
       {
-        en: 'Framework architecture: contributed to building the Merlin evaluation platform, standardizing the “evals” workflow into 5 modular components — Datacard, Exercise, PE Template, Arena, and Insight — enabling one-click benchmarking and visualization for proprietary and open-source models.',
-        zh: '评测框架：参与评测平台 Merlin 构建，把 Evals 流程标准化为 5 个模块（Datacard、Exercise、PE Template、Arena、Insight），支持自研与开源模型一键执行 Benchmark 并输出可视化。',
+        en: 'Framework architecture: contributed to an internal evaluation platform, modularizing the eval workflow to enable one-click benchmarking and visualization for proprietary and open-source models.',
+        zh: '评测框架：参与内部评测平台建设，将 Evals 流程模块化，支持自研与开源模型一键执行 Benchmark 并输出可视化。',
       },
       {
         en: 'Metric system: built a hybrid scoring system combining rule-based (RegEx) and LLM-as-a-judge metrics — spanning CoT-pattern analysis, grounding, and complex-instruction evaluation — and integrated/aligned 20+ public VLM benchmarks (ChartQA, HRBench, SciAssess, FinMME, etc.) via automated pipelines that cut evaluation deployment time by 95%.',
@@ -169,8 +169,8 @@ export const experience: ExperienceItem[] = [
         zh: '团队工程提效：通过平台 API 与 MCP 工具实现大规模评测自动化，并自研多款飞书效率工具，提升团队吞吐。',
       },
       {
-        en: 'Leadership & honors: led a 30-member cross-functional team to curate a “Visual Hard Problems” dataset — 1,000+ cases across expert domains such as art history, medical anatomy, and geology — surfacing critical multimodal failure cases and benchmarking 20+ frontier LLMs with 92% subjective-scoring agreement. Awarded a quarterly individual SPOT Bonus (Top 1% departmental honor) and an M+ performance rating (Top 10%).',
-        zh: '团队与荣誉：带领 30 人跨职能团队构建「Visual Hard Problems」数据集，在艺术史、医学解剖、地质学等专家领域设计 1000+ 高难用例，定位前沿模型的多模态 Failure Case，对 20+ 前沿模型完成大规模基准测试，主观评分一致性达 92%；获季度个人 SPOT Bonus 奖项（部门前 1%）与 M+ 绩效（前 10%）。',
+        en: 'Leadership & honors: led a cross-functional team to curate a large-scale “Visual Hard Problems” dataset across expert domains such as art history, medical anatomy, and geology, surfacing multimodal failure cases and benchmarking multiple frontier models with strong scoring consistency. Received a quarterly individual award and a high performance rating.',
+        zh: '团队与荣誉：带领跨职能团队构建大规模「Visual Hard Problems」数据集，覆盖艺术史、医学解剖、地质学等专家领域，定位前沿模型的多模态 Failure Case，完成多模型基准测试并保持较高评分一致性；获季度个人奖项与高绩效评级。',
       },
     ],
     tags: ['VLM Eval', 'Benchmark Design', 'LLM-as-a-Judge', 'Eval Platform Infra', 'MCP', 'Team Lead'],
@@ -194,8 +194,8 @@ export const experience: ExperienceItem[] = [
         zh: '审计准则 Agent：对接主管合伙人需求，以 DeepSeek R1 为基座构建基于普华永道内部审计准则与 ISA 准则的 Agent 智能助手，完成文档向量化嵌入与检索调优，面向普华永道网络内部署。',
       },
       {
-        en: 'IT general controls (ITGC): led ITGC audits for US- and HK-listed internet companies such as Meituan and Weibo, across six control domains — control environment, access management, computer operations, program changes, program development, and cybersecurity — running interviews, walkthroughs, and control testing through to full workpapers; reviewed the OS and database layers spanning Linux/Windows, MySQL/TiDB/SQL Server, HBase/MongoDB, data warehouses, and distributed components.',
-        zh: 'ITGC 审计：负责美团、微博等多家美股、港股上市互联网公司的 IT 一般控制审计，覆盖控制环境、访问管理、计算机运行、程序变更、程序开发与网络安全六大控制域，完成访谈、穿行测试、控制测试到底稿编写的全流程；并执行操作系统与数据库层审查，涵盖 Linux/Windows、MySQL/TiDB/SQL Server、HBase/MongoDB、数据仓库与各类分布式组件。',
+        en: 'IT general controls (ITGC): led ITGC audits for multiple US- and HK-listed internet companies across six control domains — control environment, access management, computer operations, program changes, program development, and cybersecurity — running interviews, walkthroughs, and control testing through to full workpapers; reviewed operating-system, database, data-warehouse, and distributed-component layers.',
+        zh: 'ITGC 审计：负责多家美股、港股上市互联网公司的 IT 一般控制审计，覆盖控制环境、访问管理、计算机运行、程序变更、程序开发与网络安全六大控制域，完成访谈、穿行测试、控制测试到底稿编写的全流程；并执行操作系统、数据库、数据仓库与分布式组件层审查。',
       },
       {
         en: 'IT application controls (ITAC): owned ITAC across multiple TMT business lines — mapping business processes and data flows, identifying key automated-control points, drafting PBC lists, and executing walkthroughs and control tests to verify system integrity — including end-to-end security testing over complex capital flows for financial institutions.',

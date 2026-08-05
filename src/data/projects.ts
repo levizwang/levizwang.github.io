@@ -42,8 +42,8 @@ export const projects: Project[] = [
     id: 'adversarial-verification',
     name: { en: 'Adversarial Verification at Scale', zh: '规模化对抗式验证' },
     description: {
-      en: 'Reusable multi-agent verification workflows: a 51-agent code review (6 independent finders, 45 candidates, execution-backed verification, 40 confirmed defects with introducing-commit attribution), and a 207-worker repair pipeline that checks reference answers score full marks against their own rubrics.',
-      zh: '可复用的 Multi-Agent 验证流程：51 个 Agent 的代码审查（6 个独立 finder、45 个候选缺陷、执行复现确认 40 个并定位引入 commit），以及 207-worker 修复流水线，强制「参考答案在自身 Rubric 上必须满分」的不变量。',
+      en: 'Reusable multi-agent verification workflows: a 51-agent code review (6 independent finders, 45 candidates, execution-backed verification, 40 confirmed defects with introducing-commit attribution), plus a large-scale repair pipeline that checks reference answers score full marks against their own rubrics.',
+      zh: '可复用的 Multi-Agent 验证流程：51 个 Agent 的代码审查（6 个独立 finder、45 个候选缺陷、执行复现确认 40 个并定位引入 commit），以及大规模自动修复流水线，强制「参考答案在自身 Rubric 上必须满分」的不变量。',
     },
     tag: { en: 'Multi-Agent Systems', zh: '多智能体系统' },
   },
